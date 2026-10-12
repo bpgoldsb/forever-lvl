@@ -74,12 +74,18 @@ keep the main session for decisions and review.
   respec); builds are saved with progress and travel in Export. Messages cover
   text that is not an address, a non-Forever link, a missing order, an unknown
   format version, an order that does not match the build, and a class with no data.
-- Left: tree data for the other eight classes (`data/talents-<class>.js`, loaded
-  when a build needs it), recognising Wowhead's exported build text by its
-  format, and showing which ticked levels changed when the build is switched.
+- Done: tree data for all nine classes; messages for exported build text.
+- Not proven: only warlock has been checked against a real Wowhead address. The
+  other eight decode a made-up one-talent address, which tests loading but not
+  the tree order. One real address per class settles it; a wrong order shows as
+  "the order and the build do not match".
+- Hunter Marksmanship: wowforevertalents lists a 17th talent (Improved Serpent
+  Sting) that Wowhead's data lacks. The file follows Wowhead, as the address does.
+- Left: showing which ticked levels changed when the build is switched.
 
-### G. First Aid
-- Research first (`research/first-aid.md`), then rows and a First Aid type.
+### G. First Aid (done for levels 1-20)
+- Seven rows and a First Aid type, from `research/first-aid.md`. Not found for
+  Forever: heal amounts, the Recently Bandaged time, what interrupts a bandage.
 
 ### H. Direction (owner, 2026-10-12)
 - The page is one Orc Warlock today. Talent import comes first for every class;

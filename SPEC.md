@@ -56,7 +56,7 @@ Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-
   nothing is shown for confirmed rows.
 - The source link is a hover-only arrow.
 - **Talent rows**: one per level from 10, on the On level side, made by the app
-  from the build in `data/talents-warlock.js`. The talent's icon sits where the
+  from the selected talent build. The talent's icon sits where the
   priority word goes; the title is the name and rank ("Suppression 2/5") and the
   muted line is the tree and that rank's text. Icons load from Wowhead's CDN, then
   from `icons/`, then fall back to the word TALENT. Rows stop at the last level the
@@ -83,9 +83,19 @@ Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-
 - Task ids are unique across all data files and never reused; progress is stored
   by id. Talent rows use `tal_<level>`, so replacing the build keeps "the point for
   level N is spent".
-- The talent build is a Wowhead Forever talent calculator address with its order
-  part, pasted into `build` in `data/talents-warlock.js`. The app decodes it and
-  warns in the console if the order does not add up to the build's own ranks.
+- A talent build is a Wowhead Forever talent calculator address with its order
+  part, for any class. `data/build.js` holds the example build. Visitors add
+  their own in the **Talents** edge tab: paste, Check, then Add. Several builds
+  can be kept, named, switched by hand (for a respec) and removed; they are saved
+  with progress and travel in Export and Import. Ticks stay with the level.
+- A pasted address is refused with a specific message when it is not an address
+  (exported build text, a wowforevertalents code, part of an address), is for
+  another game version, has no order part, uses an unknown format version, or
+  its order does not add up to its own final ranks. Breaking the row or
+  prerequisite rules is shown as a note and still allowed.
+- Tree data is one file per class, `data/talents-<class>.js`, in the tree order
+  the Wowhead address uses and with talents sorted by row then column. A file is
+  loaded only when a build needs it.
 - Talent tree data comes from wowforevertalents.com, used with credit in the
   README and the data file. Only the trimmed copy is published; their raw
   extraction stays in `research/raw/`, which is not committed.

@@ -29,7 +29,10 @@ It is a work in progress and I would like to hear what you think; see "Feedback"
   change. A `~` after a title means the fact comes from Classic and is assumed
   unchanged; rows without a mark have a Forever-specific source, linked from the
   arrow that appears when you hover the row.
-- The talent order is one example build and may change.
+- The talent order shown at first is one example build. The Talents tab on the
+  right edge takes your own: paste a Wowhead Forever talent calculator address
+  for any class, keep several builds and switch between them. Everything else
+  on the page is still written for an Orc Warlock.
 
 ## Feedback
 
@@ -52,9 +55,10 @@ changes; it is not part of the app.
 
 ## Credits and sources
 
-- **Talent trees** (`data/talents-warlock.js`: names, icons, positions and rank
-  text) come from [wowforevertalents.com](https://wowforevertalents.com/), which
-  extracted them from the beta client.
+- **Talent trees** for all nine classes (`data/talents-<class>.js`): rank text
+  comes from [wowforevertalents.com](https://wowforevertalents.com/), which
+  extracted it from the beta client; names, icons, positions and prerequisites
+  come from Wowhead's Forever talent data.
 - **Talent order** is read from a
   [Wowhead Forever talent calculator](https://www.wowhead.com/forever/talent-calc/warlock)
   link. Talent icons load from Wowhead's image server, with copies in `icons/` as

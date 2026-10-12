@@ -348,7 +348,17 @@
       try { url = new URL(/^[a-z]+:\/\//i.test(raw) ? raw : "https://" + raw); } catch (e) { /* not an address */ }
     }
     if (!url || !/(^|\.)wowhead\.com$/i.test(url.hostname)) {
-      return { error: "That is not a calculator address. It should start with https://www.wowhead.com/forever/talent-calc/. If you used the calculator's Export or Copy button, that text is something else: copy the address from the browser's address bar instead." };
+      const want = " This page needs the calculator's address, which starts with https://www.wowhead.com/forever/talent-calc/.";
+      if (/wowforevertalents\.com/i.test(raw) || /^[a-z]?\d{1,24}(-\d{0,24}){0,2}$/.test(raw)) {
+        return { error: "That is a wowforevertalents.com build. It holds the finished build but not the order the points are taken in." + want };
+      }
+      if (/^v\d[\w-]*$/.test(raw) || /^[0-2][a-zA-Z0-9.!_~^-]+$/.test(raw)) {
+        return { error: "That is only part of the address. Paste the whole thing, starting with https://." };
+      }
+      if (/^[A-Za-z0-9_+\/=-]{20,}$/.test(raw) || /^#?b\//.test(raw) || /^\s*[{[]/.test(raw)) {
+        return { error: "That looks like an exported build (the text a game client, addon or another planner produces), not an address. An export has no leveling order in it." + want + " " + HOW_TO };
+      }
+      return { error: "That is not a calculator address." + want };
     }
     const parts = url.pathname.split("/").filter(Boolean);
     const at = parts.indexOf("talent-calc");
@@ -360,6 +370,9 @@
     if (!slug) return { error: "The address has no class in it. " + HOW_TO };
     if (!CLASSES.includes(slug)) return { error: "Unknown class '" + slug + "' in the address." };
     if (!build) return { error: "No talents are picked in that address. " + HOW_TO };
+    if (/^v\d[A-Z]/.test(build)) {
+      return { error: "That address holds an imported character build, which has no leveling order in it. " + HOW_TO };
+    }
     const m = /^v(\d)([\d-]*)(_.*)?$/.exec(build);
     if (!m) return { error: "Cannot read the build part of the address ('" + build + "')." };
     if (m[1] !== "2") return { error: "That address uses Wowhead build format v" + m[1] + "; this page only reads v2, so it would get the talents wrong." };
