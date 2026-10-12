@@ -11,7 +11,7 @@
 //
 // Task fields:
 //   id          unique across ALL data files, never reuse (progress is stored by id)
-//   category    spell | grimoire | quest | herb | skin | fish_cook | wand | camp
+//   category    spell | grimoire | quest | herb | skin | fish_cook | wand | camp | aid
 //   priority    BUY | SKIP | GATE | QUEST | BUFF | INFO
 //   title, cost, location, note
 //   showCost    true to display the cost; routine costs stay hidden
@@ -60,6 +60,7 @@ window.LEVEL_DATA = (window.LEVEL_DATA || []).concat([
   {
     level: 10,
     tasks: [
+      { id: "t_9_09", category: "aid", priority: "INFO", title: "First Aid in Orgrimmar: Arnok, vials and spices", location: "Arnok, Valley of Spirits; Xen'to (spices), Kor'geld (vials)", note: "Minor Healing Potion at First Aid 55: Peacebloom, Mild Spices and an Empty Vial, so it uses herbs you already pick.", source: "https://www.wow-professions.com/forever/first-aid-leveling-guide", confidence: "confirmed" },
       { id: "t_9_02", category: "quest", priority: "GATE", title: "Voidwalker: Gan'rul's Summons, Creature of the Void, The Binding", location: "Ophek (Razor Hill), then Gan'rul Bloodeye (Cleft of Shadow)", note: "Level 10. Tablet of Verga is in the Burning Blade Stash in Skull Rock; summon at the Cleft of Shadow circle.", source: "https://www.foreverwisp.com/guides/wow-forever-orc-troll-leveling-guide", confidence: "confirmed" },
       { id: "t_9_03", category: "spell", priority: "BUY", title: "Drain Soul (Rank 1)", cost: "3s (Classic)", location: "Orgrimmar, Cleft of Shadow", note: "Level 10. Rising chance per tick to grant a Soul Shard before the kill.", source: "https://barrens.chat/viewtopic.php?t=13430&p=43348", confidence: "confirmed" },
       { id: "t_9_04", category: "spell", priority: "BUY", title: "Create Healthstone, Demon Skin (Rank 2)", cost: "3s each (Classic)", location: "Orgrimmar, Cleft of Shadow", note: "Level 10.", source: "https://warcraftforever.games/classes/warlock", confidence: "confirmed" },
@@ -109,6 +110,7 @@ window.LEVEL_DATA = (window.LEVEL_DATA || []).concat([
   {
     level: 20,
     tasks: [
+      { id: "t_19_09", category: "aid", priority: "INFO", title: "Expert First Aid is a book, off the route", location: "Balai Lok'Wein, Brackenwall Village, Dustwallow Marsh", note: "Trainers stop at 150. The book Under Wraps needs First Aid 125. Artisan is the Triage quest at level 35, untested in the beta.", source: "https://www.wow-professions.com/forever/first-aid-trainers", confidence: "confirmed" },
       { id: "t_19_02", category: "quest", priority: "GATE", title: "Succubus (Sayaad) quest chain", location: "Gan'rul Bloodeye, Cleft of Shadow", note: "Level 20. Short travel chain: Orgrimmar, the Crossroads, Camp Taurajo, possibly Ratchet and Stonetalon (from your own beta run). Some Forever text calls the pet Sayaad.", source: "https://www.method.gg/wow-forever/wow-forever-warlock-leveling-guide-and-talents", confidence: "confirmed" },
       { id: "t_19_03", category: "spell", priority: "BUY", title: "Demon Armor (Rank 1)", cost: "~20s (Classic)", location: "Orgrimmar, Cleft of Shadow", note: "Level 20. Replaces Demon Skin.", source: "https://warcraftforever.games/classes/warlock", confidence: "confirmed" },
       { id: "t_19_04", category: "spell", priority: "BUY", title: "Health Funnel (Rank 2)", cost: "~20s (Classic)", location: "Orgrimmar, Cleft of Shadow", note: "Level 20.", source: "https://warcraftforever.games/classes/warlock", confidence: "confirmed" },

@@ -8,7 +8,7 @@ changes; `PLAN.md` holds what is left to do and what is still undecided.
 A leveling cheatsheet and task tracker for one character in *World of Warcraft:
 Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-12).
 
-- Character: Orc Warlock. Professions: Herbalism, Skinning, Cooking, Fishing.
+- Character: Orc Warlock. Professions: Herbalism, Skinning, Cooking, Fishing, First Aid.
 - Route: Durotar (1-10), then The Barrens (10-20). First dataset covers levels 1-20;
   levels 21-60 are added later as data only.
 
@@ -75,7 +75,7 @@ Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-
   level, `level: 8`). Reference panels are `PANELS` in `data/reference.js`.
 - Task fields: `id`, `category`, `priority`, `title`, `cost`, `location`, `note`,
   `source`, `confidence`, `showCost`.
-  - `category`: spell, grimoire, quest, herb, skin, fish_cook, wand, camp, talent
+  - `category`: spell, grimoire, quest, herb, skin, fish_cook, wand, camp, aid (First Aid), talent
     (talent is used only by the generated talent rows).
   - `priority`: BUY, SKIP, GATE, QUEST, BUFF, INFO.
   - `confidence`: confirmed (a Forever-specific source says so), inferred (Classic

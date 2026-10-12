@@ -9,7 +9,7 @@
 //
 // Task fields:
 //   id          unique across ALL data files, never reuse (progress is stored by id)
-//   category    spell | grimoire | quest | herb | skin | fish_cook | wand | camp
+//   category    spell | grimoire | quest | herb | skin | fish_cook | wand | camp | aid
 //   priority    BUY | SKIP | GATE | QUEST | BUFF | INFO
 //   title, cost, location, note
 //   showCost    true to display the cost; routine costs stay hidden
@@ -31,6 +31,9 @@ window.ROUTE_DATA = (window.ROUTE_DATA || []).concat([
     levels: "7-8",
     zone: "Razor Hill",
     tasks: [
+      { id: "t_7_10", category: "aid", priority: "GATE", title: "Learn First Aid", location: "Rawrk, Razor Hill Barracks", note: "Secondary profession, no level requirement. Rawrk teaches to 150 (Journeyman at 50). In Forever First Aid also makes healing potions and cures for bleeds, disease and poison.", source: "https://www.wow-professions.com/forever/first-aid-trainers", confidence: "confirmed" },
+      { id: "t_7_11", category: "aid", priority: "INFO", title: "Keep Linen Cloth", location: "Humanoid drops, mob levels 1-19", note: "Linen Bandage needs First Aid 30 in Forever, not 1; Heavy Linen is 50. Sources disagree on how the first points are made, so read the trainer's list.", source: "https://seemeta.com/en/wow-forever/professions/first-aid", confidence: "confirmed" },
+      { id: "t_7_12", category: "aid", priority: "BUFF", title: "Camping 101: First Aid, then the First Aid Kit", location: "Quest giver not found for Horde", note: "First Aid 20. Kit is 3 Linen Bandage and 1 Refreshing Spring Water: a Stamina buff that does not stack with Power Word: Fortitude. Wowhead lists only the Alliance quest giver.", source: "https://www.wowhead.com/forever/quest=96047", confidence: "unverified" },
       { id: "t_7_02", category: "skin", priority: "INFO", title: "Boars, scorpids, raptors, crocolisks", location: "Durotar", note: "Skinning targets from Classic.", confidence: "inferred" },
       { id: "t_7_03", category: "camp", priority: "QUEST", title: "The Great Outdoors, then Camping 101", location: "Brakk; Cook Torka (Cooking); Jandi, Orgrimmar (Herbalism)", note: "Brakk's quest comes first. Camping 101 aims at skill 20 in the profession.", source: "https://www.foreverwisp.com/guides/wow-forever-orc-troll-leveling-guide", confidence: "confirmed" },
       { id: "t_7_04", category: "camp", priority: "BUFF", title: "Basic Campfire (3 slots)", location: "Cooking 1", note: "Costs 1 Simple Wood. Sit 1 minute for the 1-hour buff; placing a fixture puts yours on a 1-hour cooldown.", source: "https://www.wow-professions.com/forever/camping-guide", confidence: "confirmed" },
@@ -41,6 +44,7 @@ window.ROUTE_DATA = (window.ROUTE_DATA || []).concat([
     levels: "11-12",
     zone: "The Crossroads",
     tasks: [
+      { id: "t_11_09", category: "aid", priority: "GATE", title: "No First Aid trainer listed in the Barrens", location: "Arnok, Valley of Spirits, Orgrimmar", note: "Learn Wool Bandage (80) and Heavy Wool Bandage (115) on trips back to Orgrimmar or Razor Hill. No source lists a Barrens trainer; the trainer page may be incomplete.", source: "https://www.wow-professions.com/forever/first-aid-trainers", confidence: "unverified" },
       { id: "t_11_06", category: "skin", priority: "INFO", title: "Plainstriders, Savanna Prowlers, Zhevras", location: "Around the Crossroads", note: "Light Leather. Targets from Classic; they overlap the kill quests.", confidence: "inferred" },
       { id: "t_11_07", category: "herb", priority: "INFO", title: "Mageroyal (50), Briarthorn (70)", location: "Barrens plains; trees and raptor nests", note: "Skill levels from Classic.", confidence: "inferred" }
     ]
@@ -56,6 +60,7 @@ window.ROUTE_DATA = (window.ROUTE_DATA || []).concat([
     levels: "15-16",
     zone: "Northern Barrens / Sludge Fen",
     tasks: [
+      { id: "t_15_09", category: "aid", priority: "INFO", title: "Keep Wool Cloth", location: "Humanoid drops, mob levels 15-30", note: "Wool Bandage at First Aid 80, Heavy Wool at 115.", source: "https://www.warcrafttavern.com/forever/guides/first-aid/", confidence: "inferred" },
       { id: "t_15_07", category: "herb", priority: "INFO", title: "Bruiseweed (100)", location: "Quilboar camps and mountainsides", note: "Skill level from Classic.", confidence: "inferred" }
     ]
   },
