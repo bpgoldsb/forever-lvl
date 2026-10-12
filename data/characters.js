@@ -40,6 +40,10 @@ window.CHARACTER_OPTIONS = {
       "label": "Skinning"
     },
     {
+      "key": "leatherworking",
+      "label": "Leatherworking"
+    },
+    {
       "key": "cooking",
       "label": "Cooking"
     },

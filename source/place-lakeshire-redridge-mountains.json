@@ -1,0 +1,72 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "lakeshire-redridge-mountains",
+    "name": "Lakeshire / Redridge Mountains",
+    "levels": "17-20"
+  },
+  "facts": [
+    {
+      "id": "place.lakeshire-redridge-mountains.skinning-trainer",
+      "category": "skin",
+      "title": "Skinning trainer: Wilma Ranthal",
+      "location": "Redridge Mountains",
+      "note": "Teaches every rank. The trainer page names the zone but no town.",
+      "professions": [
+        "skinning"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/skinning-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.lakeshire-redridge-mountains.skinning-targets",
+      "category": "skin",
+      "title": "Great Goretusks, Black Whelps",
+      "location": "Redridge Mountains; whelps in Render’s Valley",
+      "note": "Light and Medium Leather. Targets from the Classic wiki; not checked for Forever.",
+      "professions": [
+        "skinning",
+        "leatherworking"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Redridge_Mountains"
+      ],
+      "confidence": "unverified"
+    },
+    {
+      "id": "place.lakeshire-redridge-mountains.herbalism-trainer",
+      "category": "herb",
+      "title": "Herbalism trainer: Alma Jainrose",
+      "location": "Lakeshire",
+      "professions": [
+        "herbalism"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/herbalism-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.lakeshire-redridge-mountains.cooking-fishing-trainers",
+      "category": "fish_cook",
+      "title": "Cooking: Crystal Boughman. Fishing: Matthew Hooper",
+      "location": "Lakeshire; Lake Everstill",
+      "note": "Crystal is not in the inn: facing it, her building is up the small hill on the left. Redridge Goulash (Chef Brell) is a Classic cooking quest, not checked for Forever.",
+      "professions": [
+        "cooking",
+        "fishing"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/cooking-trainers",
+        "https://www.wow-professions.com/forever/fishing-trainers"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

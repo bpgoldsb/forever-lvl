@@ -1,0 +1,54 @@
+{
+  "build": "1.60.1",
+  "profession": "skinning",
+  "facts": [
+    {
+      "id": "prof.skinning.human.apprentice",
+      "level": 1,
+      "category": "skin",
+      "title": "Learn Skinning",
+      "location": "Riley Peltskinner, Northshire Valley",
+      "note": "No level requirement in Forever. Riley teaches only Apprentice, to skill 75.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/skinning-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.skinning.human.journeyman",
+      "level": 6,
+      "category": "skin",
+      "title": "Journeyman Skinning at skill 50",
+      "location": "Helene Peltskinner, Goldshire",
+      "note": "No level requirement for any Skinning rank: Journeyman at 50, Expert at 125, Artisan at 200. Helene teaches every rank; so do Maris Granger (Old Town, Stormwind) and Wilma Ranthal (Redridge Mountains).",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/skinning-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.skinning.human.camp-chair",
+      "level": 6,
+      "category": "camp",
+      "title": "Camp Chair (Skinning 20)",
+      "location": "Skinning trainer, or the Camping 101 quest",
+      "note": "3 Light Leather and 2 Simple Wood. +2% crit chance; does not stack with Moonkin Aura.",
+      "races": [
+        "human"
+      ],
+      "priority": "BUFF",
+      "source": [
+        "https://www.wow-professions.com/forever/camping-guide"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

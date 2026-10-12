@@ -158,6 +158,13 @@ Build order:
    class; the four profession rows that name Orc trainers are tagged Orc only,
    so another race sees none until its own are written; a new character starts
    with no professions and no places.
+   Added 2026-10-12 at the owner's request, ahead of step 3: Leatherworking
+   in the picker, Skinning and Leatherworking rows for a Human, and five
+   places (Northshire Valley, Goldshire / Elwynn Forest, Stormwind City,
+   Westfall, Lakeshire / Redridge Mountains), 27 rows, from
+   `research/skinning-leatherworking-human-zones.md`. The rows are tagged
+   Human, the only Alliance race in the picker; when another Alliance race is
+   added they need a faction tag instead. Place level ranges are Classic's.
 3. Human Hunter and Undead Paladin facts for levels 1-10, built and shown.
    Needs more research first: spell costs from the per-spell pages on
    warcraftforever.games, and the unread parts of the two leveling guides.

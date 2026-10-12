@@ -26,6 +26,11 @@
       "color": "#c9945c"
     },
     {
+      "key": "leather",
+      "label": "Leatherwork",
+      "color": "#b0703a"
+    },
+    {
       "key": "fish_cook",
       "label": "Fish / Cook",
       "color": "#5ab4e6"

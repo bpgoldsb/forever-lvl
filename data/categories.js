@@ -7,6 +7,7 @@ window.CATEGORY_DATA = [
   {"key":"quest","label":"Quest","color":"#e8c04a"},
   {"key":"herb","label":"Herb","color":"#6fcf7a"},
   {"key":"skin","label":"Skin","color":"#c9945c"},
+  {"key":"leather","label":"Leatherwork","color":"#b0703a"},
   {"key":"fish_cook","label":"Fish / Cook","color":"#5ab4e6"},
   {"key":"wand","label":"Wand","color":"#e67e6a"},
   {"key":"camp","label":"Camp","color":"#e89a4a"},

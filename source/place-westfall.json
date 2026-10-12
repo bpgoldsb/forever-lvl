@@ -1,0 +1,72 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "westfall",
+    "name": "Westfall",
+    "levels": "11-16"
+  },
+  "facts": [
+    {
+      "id": "place.westfall.no-leatherworking-trainer",
+      "category": "leather",
+      "title": "No Leatherworking trainer listed in Westfall or Redridge",
+      "location": "Simon Tanner, Old Town, Stormwind",
+      "note": "Train on trips back to Stormwind. The trainer page says it is still in progress, so it may be incomplete.",
+      "professions": [
+        "leatherworking"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/leatherworking-trainers"
+      ],
+      "confidence": "unverified"
+    },
+    {
+      "id": "place.westfall.skinning-targets",
+      "category": "skin",
+      "title": "Goretusks and coyotes",
+      "location": "Westfall fields",
+      "note": "Light Leather, then Medium Leather from the higher ones. Targets from the Classic wiki; not checked for Forever.",
+      "professions": [
+        "skinning",
+        "leatherworking"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Westfall"
+      ],
+      "confidence": "unverified"
+    },
+    {
+      "id": "place.westfall.cooking-quests",
+      "category": "fish_cook",
+      "title": "Westfall Stew, Goretusk Liver Pie",
+      "location": "Salma Saldean, Saldean’s Farm",
+      "note": "Cooking recipe quests in Classic; not checked for Forever.",
+      "professions": [
+        "cooking"
+      ],
+      "priority": "QUEST",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Westfall_Stew",
+        "https://warcraft.wiki.gg/wiki/Goretusk_Liver_Pie"
+      ],
+      "confidence": "inferred"
+    },
+    {
+      "id": "place.westfall.deadmines-blueprint",
+      "category": "camp",
+      "title": "Deadmines blueprint: Cookie’s Feast",
+      "location": "The Deadmines",
+      "note": "Dropped by Cookie; Cooking 140. Stamina food for the camp.",
+      "professions": [
+        "cooking"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/camping-guide"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

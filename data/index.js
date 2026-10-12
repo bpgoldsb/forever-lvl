@@ -11,10 +11,17 @@ window.DATA_FILES = [
   "class-warlock.js",
   "prof-first-aid.js",
   "prof-herbalism.js",
+  "prof-leatherworking.js",
+  "prof-skinning.js",
+  "place-northshire-valley.js",
   "place-senjin-village-echo-isles.js",
+  "place-goldshire-elwynn-forest.js",
   "place-razor-hill.js",
+  "place-stormwind-city.js",
   "place-the-crossroads.js",
+  "place-westfall.js",
   "place-forgotten-pools-ratchet.js",
   "place-northern-barrens-sludge-fen.js",
+  "place-lakeshire-redridge-mountains.js",
   "place-oases-camp-taurajo.js"
 ];

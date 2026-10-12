@@ -1,0 +1,71 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "stormwind-city",
+    "name": "Stormwind City",
+    "levels": "10"
+  },
+  "facts": [
+    {
+      "id": "place.stormwind-city.skinning-leatherworking-trainers",
+      "category": "leather",
+      "title": "Old Town: Skinning and Leatherworking trainers",
+      "location": "Old Town, Stormwind",
+      "note": "Maris Granger teaches every Skinning rank. In the Protective Hide, Randal Worth teaches Leatherworking to 75 and Simon Tanner to 150.",
+      "professions": [
+        "skinning",
+        "leatherworking"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/skinning-trainers",
+        "https://www.wow-professions.com/forever/leatherworking-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.stormwind-city.herbalism-trainers",
+      "category": "herb",
+      "title": "Herbalism trainers: Shylamiir, Tannysa",
+      "location": "The Park; Mage Quarter, outside Alchemy Needs",
+      "professions": [
+        "herbalism"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/herbalism-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.stormwind-city.cooking-fishing-trainers",
+      "category": "fish_cook",
+      "title": "Cooking: Stephen Ryback. Fishing: Arnold Leland",
+      "location": "Pig and Whistle Tavern, Old Town; a dock in the Canals at the west corner of the Trade District",
+      "professions": [
+        "cooking",
+        "fishing"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/cooking-trainers",
+        "https://www.wow-professions.com/forever/fishing-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.stormwind-city.first-aid-trainer",
+      "category": "aid",
+      "title": "First Aid trainer: Shaina Fuller",
+      "location": "Cathedral of Light, first room on the right",
+      "professions": [
+        "first-aid"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/first-aid-trainers"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

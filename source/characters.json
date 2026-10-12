@@ -12,6 +12,7 @@
   "professions": [
     { "key": "herbalism", "label": "Herbalism" },
     { "key": "skinning", "label": "Skinning" },
+    { "key": "leatherworking", "label": "Leatherworking" },
     { "key": "cooking", "label": "Cooking" },
     { "key": "fishing", "label": "Fishing" },
     { "key": "first-aid", "label": "First Aid" }

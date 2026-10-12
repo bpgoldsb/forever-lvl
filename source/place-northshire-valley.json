@@ -1,0 +1,25 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "northshire-valley",
+    "name": "Northshire Valley",
+    "levels": "1-5"
+  },
+  "facts": [
+    {
+      "id": "place.northshire-valley.skinning-targets",
+      "category": "skin",
+      "title": "Young Wolves, Timber Wolves",
+      "location": "Northshire Valley",
+      "note": "Ruined Leather Scraps, some Light Leather. Targets from the Classic wiki; not checked for Forever.",
+      "professions": [
+        "skinning"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Northshire_Abbey"
+      ],
+      "confidence": "unverified"
+    }
+  ]
+}

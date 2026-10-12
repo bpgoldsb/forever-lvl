@@ -1,0 +1,85 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "goldshire-elwynn-forest",
+    "name": "Goldshire / Elwynn Forest",
+    "levels": "6-9"
+  },
+  "facts": [
+    {
+      "id": "place.goldshire-elwynn-forest.skinning-targets",
+      "category": "skin",
+      "title": "Wolves, boars, bears",
+      "location": "Elwynn Forest; bears around Eastvale Logging Camp",
+      "note": "Ruined Leather Scraps and Light Leather. Targets from the Classic wiki; not checked for Forever.",
+      "professions": [
+        "skinning",
+        "leatherworking"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Elwynn_Forest"
+      ],
+      "confidence": "unverified"
+    },
+    {
+      "id": "place.goldshire-elwynn-forest.great-outdoors-camping-101",
+      "category": "camp",
+      "title": "The Great Outdoors, then Camping 101",
+      "location": "Sam Sarsaparilla, outskirts of Goldshire",
+      "note": "Optional: the camping buffs work without them. Camping 101 can teach a profession's skill-20 camp item.",
+      "priority": "QUEST",
+      "source": [
+        "https://www.method.gg/wow-forever/camping-in-wow-forever-how-it-all-works-all-profession-buffs",
+        "https://www.wow-professions.com/forever/camping-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.goldshire-elwynn-forest.herbalism-trainers",
+      "category": "herb",
+      "title": "Herbalism trainers: Nancy Songflower, Herbalist Pomeroy",
+      "location": "Elwynn Forest",
+      "note": "Pomeroy is in a cottage in the hills between Stormwind and Northshire.",
+      "professions": [
+        "herbalism"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/herbalism-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.goldshire-elwynn-forest.cooking-fishing-trainers",
+      "category": "fish_cook",
+      "title": "Cooking: Tomas. Fishing: Lee Brown",
+      "location": "Lion’s Pride Inn, Goldshire; Crystal Lake",
+      "note": "Tomas is the cook in the inn's back room.",
+      "professions": [
+        "cooking",
+        "fishing"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/cooking-trainers",
+        "https://www.wow-professions.com/forever/fishing-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.goldshire-elwynn-forest.first-aid-trainer",
+      "category": "aid",
+      "title": "First Aid trainer: Michelle Belle",
+      "location": "Upstairs in the inn, Goldshire",
+      "professions": [
+        "first-aid"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/first-aid-trainers"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}
