@@ -219,7 +219,11 @@
     #locked, #rail { grid-column: 1; grid-row: auto; }
     #rail { flex-direction: row; padding: 4px; border-left: 0; order: -1; }
     #rail button { writing-mode: horizontal-tb; border-right: 1px solid var(--line); border-radius: 4px; margin: 0; padding: 2px 8px; }
-    #panel { right: 0; width: 100%; }
+    /* In the flow, under the tabs, so the tab that opened it can close it. */
+    #panel {
+      position: static; width: auto; grid-column: 1; order: -1; overflow: visible;
+      border-left: 0; border-bottom: 1px solid var(--line); box-shadow: none;
+    }
   }
 </style>
 </head>

@@ -11,8 +11,11 @@ Resume point. Last worked 2026-10-12. Start a session in this folder and read
   generated talent rows (levels 10-20).
 - Agents can see the page: `tools/shot.mjs` (headless Chromium under podman on
   the dev machine). Seen rendered so far: the locked view at 1280x1440, talent rows, the
-  icon fallback chain, SKIP rows not holding a level open. Not yet looked at: the
-  unlocked view, swap, edge panels, the narrow layout, export and import.
+  icon fallback chain, SKIP rows not holding a level open, and (2026-10-12) the
+  unlocked view, swap, all four edge panels and the narrow layout at 420x900.
+  That review found and fixed one fault: on a narrow screen an open panel
+  covered its own tabs and could not be closed. Not looked at: export and
+  import, which the tool cannot show (file dialogs).
 - Published 2026-10-12: Forgejo is the origin, push-mirrored to
   https://github.com/bpgoldsb/forever-lvl and served at
   https://bpgoldsb.github.io/forever-lvl/. Every push to `main` publishes.
