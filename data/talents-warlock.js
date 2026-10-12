@@ -91,3 +91,7 @@ window.TALENT_DATA = {
     }
   ]
 };
+
+// The trees also go in the per-class registry the talent import reads.
+window.TALENT_TREES = window.TALENT_TREES || {};
+window.TALENT_TREES.warlock = { name: "Warlock", trees: window.TALENT_DATA.trees };

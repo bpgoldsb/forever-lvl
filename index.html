@@ -190,6 +190,18 @@
   #panel ol { margin: 0; padding-left: 18px; font-size: 13px; }
   #panel p { margin: 0 0 4px; font-size: 13px; color: var(--muted); }
 
+  /* Talents panel: saved builds and the paste box. */
+  #panel input[type="text"], #panel textarea {
+    width: 100%; background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px;
+    padding: 4px 6px; margin-bottom: 6px; resize: vertical;
+  }
+  .builds label { display: flex; gap: 6px; align-items: baseline; padding: 3px 0; cursor: pointer; }
+  .builds .what { color: var(--muted); font-size: 12px; display: block; }
+  .builds .grow { flex: 1; min-width: 0; }
+  #panel .bad { color: var(--bad); }
+  #panel .note { color: var(--warn); }
+  #panel .good { color: var(--ok); }
+
   .empty, .error { color: var(--muted); padding: 20px; text-align: center; }
   .error { color: var(--bad); text-align: left; white-space: pre-wrap; }
 
@@ -270,7 +282,9 @@
   // lock: both columns scroll as one, each zone beside the levels it covers.
   // showFinished: keep rows whose tasks are all ticked on screen.
   // panel: id of the open reference panel, or null.
-  const state = { done: new Set(), level: "all", category: "all", hideDone: false, swap: false, lock: true, showFinished: false, panel: null };
+  // builds: talent builds the user pasted in, [{ name, url }]. build: which one
+  // is shown, counting the data file's own build (if any) as number 0.
+  const state = { done: new Set(), level: "all", category: "all", hideDone: false, swap: false, lock: true, showFinished: false, panel: null, builds: [], build: 0 };
 
   function loadState() {
     try {
@@ -283,6 +297,11 @@
     if (typeof raw.category === "string") state.category = raw.category;
     if (typeof raw.panel === "string" || raw.panel === null) state.panel = raw.panel;
     for (const k of ["hideDone", "swap", "lock", "showFinished"]) if (typeof raw[k] === "boolean") state[k] = raw[k];
+    if (Array.isArray(raw.builds)) {
+      state.builds = raw.builds.filter((b) => b && typeof b.url === "string")
+        .map((b) => ({ name: String(b.name || "Build"), url: b.url }));
+    }
+    if (Number.isInteger(raw.build) && raw.build >= 0) state.build = raw.build;
   }
   function serialize() {
     return Object.assign({}, state, { done: [...state.done] });
@@ -306,42 +325,136 @@
     const m = String(levels).match(/\d+/g) || [0];
     return [Number(m[0]), Number(m[m.length - 1])];
   }
-  // Wowhead talent calculator address -> [{ tree, index }], one per point in
-  // the order taken. The last path part is the order: a tree digit, then one
-  // letter per point (a talent's position in its tree). An upper-case letter
-  // stands for every rank of that talent taken in a row.
+  // ---- talent builds -----------------------------------------------------
+  // A build is a Wowhead Forever talent calculator address, for any class. Its
+  // last part is the order the points were clicked in: a tree digit, then one
+  // letter per point (the talent's position in its tree, by row then column).
+  // An upper-case letter stands for every rank of that talent taken in a row.
+  // The part before it holds the final rank of every talent.
   const ORDER_ONE = "abcdefghjkmnpqrstvwzxyilou468-~!";
   const ORDER_ALL = "ABCDEFGHJKMNPQRSTVWZXYILOU579_^.";
-  function decodeBuild(data, problems) {
-    const parts = String(data.build || "").split("/").filter(Boolean);
-    const at = parts.findIndex((p) => /^v\d[\d-]*(_|$)/.test(p));
-    if (at < 0 || !parts[at + 1]) { problems.push("Talent build has no order part: " + data.build); return []; }
-    const points = [];
+  const CLASSES = ["warrior", "paladin", "hunter", "rogue", "priest", "shaman", "mage", "warlock", "druid"];
+  const FIRST_TALENT_LEVEL = 10, POINTS_PER_ROW = 5;
+  const ICON_URL = "https://wow.zamimg.com/images/wow/icons/medium/", ICON_LOCAL = "icons/";
+  const HOW_TO = "On Wowhead's Forever talent calculator, start from an empty tree, click the points in the order you will take them, then copy the address from the browser's address bar.";
+
+  // Text the user pasted -> { slug, ranks, order, url } or { error }.
+  function parseAddress(text) {
+    const raw = String(text || "").trim();
+    if (!raw) return { error: "Paste a Wowhead talent calculator address." };
+    let url = null;
+    if (!/\s/.test(raw)) {
+      try { url = new URL(/^[a-z]+:\/\//i.test(raw) ? raw : "https://" + raw); } catch (e) { /* not an address */ }
+    }
+    if (!url || !/(^|\.)wowhead\.com$/i.test(url.hostname)) {
+      return { error: "That is not a calculator address. It should start with https://www.wowhead.com/forever/talent-calc/. If you used the calculator's Export or Copy button, that text is something else: copy the address from the browser's address bar instead." };
+    }
+    const parts = url.pathname.split("/").filter(Boolean);
+    const at = parts.indexOf("talent-calc");
+    if (at < 0) return { error: "That is a Wowhead page, but not the talent calculator." };
+    if (!parts.slice(0, at).includes("forever")) {
+      return { error: "That calculator link is not for WoW Forever (no /forever/ in the address). Other versions of the game have different talent trees." };
+    }
+    const slug = parts[at + 1], build = parts[at + 2], order = parts[at + 3];
+    if (!slug) return { error: "The address has no class in it. " + HOW_TO };
+    if (!CLASSES.includes(slug)) return { error: "Unknown class '" + slug + "' in the address." };
+    if (!build) return { error: "No talents are picked in that address. " + HOW_TO };
+    const m = /^v(\d)([\d-]*)(_.*)?$/.exec(build);
+    if (!m) return { error: "Cannot read the build part of the address ('" + build + "')." };
+    if (m[1] !== "2") return { error: "That address uses Wowhead build format v" + m[1] + "; this page only reads v2, so it would get the talents wrong." };
+    if (!order) return { error: "The address has the talents but not the order they were taken in. Opening a finished build does not record an order. " + HOW_TO };
+    return { slug, ranks: m[2].split("-"), order, url: url.origin + url.pathname };
+  }
+
+  // Tree data for a class, loaded the first time it is needed.
+  function loadTrees(slug) {
+    const have = () => (window.TALENT_TREES || {})[slug];
+    if (have()) return Promise.resolve(have());
+    return loadScript("data/talents-" + slug + ".js").then(() => {
+      if (!have()) throw new Error("no trees in the file");
+      return have();
+    });
+  }
+
+  // -> { errors, notes, points: [{ tree, index }] }. Errors mean the build
+  // cannot be used; notes are worth showing but do not stop it.
+  function decodeOrder(parsed, cls) {
+    const errors = [], notes = [], points = [];
     let tree = 0;
-    for (const ch of parts[at + 1]) {
-      const talents = (data.trees[tree] || {}).talents || [];
+    for (const ch of parsed.order) {
+      const talents = (cls.trees[tree] || {}).talents || [];
       const one = ORDER_ONE.indexOf(ch), all = ORDER_ALL.indexOf(ch);
-      if (/[0-9]/.test(ch) && Number(ch) < data.trees.length) tree = Number(ch);
+      if (/[0-9]/.test(ch) && Number(ch) < cls.trees.length) tree = Number(ch);
       else if (one >= 0 && talents[one]) points.push({ tree, index: one });
       else if (all >= 0 && talents[all]) for (let i = 0; i < talents[all].max; i++) points.push({ tree, index: all });
-      else problems.push("Talent build: cannot read '" + ch + "' in the order part");
+      else { errors.push("Cannot read '" + ch + "' in the order part of the address. Was it cut short or edited?"); break; }
     }
-    // The points part holds the final rank of every talent; the order must add up to it.
-    const want = parts[at].replace(/^v\d/, "").split("_")[0].split("-");
-    data.trees.forEach((t, ti) => t.talents.forEach((x, xi) => {
-      const got = points.filter((p) => p.tree === ti && p.index === xi).length;
-      const final = Number((want[ti] || "")[xi] || 0);
-      if (got !== final) problems.push("Talent build: " + x.name + " has " + got + " points in the order but " + final + " in the build");
+    if (errors.length) return { errors, notes, points };
+
+    // The order must add up to the final ranks in the same address.
+    const count = cls.trees.map((t) => t.talents.map(() => 0));
+    points.forEach((p) => count[p.tree][p.index]++);
+    cls.trees.forEach((t, ti) => t.talents.forEach((x, xi) => {
+      const final = Number((parsed.ranks[ti] || "")[xi] || 0);
+      if (count[ti][xi] !== final) errors.push(x.name + ": " + count[ti][xi] + " points in the order, " + final + " in the build.");
     }));
-    return points;
+    if (errors.length) {
+      errors.unshift("The order and the build in this address do not match, so part of it was not clicked in order or the address was edited.");
+      return { errors: errors.slice(0, 4), notes, points };
+    }
+
+    // Rules the calculator enforces; a break means a hand-edited address.
+    const spent = cls.trees.map(() => 0), have = cls.trees.map((t) => t.talents.map(() => 0));
+    points.forEach((p, k) => {
+      const t = cls.trees[p.tree].talents[p.index], level = FIRST_TALENT_LEVEL + k;
+      if (spent[p.tree] < t.row * POINTS_PER_ROW) notes.push("Level " + level + ": " + t.name + " is taken before its row is open.");
+      for (const r of t.requires || []) {
+        const need = cls.trees[p.tree].talents[r];
+        if (need && have[p.tree][r] < need.max) notes.push("Level " + level + ": " + t.name + " is taken before " + need.name + " is maxed.");
+      }
+      spent[p.tree]++; have[p.tree][p.index]++;
+    });
+    return { errors, notes: notes.slice(0, 4), points };
   }
-  // One task per talent point, on the level it is taken. Ids go by level, so a
-  // changed build keeps "the point for level N is spent".
-  function talentTasks(data, maxLevel, problems) {
+
+  // Pasted text -> { error } or { slug, cls, points, notes, url, summary }.
+  // Answers are kept, so asking again for the same text is free.
+  const buildCache = new Map();
+  function readBuild(text) {
+    const key = String(text || "").trim();
+    if (!buildCache.has(key)) buildCache.set(key, (async () => {
+      const parsed = parseAddress(key);
+      if (parsed.error) return parsed;
+      let cls;
+      try { cls = await loadTrees(parsed.slug); }
+      catch (e) { return { error: "This page has no talent data for " + parsed.slug + " yet." }; }
+      const d = decodeOrder(parsed, cls);
+      if (d.errors.length) return { error: d.errors.join(" ") };
+      if (!d.points.length) return { error: "No talents are picked in that address. " + HOW_TO };
+      const per = cls.trees.map((t, ti) => t.name + " " + d.points.filter((p) => p.tree === ti).length)
+        .filter((x) => !/ 0$/.test(x)).join(" / ");
+      const last = FIRST_TALENT_LEVEL + d.points.length - 1;
+      return {
+        slug: parsed.slug, cls, points: d.points, notes: d.notes, url: parsed.url,
+        summary: (cls.name || parsed.slug) + ": " + per + " (levels " + FIRST_TALENT_LEVEL + "-" + last + ")"
+      };
+    })());
+    return buildCache.get(key);
+  }
+
+  // The data file's own build, then the pasted ones.
+  function buildList() {
+    const own = window.TALENT_DATA && window.TALENT_DATA.build;
+    return (own ? [{ name: "Example build", url: own, fixed: true }] : []).concat(state.builds);
+  }
+
+  // One task per talent point, on the level it is taken. Ids go by level, so
+  // switching builds keeps "the point for level N is spent".
+  function talentTasks(build, maxLevel) {
     const taken = new Map(), out = [];
-    decodeBuild(data, problems).forEach((p, k) => {
-      const level = data.firstLevel + k;
-      const tree = data.trees[p.tree], t = tree.talents[p.index];
+    build.points.forEach((p, k) => {
+      const level = FIRST_TALENT_LEVEL + k;
+      const tree = build.cls.trees[p.tree], t = tree.talents[p.index];
       const key = p.tree + ":" + p.index;
       const rank = (taken.get(key) || 0) + 1;
       taken.set(key, rank);
@@ -349,30 +462,42 @@
       out.push({ level, task: {
         id: "tal_" + level, category: "talent", priority: "TALENT", icon: t.icon,
         title: t.name + " " + rank + "/" + t.max, location: tree.name, note: t.ranks[rank - 1],
-        source: data.build, confidence: "confirmed"
+        source: build.url, confidence: "confirmed"
       } });
     });
     return out;
   }
 
-  async function loadData() {
-    for (const f of window.DATA_FILES || []) await loadScript("data/" + f);
-    ROUTE = (window.ROUTE_DATA || []).slice().sort((a, b) => range(a.levels)[0] - range(b.levels)[0]);
-    LEVELS = (window.LEVEL_DATA || []).map((g) => Object.assign({}, g, { tasks: (g.tasks || []).slice() }));
-    MAX_LEVEL = Math.max(1, ...ROUTE.map((z) => range(z.levels)[1]), ...LEVELS.map((g) => g.level));
-
-    const seen = new Set(), problems = [];
-    // Talent rows stop at the last level the loaded data covers.
-    if (window.TALENT_DATA) {
-      for (const { level, task } of talentTasks(window.TALENT_DATA, MAX_LEVEL, problems)) {
+  // Rebuild the On level groups from the hand-written rows plus the active
+  // build. Talent rows stop at the last level the loaded data covers.
+  let BASE_LEVELS = [], ACTIVE = null;
+  async function applyBuild() {
+    const list = buildList();
+    state.build = Math.max(0, Math.min(state.build, list.length - 1));
+    await Promise.all(list.map((b) => readBuild(b.url)));
+    ACTIVE = list.length ? await readBuild(list[state.build].url) : null;
+    LEVELS = BASE_LEVELS.map((g) => Object.assign({}, g, { tasks: g.tasks.slice() }));
+    if (ACTIVE && !ACTIVE.error) {
+      for (const { level, task } of talentTasks(ACTIVE, MAX_LEVEL)) {
         let g = LEVELS.find((x) => x.level === level);
         if (!g) LEVELS.push(g = { level, tasks: [] });
         g.tasks.unshift(task);
       }
+    } else if (ACTIVE) {
+      console.warn("Talent build '" + list[state.build].name + "': " + ACTIVE.error);
     }
     LEVELS.sort((a, b) => a.level - b.level);
     ALL = ROUTE.concat(LEVELS).flatMap((g) => g.tasks || []);
+  }
 
+  async function loadData() {
+    for (const f of window.DATA_FILES || []) await loadScript("data/" + f);
+    ROUTE = (window.ROUTE_DATA || []).slice().sort((a, b) => range(a.levels)[0] - range(b.levels)[0]);
+    BASE_LEVELS = (window.LEVEL_DATA || []).map((g) => Object.assign({}, g, { tasks: (g.tasks || []).slice() }));
+    MAX_LEVEL = Math.max(1, ...ROUTE.map((z) => range(z.levels)[1]), ...BASE_LEVELS.map((g) => g.level));
+    await applyBuild();
+
+    const seen = new Set(), problems = [];
     for (const t of ALL) {
       if (!t.id) problems.push("Task without id: " + t.title);
       else if (seen.has(t.id)) problems.push("Duplicate task id: " + t.id);
@@ -426,16 +551,15 @@
     box.addEventListener("change", () => toggle(t.id, box.checked));
     row.appendChild(box);
 
-    if (t.icon && window.TALENT_DATA) {
+    if (t.icon) {
       // Wowhead's copy first, then the one in icons/, then the plain word.
-      const data = window.TALENT_DATA;
       const img = el("img", "ticon");
       img.alt = "";
       img.onerror = () => {
-        if (!img.dataset.local) { img.dataset.local = "1"; img.src = data.iconLocal + t.icon + ".jpg"; }
+        if (!img.dataset.local) { img.dataset.local = "1"; img.src = ICON_LOCAL + t.icon + ".jpg"; }
         else img.replaceWith(el("span", "prio prio-INFO", t.priority));
       };
-      img.src = data.iconUrl + t.icon + ".jpg";
+      img.src = ICON_URL + t.icon + ".jpg";
       row.appendChild(img);
     } else {
       row.appendChild(el("span", "prio prio-" + t.priority, t.priority));
@@ -604,7 +728,7 @@
   }
 
   function renderPanels() {
-    const panels = window.PANELS || [];
+    const panels = (window.PANELS || []).concat([{ id: "talents", tab: "Talents" }]);
     const rail = $("rail");
     rail.textContent = "";
     for (const p of panels) {
@@ -619,6 +743,7 @@
     const open = panels.find((p) => p.id === state.panel);
     root.hidden = !open;
     root.textContent = "";
+    if (open && open.id === "talents") renderTalentPanel(root);
     for (const s of (open && open.sections) || []) {
       const sec = el("section");
       if (s.title) sec.appendChild(el("h3", null, s.title));
@@ -637,6 +762,86 @@
     }
   }
 
+  // What is typed into the Talents panel, kept across re-renders.
+  const draft = { text: "", name: "", result: null };
+
+  function renderTalentPanel(root) {
+    const list = buildList();
+    const sec = el("section", "builds");
+    sec.appendChild(el("h3", null, "Talent builds"));
+    sec.appendChild(el("p", null, "On level shows the selected build's point for each level. Switch builds yourself when you respec; ticks stay with the level."));
+    list.forEach((b, i) => {
+      const row = el("label");
+      const pick = el("input");
+      pick.type = "radio"; pick.name = "build"; pick.checked = i === state.build;
+      pick.addEventListener("change", () => chooseBuild(i));
+      row.appendChild(pick);
+      const text = el("span", "grow", b.name);
+      const cached = buildCache.get(b.url.trim());
+      const what = el("span", "what");
+      text.appendChild(what);
+      if (cached) cached.then((r) => { what.textContent = r.error || r.summary; if (r.error) what.className = "what bad"; });
+      row.appendChild(text);
+      if (!b.fixed) {
+        const del = el("button", "btn", "Remove");
+        del.type = "button";
+        del.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (!confirm("Remove the build '" + b.name + "'?")) return;
+          state.builds.splice(i - (list.length - state.builds.length), 1);
+          if (state.build >= i && state.build > 0) state.build--;
+          chooseBuild(state.build);
+        });
+        row.appendChild(del);
+      }
+      sec.appendChild(row);
+    });
+    if (!list.length) sec.appendChild(el("p", null, "No builds yet."));
+    const clear = el("button", "btn", "Untick all talent rows");
+    clear.type = "button";
+    clear.addEventListener("click", () => {
+      [...state.done].filter((id) => id.startsWith("tal_")).forEach((id) => state.done.delete(id));
+      saveState(); render();
+    });
+    sec.appendChild(clear);
+    root.appendChild(sec);
+
+    const add = el("section");
+    add.appendChild(el("h3", null, "Add a build"));
+    add.appendChild(el("p", null, HOW_TO + " Any class works."));
+    const box = el("textarea");
+    box.rows = 3; box.placeholder = "https://www.wowhead.com/forever/talent-calc/..."; box.value = draft.text;
+    box.setAttribute("aria-label", "Wowhead talent calculator address");
+    box.addEventListener("input", () => { draft.text = box.value; draft.result = null; });
+    add.appendChild(box);
+    const name = el("input");
+    name.type = "text"; name.placeholder = "Name, e.g. Affliction to 30"; name.value = draft.name;
+    name.setAttribute("aria-label", "Name for this build");
+    name.addEventListener("input", () => { draft.name = name.value; });
+    add.appendChild(name);
+    const check = el("button", "btn", "Check");
+    check.type = "button";
+    check.addEventListener("click", async () => { draft.result = await readBuild(draft.text); renderPanels(); });
+    add.appendChild(check);
+
+    const r = draft.result;
+    if (r && r.error) add.appendChild(el("p", "bad", r.error));
+    if (r && !r.error) {
+      add.appendChild(el("p", "good", r.summary));
+      r.notes.forEach((n) => add.appendChild(el("p", "note", n)));
+      if (r.notes.length) add.appendChild(el("p", "note", "The calculator does not allow these, so the address may have been edited. You can still add it."));
+      const ok = el("button", "btn", "Add and show this build");
+      ok.type = "button";
+      ok.addEventListener("click", () => {
+        state.builds.push({ name: draft.name.trim() || (r.cls.name || r.slug) + " build " + (state.builds.length + 1), url: r.url });
+        draft.text = draft.name = ""; draft.result = null;
+        chooseBuild(buildList().length - 1);
+      });
+      add.appendChild(ok);
+    }
+    root.appendChild(add);
+  }
+
   function render() { renderFilters(); renderTasks(); renderProgress(); renderPanels(); }
 
   // ---- actions -----------------------------------------------------------
@@ -645,6 +850,11 @@
     if (on) state.done.add(id); else state.done.delete(id);
     saveState();
     render();
+  }
+  function chooseBuild(i) {
+    state.build = i;
+    saveState();
+    applyBuild().then(render);
   }
   function stepLevel(delta) {
     const from = state.level === "all" ? (delta > 0 ? 0 : MAX_LEVEL + 1) : state.level;
@@ -671,7 +881,7 @@
         if (!confirm("Replace current progress with " + raw.done.length + " completed tasks from this file?")) return;
         applyState(raw);
         saveState();
-        render();
+        applyBuild().then(render);
       } catch (e) {
         alert("Could not import: " + e.message);
       }

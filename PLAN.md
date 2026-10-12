@@ -68,6 +68,24 @@ keep the main session for decisions and review.
 - Forgejo repo and its GitHub push mirror are managed in the owner's infrastructure
   repo. Feedback comes in as GitHub issues.
 
+### F. Talent builds for any class (in progress)
+- Done: a Talents edge tab where a Wowhead Forever calculator address is pasted,
+  checked and added; several builds can be kept and switched by hand (for a
+  respec); builds are saved with progress and travel in Export. Messages cover
+  text that is not an address, a non-Forever link, a missing order, an unknown
+  format version, an order that does not match the build, and a class with no data.
+- Left: tree data for the other eight classes (`data/talents-<class>.js`, loaded
+  when a build needs it), recognising Wowhead's exported build text by its
+  format, and showing which ticked levels changed when the build is switched.
+
+### G. First Aid
+- Research first (`research/first-aid.md`), then rows and a First Aid type.
+
+### H. Direction (owner, 2026-10-12)
+- The page is one Orc Warlock today. Talent import comes first for every class;
+  if that works out, the goal is every class and every profession, which means
+  the hand-written rows need a way to be chosen per character.
+
 ### E. Levels 21-60
 - After the 1-20 shape is settled. New `data/route-21-40.js` and
   `data/levels-21-40.js` (and so on), added to `data/index.js`.
