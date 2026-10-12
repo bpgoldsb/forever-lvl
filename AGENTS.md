@@ -26,6 +26,11 @@ for what it must do and `PLAN.md` for what is next and what is undecided.
     merge the results into one report.
   - Workflow and general-purpose research uses Claude agents; `agy` MAY also be
     used at the agent's discretion.
+  - Keep the raw material of every research run under `research/raw/`, with
+    the date in the name: the agent's full answer, and a copy of each page
+    that was re-read to check it (`research/raw/pages-<date>/`). The beta
+    sites change, and this is the only way to recheck a row later. The folder
+    is not committed.
   - Every research report says at the top which agents produced it. Ask `agy` for
     the full page address of every fact, not a bare domain. Where the two agents
     disagree, the row is `unverified`.
