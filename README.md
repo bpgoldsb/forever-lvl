@@ -33,7 +33,8 @@ It is a work in progress and I would like to hear what you think; see "Feedback"
 
 ## Feedback
 
-Open an issue on this repository, or tell me directly. Most useful:
+Open an issue at https://github.com/bpgoldsb/forever-lvl/issues, or tell me
+directly. Most useful:
 
 - Facts that are wrong for Forever.
 - Rows that are missing, or rows that do not earn their place.
