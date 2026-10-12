@@ -97,6 +97,54 @@ keep the main session for decisions and review.
   if that works out, the goal is every class and every profession, which means
   the hand-written rows need a way to be chosen per character.
 
+### I. Data layers and any character (owner agreed, 2026-10-12; NEXT)
+
+Goal: every class, then every profession, then races, without becoming a
+leveling guide. Test characters: Human Hunter and Undead Paladin, levels 1-10
+(`research/human-hunter-01-10.md`, `research/undead-paladin-01-10.md`).
+
+Three layers:
+- **Facts**, `source/<class>-spells.json`, `<class>-talents.json`,
+  `<class>-quests.json`, `trainers.json`, and the same per profession, race and
+  place. Filled by research and scripts. Every fact carries its source address,
+  confidence and the beta build it was read from.
+- **Advice**, `source/<class>-advice.json`: buy or skip and notes, keyed by the
+  fact's id. Written by the owner or from a cited guide. Never overwritten when
+  facts are pulled again.
+- **Built**, `data/*.js`: made by a script in `tools/` (plain Node, no
+  packages) and committed. Never edited by hand. The script also checks the
+  data: duplicate ids, a fact with no source, advice for a fact that is missing.
+
+Built files, by what a row depends on: `class-<class>.js` (by level),
+`prof-<profession>.js` (by level or skill), `place-<zone>.js` (by zone or
+dungeon, with the zone's own level range), `trainers.js`, `race-<race>.js`.
+
+Row rules:
+- A spell row has no location. The page fills it from the trainer list. First
+  rule to try: the race's start zone until level 6, then its home city.
+- New ids come from the game's spell and quest ids. The 50 warlock rows keep
+  their ids through a fixed map, so saved progress survives.
+- A quest chain can carry a chain name and a step number, shown as one group.
+- `source` becomes a list, so a row can cite both sides of a conflict.
+- Categories are declared in the data (Grimoire for the warlock, Pet for the
+  hunter), not fixed in the page.
+
+A character is a class, a race, professions and chosen places, picked in a new
+edge tab that defaults to the Orc Warlock. Progress is saved per character;
+Export and Import carry them all. In zone shows only chosen places that have
+rows for the character; a level with nothing place-specific stays empty.
+
+Build order:
+1. Fact and advice formats and the build script; port the warlock through them.
+   Done when the page renders exactly as it does now (compare screenshots).
+2. Character picker and progress per character.
+3. Human Hunter and Undead Paladin facts for levels 1-10, built and shown.
+   Needs more research first: spell costs from the per-spell pages on
+   warcraftforever.games, and the unread parts of the two leveling guides.
+
+Left out for now: dungeons as places, a profession picker beyond the warlock's
+professions, any class past the two test ones.
+
 ### E. Levels 21-60
 - After the 1-20 shape is settled. New `data/route-21-40.js` and
   `data/levels-21-40.js` (and so on), added to `data/index.js`.

@@ -5,11 +5,14 @@ for what it must do and `PLAN.md` for what is next and what is undecided.
 
 ## Rules
 
-- No dependencies, no build step, no framework. `index.html` plus `data/*.js`. It
-  must keep working when opened from `file://`. `tools/` is for checking the app
-  and is not part of it.
-- Data changes go in `data/`, not in `index.html`. Follow the field list at the top
-  of each data file.
+- No dependencies, no framework, and no build step for the app: `index.html` plus
+  the committed `data/*.js`. It must keep working when opened from `file://`.
+  `tools/` is for checking the app and building its data, and is not part of it.
+- Data is moving to layers (PLAN.md section I): facts and advice in `source/`,
+  and `data/*.js` generated from them by a script in `tools/` and committed.
+  Once a data file is generated, never edit it by hand; change `source/` and
+  rebuild. Until then, data changes go in `data/`, not in `index.html`, and
+  follow the field list at the top of each data file.
 - Never change or reuse a task `id`; saved progress is keyed on it.
 - Do not invent game facts. Forever is in beta and differs from Classic. A row is
   `confirmed` only when a Forever-specific page says so; otherwise `inferred` or
