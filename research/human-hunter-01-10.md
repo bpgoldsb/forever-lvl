@@ -1,5 +1,7 @@
 # Human Hunter, levels 1-10, in WoW Forever (research, 2026-10-12, build 1.60.1)
 
+Agents: Claude only so far. The required `agy` (Gemini Flash) pass is NOT done: two runs on 2026-10-12 returned nothing because headless `agy` denied its page-fetch tool. Treat this report as incomplete until that pass is merged in.
+
 Tags: confirmed = a Forever-specific page says so; inferred = Classic assumed; unverified = sources conflict, single odd source, or ambiguous; not found.
 Note: every Forever source here is a third-party guide or database site reading the beta, not a Blizzard client. "Confirmed" means "a Forever-specific page says so". Human Hunter is a NEW combination in Forever (Blizzard lists it among the new race/class pairings), so no Classic data exists to fall back on for trainers or class quests.
 

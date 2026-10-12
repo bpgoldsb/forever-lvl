@@ -14,11 +14,16 @@ for what it must do and `PLAN.md` for what is next and what is undecided.
 - Do not invent game facts. Forever is in beta and differs from Classic. A row is
   `confirmed` only when a Forever-specific page says so; otherwise `inferred` or
   `unverified`, with the source URL when there is one. "Not found" is a valid result.
-- Run every research question twice: once with the session's own agent and once
-  through `agy` on a Gemini Flash model (`agy --model <flash model> --sandbox -p`),
-  which often has newer pages for a game this recent. Ask it for the full page
-  address of every fact, not a bare domain, and treat what it returns as unchecked
-  until a page has been read. Where the two disagree, the row is `unverified`.
+- Research agents (owner's rule, 2026-10-12):
+  - Research about WoW or WoW Forever content MUST use an `agy` agent on a Gemini
+    Flash model, which often has newer pages for a game this recent. A Claude
+    agent MAY be used as well, at the agent's discretion. When both are used,
+    merge the results into one report.
+  - Workflow and general-purpose research uses Claude agents; `agy` MAY also be
+    used at the agent's discretion.
+  - Every research report says at the top which agents produced it. Ask `agy` for
+    the full page address of every fact, not a bare domain. Where the two agents
+    disagree, the row is `unverified`.
 - Do not add generic quest-path rows; see SPEC.md "What goes in it".
 - The repo is public (Forgejo, mirrored to GitHub, served by GitHub Pages), so a
   push publishes. Pushing needs the owner's go-ahead at the time.

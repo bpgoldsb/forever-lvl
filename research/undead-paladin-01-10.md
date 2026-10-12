@@ -1,5 +1,7 @@
 # Undead (Forsaken) Paladin, levels 1-10 in WoW Forever (research, 2026-10-12, build 1.60.1)
 
+Agents: Claude only so far. The required `agy` (Gemini Flash) pass is NOT done: two runs on 2026-10-12 returned nothing because headless `agy` denied its page-fetch tool. Treat this report as incomplete until that pass is merged in.
+
 Tags: confirmed = a Forever-specific page says so; inferred = Classic assumed; unverified = sources conflict or none; not found.
 Note on "confirmed": every Forever source here is a third-party guide site or the Warcraft Wiki (warcraft.wiki.gg Forever pages, which read the beta client and flag themselves "possibly out of date"). None is Blizzard. Wowhead Forever, Mobalytics and Icy Veins pages returned HTTP 403 to plain fetch, so their content is only known from search snippets (marked "snippet").
 
