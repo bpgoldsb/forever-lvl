@@ -38,7 +38,9 @@ Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-
 - A level row disappears once every task in it is ticked (both sides of a band in
   the locked view). A button shows the finished rows again. SKIP rows do not count:
   they never hold a row open and are left out of the tallies and the progress bar.
-  INFO rows do count and must be ticked.
+  INFO rows do count and must be ticked. Talent rows are only shown: they have no
+  checkbox and, like SKIP rows, never hold a row open or count in a tally. A level
+  with nothing to tick shows no tally and stays on screen.
 - "Hide done tasks" hides individual ticked tasks inside unfinished rows.
 - Reference material lives in **edge tabs** on the right side that slide a panel
   out over the page: Camping, Warlock, Orc. Not shown until opened. More panels
@@ -81,13 +83,13 @@ Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-
   - `confidence`: confirmed (a Forever-specific source says so), inferred (Classic
     data assumed unchanged), unverified (sources conflict or none found).
 - Task ids are unique across all data files and never reused; progress is stored
-  by id. Talent rows use `tal_<level>`, so replacing the build keeps "the point for
-  level N is spent".
+  by id. Talent rows use `tal_<level>`; they cannot be ticked, and a tick saved for
+  one by an older version of the page is ignored.
 - A talent build is a Wowhead Forever talent calculator address with its order
   part, for any class. `data/build.js` holds the example build. Visitors add
   their own in the **Talents** edge tab: paste, Check, then Add. Several builds
   can be kept, named, switched by hand (for a respec) and removed; they are saved
-  with progress and travel in Export and Import. Ticks stay with the level.
+  with progress and travel in Export and Import.
 - A pasted address is refused with a specific message when it is not an address
   (exported build text, a wowforevertalents code, part of an address), is for
   another game version, has no order part, uses an unknown format version, or

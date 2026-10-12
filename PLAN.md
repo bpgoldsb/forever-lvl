@@ -81,7 +81,9 @@ keep the main session for decisions and review.
   "the order and the build do not match".
 - Hunter Marksmanship: wowforevertalents lists a 17th talent (Improved Serpent
   Sting) that Wowhead's data lacks. The file follows Wowhead, as the address does.
-- Left: showing which ticked levels changed when the build is switched.
+- Decided 2026-10-12: talent rows are only shown (no checkbox), so there is
+  nothing to flag when the build is switched and the "Untick all talent rows"
+  button is gone.
 
 ### G. First Aid (done for levels 1-20)
 - Seven rows and a First Aid type, from `research/first-aid.md`. Not found for

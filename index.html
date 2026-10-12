@@ -124,6 +124,8 @@
     border-radius: 2px;
     cursor: pointer;
   }
+  /* A row that is only shown (a talent point): nothing to tick. */
+  .task.show { cursor: default; }
   .task + .task { margin-top: 2px; }
   .task:hover { background: var(--panel); }
   .task input { margin: 2px 0 0; accent-color: var(--ok); cursor: pointer; }
@@ -462,8 +464,7 @@
     return (own ? [{ name: "Example build", url: own, fixed: true }] : []).concat(state.builds);
   }
 
-  // One task per talent point, on the level it is taken. Ids go by level, so
-  // switching builds keeps "the point for level N is spent".
+  // One task per talent point, on the level it is taken. Ids go by level.
   function talentTasks(build, maxLevel) {
     const taken = new Map(), out = [];
     build.points.forEach((p, k) => {
@@ -553,17 +554,22 @@
   }
 
   function renderTask(t) {
-    const done = state.done.has(t.id);
+    const done = isDone(t);
     const cat = CATEGORIES[t.category] || t.category;
-    const row = el("label", "task" + (done ? " done" : ""));
+    const row = el(shownOnly(t) ? "div" : "label", "task" + (done ? " done" : "") + (shownOnly(t) ? " show" : ""));
     row.style.setProperty("--cat", "var(--c-" + t.category + ")");
     row.title = cat;
 
-    const box = el("input");
-    box.type = "checkbox";
-    box.checked = done;
-    box.addEventListener("change", () => toggle(t.id, box.checked));
-    row.appendChild(box);
+    if (shownOnly(t)) {
+      // Keeps the checkbox column, so the icon lines up with the rows around it.
+      row.appendChild(el("span"));
+    } else {
+      const box = el("input");
+      box.type = "checkbox";
+      box.checked = done;
+      box.addEventListener("change", () => toggle(t.id, box.checked));
+      row.appendChild(box);
+    }
 
     if (t.icon) {
       // Wowhead's copy first, then the one in icons/, then the plain word.
@@ -618,12 +624,17 @@
     return row;
   }
 
+  // Talent rows are only shown: no checkbox, and a tick saved for one by an
+  // older version of the page is ignored.
+  const shownOnly = (t) => t.category === "talent";
+  const isDone = (t) => !shownOnly(t) && state.done.has(t.id);
   // SKIP rows say what not to buy, so they never hold a level open and are
-  // left out of the tallies. Everything else, INFO included, has to be ticked.
-  const counts = (t) => t.priority !== "SKIP";
+  // left out of the tallies; the same goes for rows that are only shown.
+  // Everything else, INFO included, has to be ticked.
+  const counts = (t) => t.priority !== "SKIP" && !shownOnly(t);
   const finished = (groups) => {
     const tasks = groups.flatMap((g) => g.tasks).filter(counts);
-    return tasks.length > 0 && tasks.every((t) => state.done.has(t.id));
+    return tasks.length > 0 && tasks.every(isDone);
   };
   // Counts rows hidden for being finished, for the header button.
   let hiddenFinished = 0;
@@ -634,16 +645,16 @@
     if (state.level !== "all" && !g.match(state.level)) return null;
     const tasks = g.tasks.filter((t) =>
       (state.category === "all" || t.category === state.category) &&
-      !(state.hideDone && state.done.has(t.id)));
+      !(state.hideDone && isDone(t)));
     if (!tasks.length) return null;
 
     const counted = g.tasks.filter(counts);
-    const done = counted.filter((t) => state.done.has(t.id)).length;
+    const done = counted.filter(isDone).length;
     const sec = el("section", "group" + (counted.length && done === counted.length ? " all-done" : ""));
     const h = el("h3");
     h.appendChild(el("span", "lvl", g.label));
     if (g.sub) h.appendChild(el("span", "zone", g.sub));
-    h.appendChild(el("span", "tally", done + " / " + counted.length));
+    if (counted.length) h.appendChild(el("span", "tally", done + " / " + counted.length));
     sec.appendChild(h);
     tasks.forEach((t) => sec.appendChild(renderTask(t)));
     return sec;
@@ -736,7 +747,7 @@
 
   function renderProgress() {
     const counted = ALL.filter(counts);
-    const done = counted.filter((t) => state.done.has(t.id)).length;
+    const done = counted.filter(isDone).length;
     $("progressBar").style.width = (counted.length ? (100 * done / counted.length) : 0) + "%";
     $("progressText").textContent = done + " / " + counted.length + " done";
   }
@@ -783,7 +794,7 @@
     const list = buildList();
     const sec = el("section", "builds");
     sec.appendChild(el("h3", null, "Talent builds"));
-    sec.appendChild(el("p", null, "On level shows the selected build's point for each level. Switch builds yourself when you respec; ticks stay with the level."));
+    sec.appendChild(el("p", null, "On level shows the selected build's point for each level. Switch builds yourself when you respec. Talent rows are only shown; there is nothing to tick."));
     list.forEach((b, i) => {
       const row = el("label");
       const pick = el("input");
@@ -811,13 +822,6 @@
       sec.appendChild(row);
     });
     if (!list.length) sec.appendChild(el("p", null, "No builds yet."));
-    const clear = el("button", "btn", "Untick all talent rows");
-    clear.type = "button";
-    clear.addEventListener("click", () => {
-      [...state.done].filter((id) => id.startsWith("tal_")).forEach((id) => state.done.delete(id));
-      saveState(); render();
-    });
-    sec.appendChild(clear);
     root.appendChild(sec);
 
     const add = el("section");

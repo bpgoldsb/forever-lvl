@@ -16,7 +16,8 @@ It is a work in progress and I would like to hear what you think; see "Feedback"
 - It leaves out the quest path. A guide addon covers that; this holds only what
   is specific to the character.
 - Tick rows as you go. A level disappears once everything in it is ticked. SKIP
-  rows are advice not to buy something and never hold a level open.
+  rows are advice not to buy something and never hold a level open. Talent rows
+  are only shown and have nothing to tick.
 - Step through levels, filter by type, and open the reference tabs on the right
   edge (Camping, Warlock, Orc).
 - Progress is saved in your browser only. Export and Import move it between
