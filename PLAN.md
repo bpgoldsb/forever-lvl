@@ -13,7 +13,9 @@ Resume point. Last worked 2026-10-12. Start a session in this folder and read
   the dev machine). Seen rendered so far: the locked view at 1280x1440, talent rows, the
   icon fallback chain, SKIP rows not holding a level open. Not yet looked at: the
   unlocked view, swap, edge panels, the narrow layout, export and import.
-- Not published yet: the single commit on `main` is ready, and the Forgejo repo, GitHub mirror and Pages are still to be created.
+- Published 2026-10-12: Forgejo is the origin, push-mirrored to
+  https://github.com/bpgoldsb/forever-lvl and served at
+  https://bpgoldsb.github.io/forever-lvl/. Every push to `main` publishes.
 
 ## Decided (owner, 2026-10-12)
 
@@ -62,10 +64,9 @@ keep the main session for decisions and review.
 - Sources that worked: see the "Best sources" lists in `research/claude.md` and
   `research/gapfill.md`. `research/agy.md` cites bare domains; treat it as unchecked.
 
-### D. Repo and hosting
-- Ready to publish: README with credits, `.nojekyll`, raw extraction untracked.
-- Left, each needing the owner's go-ahead: create the Forgejo repo, add the push
-  mirror to GitHub, push, enable Pages.
+### D. Repo and hosting (done)
+- Forgejo repo and its GitHub push mirror are managed in the owner's infrastructure
+  repo. Feedback comes in as GitHub issues.
 
 ### E. Levels 21-60
 - After the 1-20 shape is settled. New `data/route-21-40.js` and
