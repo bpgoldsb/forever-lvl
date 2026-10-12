@@ -6,6 +6,7 @@ window.DATA_FILES = [
   "reference.js",
   "build.js",
   "categories.js",
+  "characters.js",
   "trainers.js",
   "class-warlock.js",
   "prof-first-aid.js",

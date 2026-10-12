@@ -39,7 +39,8 @@ Fields of a fact:
 | `location` | Where, for a row that is not taught by a class trainer. |
 | `note` | The factual part of the note. |
 | `priority` | `BUY`, `SKIP`, `GATE`, `QUEST`, `BUFF` or `INFO`, when it is part of the fact (a quest, a profession step). A spell has none; its advice gives it. |
-| `professions` | The row applies to a character with any of these professions. |
+| `professions` | The row applies to a character with any of these professions. A fact in a profession file is for that profession unless it says otherwise. |
+| `races`, `classes` | The row applies only to these races or classes. Used where a row names places only one side can reach (the Orc trainers in the profession files). A fact in a class file is already for that class. |
 | `order` | Position within a level, default 50; lower is higher on the page. |
 | `chain` | `{ "name", "step" }` for a step of a quest chain. Carried into the built row; the page does not group by it yet. |
 | `source` | List of page addresses the fact came from. May be empty only when the fact is not `confirmed`. |
@@ -59,6 +60,9 @@ after the fact's note.
 
 - `categories.json`: row categories in the order of the Type filter, each with
   `key`, `label` and `color`.
+- `characters.json`: the classes, races and professions the Character tab
+  offers, each with `key` and `label`, and `default`, the character the page
+  starts with (class, race, professions, places).
 - `trainers.json`: where a trainer is, as `teaches`, `race`, `levels`,
   `location` and `confidence`.
 - `legacy-ids.json`: `ids` maps a fact id to the row id the page used before

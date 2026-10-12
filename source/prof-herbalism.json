@@ -13,6 +13,9 @@
         "herbalism",
         "skinning"
       ],
+      "races": [
+        "orc"
+      ],
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/herbalism-trainers"
@@ -30,6 +33,9 @@
       "professions": [
         "herbalism",
         "skinning"
+      ],
+      "races": [
+        "orc"
       ],
       "priority": "GATE",
       "source": [

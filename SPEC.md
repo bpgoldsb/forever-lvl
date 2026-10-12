@@ -120,12 +120,34 @@ Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-
   kept in `research/`.
 - Trainer costs are low priority: Classic values are kept, labelled, and not shown.
 
+## Characters
+
+- A character is a class, a race, professions and chosen places, with an
+  optional name. The page starts with the Orc Warlock from
+  `source/characters.json`, which also lists what can be picked.
+- The **Character** edge tab switches between characters, edits the current
+  one, and adds or removes one. A new character starts with no professions and
+  no places.
+- Rows are chosen for the current character: a class file's rows for that
+  class; any row that names `professions` (any one is enough), `races` or
+  `classes` only when the character matches. In zone shows the places the
+  character ticked that have rows for it; a level with nothing stays empty.
+- A reference panel can be tied to a class or a race (the Warlock and Orc
+  panels). The example talent build shows only for its own class.
+- Ticks, the level stepper and talent builds belong to the character. The
+  header shows the character's name, or its race and class.
+
 ## Persistence
 
-- `localStorage` key `forever-lvl.v1` holds completed ids and view settings (level,
-  category, hide done, swap, lock, show finished, open panel).
-- Export and Import move progress as a JSON file, since `localStorage` is not shared
-  between `file://`, a preview address and the hosted site.
+- `localStorage` key `forever-lvl.v2` holds the characters (each with its ticks,
+  level and builds), which one is shown, and the view settings (category, hide
+  done, swap, lock, show finished, open panel). The older key `forever-lvl.v1`
+  held one character's progress; it is read when the new key is empty, becomes
+  the starting character, and is left in place.
+- Export and Import move every character as a JSON file, since `localStorage` is
+  not shared between `file://`, a preview address and the hosted site. A file
+  exported before characters existed replaces only the current character's
+  progress.
 
 ## Hosting
 

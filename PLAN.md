@@ -149,7 +149,15 @@ Build order:
      The build prints them as warnings.
    - The page still shows every built file. Choosing rows by class, race and
      profession is step 2; built rows already carry `professions`.
-2. Character picker and progress per character.
+2. Character picker and progress per character. **Done 2026-10-12** (SPEC.md
+   "Characters"). Seen rendered: the Character tab, a new Human Hunter with
+   Skinning and Razor Hill, a save from the old key carried over. Not seen:
+   Export and Import (file dialogs), which the owner checks by hand. Choices
+   made without asking, easy to change: the picker offers three classes and
+   three races (the warlock and the two test characters); any race can be any
+   class; the four profession rows that name Orc trainers are tagged Orc only,
+   so another race sees none until its own are written; a new character starts
+   with no professions and no places.
 3. Human Hunter and Undead Paladin facts for levels 1-10, built and shown.
    Needs more research first: spell costs from the per-spell pages on
    warcraftforever.games, and the unread parts of the two leveling guides.

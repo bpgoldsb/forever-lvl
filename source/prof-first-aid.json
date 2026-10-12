@@ -12,6 +12,9 @@
       "professions": [
         "first-aid"
       ],
+      "races": [
+        "orc"
+      ],
       "priority": "INFO",
       "order": 10,
       "source": [
@@ -28,6 +31,9 @@
       "note": "Trainers stop at 150. The book Under Wraps needs First Aid 125. Artisan is the Triage quest at level 35, untested in the beta.",
       "professions": [
         "first-aid"
+      ],
+      "races": [
+        "orc"
       ],
       "priority": "INFO",
       "order": 10,

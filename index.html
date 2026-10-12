@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WoW Forever — Orc Warlock Leveling</title>
+<title>WoW Forever leveling</title>
 <style>
   :root {
     --bg: #14121a;
@@ -198,6 +198,7 @@
     width: 100%; background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px;
     padding: 4px 6px; margin-bottom: 6px; resize: vertical;
   }
+  #panel select { background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px; margin: 0 6px 6px 0; color: var(--text); }
   .builds label { display: flex; gap: 6px; align-items: baseline; padding: 3px 0; cursor: pointer; }
   .builds .what { color: var(--muted); font-size: 12px; display: block; }
   .builds .grow { flex: 1; min-width: 0; }
@@ -231,7 +232,7 @@
 
 <header>
   <div class="row">
-    <h1>Orc Warlock · WoW Forever</h1>
+    <h1 id="title">WoW Forever</h1>
     <div class="progress" title="Overall progress"><i id="progressBar"></i></div>
     <span id="progressText"></span>
     <span class="spacer"></span>
@@ -239,7 +240,7 @@
     <button class="btn" id="swapBtn" title="Swap the In zone and On level columns">⇄ Swap</button>
     <button class="btn" id="exportBtn" title="Download progress as a JSON file">Export</button>
     <button class="btn" id="importBtn" title="Load progress from a JSON file">Import</button>
-    <button class="btn" id="resetBtn" title="Clear all completed tasks">Reset</button>
+    <button class="btn" id="resetBtn" title="Clear this character's completed tasks">Reset</button>
     <input type="file" id="importFile" accept="application/json,.json" hidden>
   </div>
   <div class="row">
@@ -270,13 +271,15 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "forever-lvl.v1";
+  // Saved state. The older key held one character's progress; it is read once
+  // when the new key is empty, and left as it was.
+  const STORAGE_KEY = "forever-lvl.v2", OLD_STORAGE_KEY = "forever-lvl.v1";
   // Row categories, key -> label. Declared in data/categories.js; the talent
   // category is the page's own, for the rows it makes from a talent build.
   const CATEGORIES = {};
-  // The character the page is written for. Rows that name a trainer get their
-  // location from data/trainers.js for this race.
-  const CHARACTER = { class: "warlock", race: "orc" };
+  // What a character can be, and the one the page starts with: data/characters.js.
+  const options = () => window.CHARACTER_OPTIONS || {};
+  const label = (list, key) => ((options()[list] || []).find((x) => x.key === key) || {}).label || key;
 
   const $ = (id) => document.getElementById(id);
   const el = (tag, cls, text) => {
@@ -291,29 +294,60 @@
   // lock: both columns scroll as one, each zone beside the levels it covers.
   // showFinished: keep rows whose tasks are all ticked on screen.
   // panel: id of the open reference panel, or null.
+  // characters: every saved character; character: which one is shown.
+  //
+  // A character is { name, class, race, professions, places, done, level,
+  // builds, build }. name is "" until the user types one. places are the
+  // zones and hubs shown under In zone. done, level, builds and build belong
+  // to the character and are reached through state as before:
   // builds: talent builds the user pasted in, [{ name, url }]. build: which one
   // is shown, counting the data file's own build (if any) as number 0.
-  const state = { done: new Set(), level: "all", category: "all", hideDone: false, swap: false, lock: true, showFinished: false, panel: null, builds: [], build: 0 };
+  const state = { characters: [], character: 0, category: "all", hideDone: false, swap: false, lock: true, showFinished: false, panel: null };
+  const me = () => state.characters[state.character];
+  for (const k of ["done", "level", "builds", "build"]) {
+    Object.defineProperty(state, k, { get: () => me()[k], set: (v) => { me()[k] = v; } });
+  }
+  const charName = (c) => c.name || label("races", c.race) + " " + label("classes", c.class);
+
+  // Saved or imported text -> a character, with anything unknown replaced by
+  // the starting character's value.
+  function readCharacter(raw) {
+    const o = options(), first = o.default || {};
+    const known = (list, key) => (o[list] || []).some((x) => x.key === key);
+    return {
+      name: typeof raw.name === "string" ? raw.name.slice(0, 40) : "",
+      class: known("classes", raw.class) ? raw.class : first.class,
+      race: known("races", raw.race) ? raw.race : first.race,
+      professions: (Array.isArray(raw.professions) ? raw.professions : first.professions || []).filter((x) => known("professions", x)),
+      places: (Array.isArray(raw.places) ? raw.places : first.places || []).map(String),
+      done: new Set(Array.isArray(raw.done) ? raw.done.map(String) : []),
+      level: raw.level === "all" || Number.isInteger(raw.level) ? raw.level : "all",
+      builds: (Array.isArray(raw.builds) ? raw.builds : []).filter((b) => b && typeof b.url === "string")
+        .map((b) => ({ name: String(b.name || "Build"), url: b.url })),
+      build: Number.isInteger(raw.build) && raw.build >= 0 ? raw.build : 0
+    };
+  }
 
   function loadState() {
+    let raw = {};
     try {
-      applyState(JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"));
+      raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || JSON.parse(localStorage.getItem(OLD_STORAGE_KEY) || "{}") || {};
     } catch (e) { /* corrupt or unavailable storage: start clean */ }
+    applyState(raw);
   }
+  // Takes both shapes: the current one, with a list of characters, and the
+  // older one, which is one character's progress and becomes the starting
+  // character.
   function applyState(raw) {
-    if (Array.isArray(raw.done)) state.done = new Set(raw.done.map(String));
-    if (raw.level === "all" || Number.isInteger(raw.level)) state.level = raw.level;
     if (typeof raw.category === "string") state.category = raw.category;
     if (typeof raw.panel === "string" || raw.panel === null) state.panel = raw.panel;
     for (const k of ["hideDone", "swap", "lock", "showFinished"]) if (typeof raw[k] === "boolean") state[k] = raw[k];
-    if (Array.isArray(raw.builds)) {
-      state.builds = raw.builds.filter((b) => b && typeof b.url === "string")
-        .map((b) => ({ name: String(b.name || "Build"), url: b.url }));
-    }
-    if (Number.isInteger(raw.build) && raw.build >= 0) state.build = raw.build;
+    const list = Array.isArray(raw.characters) ? raw.characters.filter((c) => c && typeof c === "object") : [];
+    state.characters = list.length ? list.map(readCharacter) : [readCharacter(raw)];
+    state.character = Number.isInteger(raw.character) && raw.character >= 0 && raw.character < state.characters.length ? raw.character : 0;
   }
   function serialize() {
-    return Object.assign({}, state, { done: [...state.done] });
+    return Object.assign({}, state, { characters: state.characters.map((c) => Object.assign({}, c, { done: [...c.done] })) });
   }
   function saveState() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(serialize())); } catch (e) { /* ignore */ }
@@ -464,10 +498,12 @@
     return buildCache.get(key);
   }
 
-  // The data file's own build, then the pasted ones.
+  // The data file's own build when it is for this character's class, then the
+  // pasted ones.
   function buildList() {
     const own = window.TALENT_DATA && window.TALENT_DATA.build;
-    return (own ? [{ name: "Example build", url: own, fixed: true }] : []).concat(state.builds);
+    const mine = own && parseAddress(own).slug === me().class;
+    return (mine ? [{ name: "Example build", url: own, fixed: true }] : []).concat(state.builds);
   }
 
   // One task per talent point, on the level it is taken. Ids go by level.
@@ -512,37 +548,62 @@
   }
 
   // A row with a `trainer` and no location gets the trainer's location for
-  // this character's race at that level.
-  function withTrainer(t, level) {
+  // this character's race at that level, when the trainer list has one.
+  function withTrainer(t, level, ch) {
     if (t.location || !t.trainer) return t;
     const found = (window.TRAINERS || []).find((x) =>
-      x.teaches === t.trainer && x.race === CHARACTER.race && level >= range(x.levels)[0] && level <= range(x.levels)[1]);
-    if (!found) console.warn("No " + t.trainer + " trainer listed for a level " + level + " " + CHARACTER.race + ": " + t.id);
+      x.teaches === t.trainer && x.race === ch.race && level >= range(x.levels)[0] && level <= range(x.levels)[1]);
     return found ? Object.assign({}, t, { location: found.location }) : t;
+  }
+
+  // Does a row apply to this character? A row can name classes, races and
+  // professions; for professions, having any one of them is enough.
+  function applies(t, ch) {
+    return (!t.classes || t.classes.includes(ch.class)) &&
+      (!t.races || t.races.includes(ch.race)) &&
+      (!t.professions || t.professions.some((p) => ch.professions.includes(p)));
+  }
+  // Every place in the data, in level order, with only this character's rows.
+  function placesFor(ch) {
+    return (window.ROUTE_DATA || []).slice().sort((a, b) => range(a.levels)[0] - range(b.levels)[0])
+      .map((z) => Object.assign({}, z, { tasks: (z.tasks || []).filter((t) => applies(t, ch)) }));
+  }
+
+  // Pick the rows for the current character, then add its talent build.
+  // In zone shows the places the character chose that have rows for it.
+  async function applyCharacter() {
+    const ch = me();
+    ROUTE = placesFor(ch).filter((z) => z.tasks.length && (!z.place || ch.places.includes(z.place)));
+    // Several files can hold rows for one level (a class, a profession): one
+    // group per level, rows by `order` (default 50) and then by load order.
+    const byLevel = new Map();
+    for (const g of window.LEVEL_DATA || []) {
+      if (g.class && g.class !== ch.class) continue;
+      for (const t of g.tasks || []) {
+        if (!applies(t, ch)) continue;
+        if (!byLevel.has(g.level)) byLevel.set(g.level, []);
+        byLevel.get(g.level).push(withTrainer(t, g.level, ch));
+      }
+    }
+    const order = (t) => (t.order == null ? 50 : t.order);
+    BASE_LEVELS = [...byLevel].map(([level, tasks]) => ({ level, tasks: tasks.sort((a, b) => order(a) - order(b)) }));
+    if (state.level !== "all") state.level = Math.min(MAX_LEVEL, Math.max(1, state.level));
+    await applyBuild();
   }
 
   async function loadData() {
     for (const f of window.DATA_FILES || []) await loadScript("data/" + f);
-    ROUTE = (window.ROUTE_DATA || []).slice().sort((a, b) => range(a.levels)[0] - range(b.levels)[0]);
     for (const c of window.CATEGORY_DATA || []) {
       CATEGORIES[c.key] = c.label;
       document.documentElement.style.setProperty("--c-" + c.key, c.color);
     }
     CATEGORIES.talent = "Talent";
-    // Several files can hold rows for one level (a class, a profession): one
-    // group per level, rows by `order` (default 50) and then by load order.
-    const byLevel = new Map();
-    for (const g of window.LEVEL_DATA || []) {
-      if (!byLevel.has(g.level)) byLevel.set(g.level, []);
-      for (const t of g.tasks || []) byLevel.get(g.level).push(withTrainer(t, g.level));
-    }
-    const order = (t) => (t.order == null ? 50 : t.order);
-    BASE_LEVELS = [...byLevel].map(([level, tasks]) => ({ level, tasks: tasks.sort((a, b) => order(a) - order(b)) }));
-    MAX_LEVEL = Math.max(1, ...ROUTE.map((z) => range(z.levels)[1]), ...BASE_LEVELS.map((g) => g.level));
-    await applyBuild();
+    // The last level any character's data covers; talent rows stop there.
+    const every = (window.ROUTE_DATA || []).concat(window.LEVEL_DATA || []);
+    MAX_LEVEL = Math.max(1, ...(window.ROUTE_DATA || []).map((z) => range(z.levels)[1]), ...(window.LEVEL_DATA || []).map((g) => g.level));
 
     const seen = new Set(), problems = [];
-    for (const t of ALL) {
+    for (const t of every.flatMap((g) => g.tasks || [])) {
       if (!t.id) problems.push("Task without id: " + t.title);
       else if (seen.has(t.id)) problems.push("Duplicate task id: " + t.id);
       seen.add(t.id);
@@ -704,10 +765,16 @@
     ));
   }
 
+  // Said when a column or the whole page has nothing to show.
+  function emptyText() {
+    if (ROUTE.length || BASE_LEVELS.length) return "Nothing here with these filters.";
+    return "No rows are written for a " + label("races", me().race) + " " + label("classes", me().class) +
+      " yet. Talent rows appear once a build is added in the Talents tab.";
+  }
   function fill(root, sections) {
     root.textContent = "";
     sections.forEach((s) => root.appendChild(s));
-    if (!sections.length) root.appendChild(el("div", "empty", "Nothing here with these filters."));
+    if (!sections.length) root.appendChild(el("div", "empty", emptyText()));
   }
 
   function band(routeCell, levelCell, cls) {
@@ -752,7 +819,7 @@
       root.appendChild(band(cell(routeSecs), cell(levelSecs)));
       shown++;
     }
-    if (!shown) root.appendChild(el("div", "empty", "Nothing here with these filters."));
+    if (!shown) root.appendChild(el("div", "empty", emptyText()));
   }
 
   function renderTasks() {
@@ -783,7 +850,9 @@
   }
 
   function renderPanels() {
-    const panels = (window.PANELS || []).concat([{ id: "talents", tab: "Talents" }]);
+    // A reference panel can be for one class or one race.
+    const panels = (window.PANELS || []).filter((p) => (!p.class || p.class === me().class) && (!p.race || p.race === me().race))
+      .concat([{ id: "talents", tab: "Talents" }, { id: "character", tab: "Character" }]);
     const rail = $("rail");
     rail.textContent = "";
     for (const p of panels) {
@@ -799,6 +868,7 @@
     root.hidden = !open;
     root.textContent = "";
     if (open && open.id === "talents") renderTalentPanel(root);
+    if (open && open.id === "character") renderCharacterPanel(root);
     for (const s of (open && open.sections) || []) {
       const sec = el("section");
       if (s.title) sec.appendChild(el("h3", null, s.title));
@@ -890,7 +960,105 @@
     root.appendChild(add);
   }
 
-  function render() { renderFilters(); renderTasks(); renderProgress(); renderPanels(); }
+  // The class and race picked for the next new character.
+  const newChar = { class: null, race: null };
+
+  function renderCharacterPanel(root) {
+    const o = options(), ch = me();
+    const select = (list, value, onPick, name) => {
+      const sel = el("select");
+      sel.setAttribute("aria-label", name);
+      for (const x of o[list] || []) {
+        const opt = el("option", null, x.label);
+        opt.value = x.key; opt.selected = x.key === value;
+        sel.appendChild(opt);
+      }
+      sel.addEventListener("change", () => onPick(sel.value));
+      return sel;
+    };
+    const tick = (text, on, onChange, sub) => {
+      const row = el("label");
+      const box = el("input");
+      box.type = "checkbox"; box.checked = on;
+      box.addEventListener("change", () => onChange(box.checked));
+      row.appendChild(box);
+      const span = el("span", "grow", text);
+      if (sub) span.appendChild(el("span", "what", sub));
+      row.appendChild(span);
+      return row;
+    };
+    const inList = (list, key, on) => { const at = list.indexOf(key); if (on && at < 0) list.push(key); if (!on && at >= 0) list.splice(at, 1); };
+
+    const all = el("section", "builds");
+    all.appendChild(el("h3", null, "Characters"));
+    all.appendChild(el("p", null, "Each character has its own ticks, level and talent builds. Export and Import carry them all."));
+    state.characters.forEach((c, i) => {
+      const row = el("label");
+      const pick = el("input");
+      pick.type = "radio"; pick.name = "character"; pick.checked = i === state.character;
+      pick.addEventListener("change", () => chooseCharacter(i));
+      row.appendChild(pick);
+      const text = el("span", "grow", charName(c));
+      text.appendChild(el("span", "what", label("races", c.race) + " " + label("classes", c.class) + ", " + c.done.size + " ticked"));
+      row.appendChild(text);
+      if (state.characters.length > 1) {
+        const del = el("button", "btn", "Remove");
+        del.type = "button";
+        del.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (!confirm("Remove '" + charName(c) + "' and its " + c.done.size + " ticks?")) return;
+          state.characters.splice(i, 1);
+          chooseCharacter(Math.max(0, state.character - (state.character >= i ? 1 : 0)));
+        });
+        row.appendChild(del);
+      }
+      all.appendChild(row);
+    });
+    root.appendChild(all);
+
+    const edit = el("section", "builds");
+    edit.appendChild(el("h3", null, "This character"));
+    const name = el("input");
+    name.type = "text"; name.placeholder = "Name (optional)"; name.value = ch.name; name.maxLength = 40;
+    name.setAttribute("aria-label", "Character name");
+    name.addEventListener("change", () => { ch.name = name.value.trim(); changed(); });
+    edit.appendChild(name);
+    edit.appendChild(select("races", ch.race, (v) => { ch.race = v; changed(); }, "Race"));
+    edit.appendChild(select("classes", ch.class, (v) => { ch.class = v; changed(); }, "Class"));
+    edit.appendChild(el("h3", null, "Professions"));
+    for (const x of o.professions || []) {
+      edit.appendChild(tick(x.label, ch.professions.includes(x.key), (on) => { inList(ch.professions, x.key, on); changed(); }));
+    }
+    edit.appendChild(el("h3", null, "Places"));
+    edit.appendChild(el("p", null, "In zone shows the places ticked here that have rows for this character."));
+    for (const z of placesFor(ch)) {
+      const n = z.tasks.length;
+      edit.appendChild(tick(z.zone, ch.places.includes(z.place), (on) => { inList(ch.places, z.place, on); changed(); },
+        "Lv " + z.levels + ", " + (n ? n + (n === 1 ? " row" : " rows") : "no rows for this character")));
+    }
+    root.appendChild(edit);
+
+    const add = el("section");
+    add.appendChild(el("h3", null, "Add a character"));
+    add.appendChild(el("p", null, "It starts with no professions and no places; tick them above once it is added."));
+    newChar.race = newChar.race || (o.default || {}).race;
+    newChar.class = newChar.class || (o.default || {}).class;
+    add.appendChild(select("races", newChar.race, (v) => { newChar.race = v; }, "Race of the new character"));
+    add.appendChild(select("classes", newChar.class, (v) => { newChar.class = v; }, "Class of the new character"));
+    const ok = el("button", "btn", "Add");
+    ok.type = "button";
+    ok.addEventListener("click", () => {
+      state.characters.push(readCharacter({ class: newChar.class, race: newChar.race, professions: [], places: [] }));
+      chooseCharacter(state.characters.length - 1);
+    });
+    add.appendChild(ok);
+    root.appendChild(add);
+  }
+
+  function render() {
+    $("title").textContent = charName(me()) + " \u00b7 WoW Forever";
+    renderFilters(); renderTasks(); renderProgress(); renderPanels();
+  }
 
   // ---- actions -----------------------------------------------------------
   function set(key, value) { state[key] = value; saveState(); render(); }
@@ -898,6 +1066,15 @@
     if (on) state.done.add(id); else state.done.delete(id);
     saveState();
     render();
+  }
+  // The current character was edited: pick its rows again.
+  function changed() {
+    saveState();
+    applyCharacter().then(render);
+  }
+  function chooseCharacter(i) {
+    state.character = i;
+    changed();
   }
   function chooseBuild(i) {
     state.build = i;
@@ -910,7 +1087,7 @@
   }
 
   function exportProgress() {
-    const payload = Object.assign({ app: "forever-lvl", version: 1, exported: new Date().toISOString() }, serialize());
+    const payload = Object.assign({ app: "forever-lvl", version: 2, exported: new Date().toISOString() }, serialize());
     const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
     const a = el("a");
     a.href = url;
@@ -925,11 +1102,18 @@
     reader.onload = () => {
       try {
         const raw = JSON.parse(reader.result);
-        if (!raw || !Array.isArray(raw.done)) throw new Error("no 'done' list in file");
-        if (!confirm("Replace current progress with " + raw.done.length + " completed tasks from this file?")) return;
-        applyState(raw);
-        saveState();
-        applyBuild().then(render);
+        if (raw && Array.isArray(raw.characters) && raw.characters.length) {
+          if (!confirm("Replace every character here with the " + raw.characters.length + " in this file?")) return;
+          applyState(raw);
+        } else if (raw && Array.isArray(raw.done)) {
+          // A file from before characters: one character's progress.
+          if (!confirm("Replace the progress of '" + charName(me()) + "' with " + raw.done.length + " completed tasks from this file?")) return;
+          const from = readCharacter(raw);
+          Object.assign(me(), { done: from.done, level: from.level, builds: from.builds, build: from.build });
+        } else {
+          throw new Error("no characters and no 'done' list in file");
+        }
+        changed();
       } catch (e) {
         alert("Could not import: " + e.message);
       }
@@ -958,13 +1142,14 @@
     render();
   });
 
-  loadState();
+  // The data comes first: reading saved state needs the list of classes,
+  // races and professions.
   loadData().then(() => {
-    // Saved filters may point past the data that is loaded now.
-    if (state.level !== "all") state.level = Math.min(MAX_LEVEL, Math.max(1, state.level));
+    loadState();
+    // A saved filter may name a category that is gone.
     if (state.category !== "all" && !CATEGORIES[state.category]) state.category = "all";
-    render();
-  }).catch((e) => {
+    return applyCharacter();
+  }).then(render).catch((e) => {
     $("route").appendChild(el("div", "error", e.message + "\nCheck data/index.js and the data/ folder."));
   });
 })();

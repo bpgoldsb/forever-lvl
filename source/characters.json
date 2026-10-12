@@ -1,0 +1,32 @@
+{
+  "classes": [
+    { "key": "warlock", "label": "Warlock" },
+    { "key": "hunter", "label": "Hunter" },
+    { "key": "paladin", "label": "Paladin" }
+  ],
+  "races": [
+    { "key": "orc", "label": "Orc" },
+    { "key": "human", "label": "Human" },
+    { "key": "undead", "label": "Undead" }
+  ],
+  "professions": [
+    { "key": "herbalism", "label": "Herbalism" },
+    { "key": "skinning", "label": "Skinning" },
+    { "key": "cooking", "label": "Cooking" },
+    { "key": "fishing", "label": "Fishing" },
+    { "key": "first-aid", "label": "First Aid" }
+  ],
+  "default": {
+    "class": "warlock",
+    "race": "orc",
+    "professions": ["herbalism", "skinning", "cooking", "fishing", "first-aid"],
+    "places": [
+      "senjin-village-echo-isles",
+      "razor-hill",
+      "the-crossroads",
+      "forgotten-pools-ratchet",
+      "northern-barrens-sludge-fen",
+      "oases-camp-taurajo"
+    ]
+  }
+}

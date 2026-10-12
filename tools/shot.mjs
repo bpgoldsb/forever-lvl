@@ -8,8 +8,9 @@
 // Usage: node tools/shot.mjs [options and steps, run in the order given]
 //
 //   --size WxH        viewport, default 1280x1440 (set before the first step)
-//   --state JSON      saved state to start from, the shape the app stores in
-//                     localStorage, e.g. '{"level":10,"done":["t_1_03"]}'
+//   --state JSON      saved state to start from, in either shape the app reads:
+//                     one character's progress, '{"level":10,"done":["t_1_03"]}',
+//                     or '{"characters":[{"class":"hunter","race":"human"}]}'
 //   --url URL         page to load instead of file:///site/index.html
 //   --click SEL       click the first element matching the CSS selector
 //   --hover SEL       move the mouse over the first match

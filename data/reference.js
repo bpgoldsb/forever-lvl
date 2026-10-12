@@ -3,6 +3,8 @@
 //
 //   id        unique, used to remember which panel is open
 //   tab       short label on the edge tab
+//   class     optional: show only for a character of this class
+//   race      optional: show only for a character of this race
 //   sections  [{ title, text, ordered: [...], items: [[label, detail], ...] }]
 //             every field of a section is optional
 //
@@ -56,6 +58,7 @@ window.PANELS = (window.PANELS || []).concat([
   {
     id: "warlock",
     tab: "Warlock",
+    class: "warlock",
     sections: [
       {
         title: "Stat priority",
@@ -84,6 +87,7 @@ window.PANELS = (window.PANELS || []).concat([
   {
     id: "orc",
     tab: "Orc",
+    race: "orc",
     sections: [
       {
         title: "Racials",

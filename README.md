@@ -33,7 +33,8 @@ It is a work in progress and I would like to hear what you think; see "Feedback"
 - The talent order shown at first is one example build. The Talents tab on the
   right edge takes your own: paste a Wowhead Forever talent calculator address
   for any class, keep several builds and switch between them. Everything else
-  on the page is still written for an Orc Warlock.
+  on the page is still written for an Orc Warlock: the Character tab can add
+  other characters, but they have almost no rows yet.
 
 ## Feedback
 

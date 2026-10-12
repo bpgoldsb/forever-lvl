@@ -3,9 +3,9 @@
 // On-level rows for first-aid.
 window.LEVEL_DATA = (window.LEVEL_DATA || []).concat([
   { "level": 10, "tasks": [
-    {"id":"t_9_09","category":"aid","priority":"INFO","title":"First Aid in Orgrimmar: Arnok, vials and spices","location":"Arnok, Valley of Spirits; Xen'to (spices), Kor'geld (vials)","note":"Minor Healing Potion at First Aid 55: Peacebloom, Mild Spices and an Empty Vial, so it uses herbs you already pick.","source":["https://www.wow-professions.com/forever/first-aid-leveling-guide"],"confidence":"confirmed","order":10,"professions":["first-aid"]}
+    {"id":"t_9_09","category":"aid","priority":"INFO","title":"First Aid in Orgrimmar: Arnok, vials and spices","location":"Arnok, Valley of Spirits; Xen'to (spices), Kor'geld (vials)","note":"Minor Healing Potion at First Aid 55: Peacebloom, Mild Spices and an Empty Vial, so it uses herbs you already pick.","source":["https://www.wow-professions.com/forever/first-aid-leveling-guide"],"confidence":"confirmed","order":10,"professions":["first-aid"],"races":["orc"]}
   ] },
   { "level": 20, "tasks": [
-    {"id":"t_19_09","category":"aid","priority":"INFO","title":"Expert First Aid is a book, off the route","location":"Balai Lok'Wein, Brackenwall Village, Dustwallow Marsh","note":"Trainers stop at 150. The book Under Wraps needs First Aid 125. Artisan is the Triage quest at level 35, untested in the beta.","source":["https://www.wow-professions.com/forever/first-aid-trainers"],"confidence":"confirmed","order":10,"professions":["first-aid"]}
+    {"id":"t_19_09","category":"aid","priority":"INFO","title":"Expert First Aid is a book, off the route","location":"Balai Lok'Wein, Brackenwall Village, Dustwallow Marsh","note":"Trainers stop at 150. The book Under Wraps needs First Aid 125. Artisan is the Triage quest at level 35, untested in the beta.","source":["https://www.wow-professions.com/forever/first-aid-trainers"],"confidence":"confirmed","order":10,"professions":["first-aid"],"races":["orc"]}
   ] }
 ]);
