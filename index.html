@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WoW Forever — Orc Warlock Leveling</title>
+<style>
+  :root {
+    --bg: #14121a;
+    --panel: #1d1a26;
+    --panel-2: #262233;
+    --line: #353047;
+    --text: #e6e2f0;
+    --muted: #9a93ad;
+    --accent: #a78bfa;
+    --ok: #5fcf8a;
+    --warn: #e8b04a;
+    --bad: #e06c75;
+    --c-spell: #a78bfa;
+    --c-grimoire: #d07be0;
+    --c-quest: #e8c04a;
+    --c-herb: #6fcf7a;
+    --c-skin: #c9945c;
+    --c-fish_cook: #5ab4e6;
+    --c-wand: #e67e6a;
+    --c-camp: #e89a4a;
+    --c-talent: #8fd0c4;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.35 system-ui, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  button, input, select { font: inherit; color: inherit; }
+  a { color: var(--accent); }
+
+  header {
+    flex: none;
+    padding: 8px 12px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    gap: 6px;
+  }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  h1 { font-size: 15px; margin: 0 8px 0 0; font-weight: 600; }
+  .spacer { flex: 1; }
+  .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; margin-right: 2px; }
+  .gap { width: 14px; }
+
+  .chip {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 2px 8px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--muted); }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #17131f; font-weight: 600; }
+  .btn { background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+  .btn:hover { border-color: var(--muted); }
+  .btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+  .btn:disabled { opacity: .35; cursor: default; }
+  label.toggle { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+  #levelNow { min-width: 52px; text-align: center; font-weight: 700; color: var(--accent); }
+
+  .progress { height: 6px; background: var(--panel-2); border-radius: 3px; overflow: hidden; width: 160px; }
+  .progress > i { display: block; height: 100%; background: var(--ok); width: 0; transition: width .15s; }
+  #progressText { color: var(--muted); font-size: 12px; min-width: 70px; }
+
+  main {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 26px;
+    /* One row pinned to the space left under the header, so the columns scroll
+       inside it and their scrollbar sits to the left of the edge tabs. */
+    grid-template-rows: minmax(0, 1fr);
+    overflow: hidden;
+    position: relative;
+  }
+  .col { overflow-y: auto; padding: 8px 12px 10px; }
+  .col + .col { border-left: 1px solid var(--line); }
+  main.swap #routeCol { order: 2; border-left: 1px solid var(--line); }
+  main.swap #levelCol { order: 1; border-left: 0; }
+  .col > h2 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted);
+    margin: 0 0 8px; font-weight: 600;
+  }
+
+  /* Locked view: one scroller, each band pairs a zone with the levels it covers. */
+  #locked { grid-column: 1 / 3; grid-row: 1; overflow-y: auto; }
+  .band { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-bottom: 1px solid var(--line); }
+  .band > div { padding: 8px 12px 0; }
+  .band > div + div { border-left: 1px solid var(--line); }
+  .band.head { position: sticky; top: 0; background: var(--bg); z-index: 1; }
+  .band.head > div { padding: 6px 12px; }
+  .band.head h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0; font-weight: 600; }
+
+  .group { margin-bottom: 14px; }
+  .group > h3 {
+    font-size: 14px; margin: 0 0 4px; padding-bottom: 3px;
+    border-bottom: 1px solid var(--panel-2);
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .group > h3 .lvl { color: var(--accent); font-weight: 700; white-space: nowrap; }
+  .group > h3 .zone { color: var(--muted); font-weight: 400; }
+  .group > h3 .tally { margin-left: auto; color: #b9b2cc; font-weight: 400; font-size: 12px; white-space: nowrap; }
+  .group.all-done > h3 .tally { color: var(--ok); }
+
+  .task {
+    display: grid;
+    grid-template-columns: 18px 40px minmax(0, 1fr);
+    gap: 1px 8px;
+    align-items: start;
+    padding: 4px 6px;
+    border-left: 3px solid var(--cat, var(--line));
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .task + .task { margin-top: 2px; }
+  .task:hover { background: var(--panel); }
+  .task input { margin: 2px 0 0; accent-color: var(--ok); cursor: pointer; }
+  .task .head { display: flex; gap: 6px; align-items: baseline; }
+  .task .title { font-weight: 600; min-width: 0; }
+  .task .cost { margin-left: auto; padding-left: 8px; font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  /* Location and note share one muted line, clamped to two; hover shows the rest. */
+  .task .note {
+    color: var(--muted); font-size: 13px;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  }
+  .task:hover .note, .task:focus-within .note { -webkit-line-clamp: unset; }
+  .task .loc { color: #b9b2cc; }
+  .task.done .title { text-decoration: line-through; color: var(--muted); }
+  .task.done { opacity: .6; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* Priority: plain word. Only the calls that change what you do are loud. */
+  .prio { font-size: 11px; letter-spacing: .04em; margin-top: 2px; font-weight: 800; }
+  .prio-BUY, .prio-INFO { color: var(--muted); font-weight: 600; }
+  .prio-SKIP { color: var(--bad); }
+  .prio-GATE { color: var(--warn); }
+  .prio-QUEST { color: var(--c-quest); }
+  .prio-BUFF { color: var(--c-fish_cook); }
+  /* A talent row shows its icon where the priority word goes. */
+  .ticon { width: 28px; height: 28px; border-radius: 3px; border: 1px solid var(--line); display: block; }
+
+  .conf { font-weight: 800; cursor: help; }
+  .conf-inferred { color: var(--warn); }
+  .conf-unverified { color: var(--bad); }
+  .src { text-decoration: none; opacity: 0; }
+  .task:hover .src, .src:focus-visible { opacity: 1; }
+
+  /* Edge tabs: one per reference panel, down the right side. */
+  #rail {
+    grid-column: 3; grid-row: 1;
+    display: flex; flex-direction: column; gap: 4px; padding-top: 8px;
+    background: var(--panel); border-left: 1px solid var(--line);
+  }
+  #rail button {
+    writing-mode: vertical-rl;
+    background: var(--panel-2); border: 1px solid var(--line); border-right: 0;
+    border-radius: 4px 0 0 4px; padding: 10px 3px; margin-left: 2px;
+    font-size: 12px; letter-spacing: .05em; cursor: pointer; color: var(--muted);
+  }
+  #rail button:hover { color: var(--text); }
+  #rail button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #17131f; font-weight: 600; }
+
+  #panel {
+    position: absolute; top: 0; right: 26px; bottom: 0;
+    width: min(380px, calc(100% - 26px));
+    overflow-y: auto;
+    padding: 10px 12px;
+    background: var(--panel);
+    border-left: 1px solid var(--line);
+    box-shadow: -8px 0 20px rgba(0, 0, 0, .45);
+    z-index: 2;
+  }
+  #panel[hidden] { display: none; }
+  #panel h3 { font-size: 13px; margin: 0 0 4px; color: var(--accent); }
+  #panel section { margin-bottom: 14px; }
+  #panel dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 8px; font-size: 13px; }
+  #panel dt { color: var(--text); font-weight: 600; }
+  #panel dd { margin: 0; color: var(--muted); }
+  #panel ol { margin: 0; padding-left: 18px; font-size: 13px; }
+  #panel p { margin: 0 0 4px; font-size: 13px; color: var(--muted); }
+
+  .empty, .error { color: var(--muted); padding: 20px; text-align: center; }
+  .error { color: var(--bad); text-align: left; white-space: pre-wrap; }
+
+  @media (max-width: 760px) {
+    main { grid-template-columns: 1fr; grid-template-rows: none; overflow-y: auto; }
+    #locked { overflow: visible; }
+    .col { overflow: visible; }
+    .col + .col, main.swap #routeCol { border-left: 0; border-top: 1px solid var(--line); }
+    .band { grid-template-columns: 1fr; }
+    .band > div + div { border-left: 0; }
+    .band.head { display: none; }
+    #locked, #rail { grid-column: 1; grid-row: auto; }
+    #rail { flex-direction: row; padding: 4px; border-left: 0; order: -1; }
+    #rail button { writing-mode: horizontal-tb; border-right: 1px solid var(--line); border-radius: 4px; margin: 0; padding: 2px 8px; }
+    #panel { right: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="row">
+    <h1>Orc Warlock · WoW Forever</h1>
+    <div class="progress" title="Overall progress"><i id="progressBar"></i></div>
+    <span id="progressText"></span>
+    <span class="spacer"></span>
+    <button class="btn" id="lockBtn" aria-pressed="true" title="Scroll both columns together, levels lined up">Lock scroll</button>
+    <button class="btn" id="swapBtn" title="Swap the In zone and On level columns">⇄ Swap</button>
+    <button class="btn" id="exportBtn" title="Download progress as a JSON file">Export</button>
+    <button class="btn" id="importBtn" title="Load progress from a JSON file">Import</button>
+    <button class="btn" id="resetBtn" title="Clear all completed tasks">Reset</button>
+    <input type="file" id="importFile" accept="application/json,.json" hidden>
+  </div>
+  <div class="row">
+    <span class="label">Level</span>
+    <button class="chip" id="levelAll" type="button">All</button>
+    <button class="btn" id="levelDown" type="button" title="Previous level">−</button>
+    <span id="levelNow"></span>
+    <button class="btn" id="levelUp" type="button" title="Next level">+</button>
+    <span class="gap"></span>
+    <span class="row" id="categoryRow"><span class="label">Type</span></span>
+    <span class="spacer"></span>
+    <button class="chip" id="finishedBtn" type="button" aria-pressed="false" title="Levels with every task ticked are hidden until you show them"></button>
+    <label class="toggle"><input type="checkbox" id="hideDone"> Hide done tasks</label>
+  </div>
+</header>
+
+<main id="main">
+  <div class="col" id="routeCol"><h2>In zone</h2><div id="route"></div></div>
+  <div class="col" id="levelCol"><h2>On level</h2><div id="levels"></div></div>
+  <div id="locked" hidden></div>
+  <nav id="rail" aria-label="Reference panels"></nav>
+  <aside id="panel" hidden></aside>
+</main>
+
+<!-- data/index.js lists the data files; the app loads each one in order. -->
+<script src="data/index.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const STORAGE_KEY = "forever-lvl.v1";
+  const CATEGORIES = {
+    spell: "Spell", grimoire: "Grimoire", quest: "Quest", herb: "Herb",
+    skin: "Skin", fish_cook: "Fish / Cook", wand: "Wand", camp: "Camp", talent: "Talent"
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  };
+
+  // ---- state -------------------------------------------------------------
+  // level: "all" or a character level. swap: On level column on the left.
+  // lock: both columns scroll as one, each zone beside the levels it covers.
+  // showFinished: keep rows whose tasks are all ticked on screen.
+  // panel: id of the open reference panel, or null.
+  const state = { done: new Set(), level: "all", category: "all", hideDone: false, swap: false, lock: true, showFinished: false, panel: null };
+
+  function loadState() {
+    try {
+      applyState(JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"));
+    } catch (e) { /* corrupt or unavailable storage: start clean */ }
+  }
+  function applyState(raw) {
+    if (Array.isArray(raw.done)) state.done = new Set(raw.done.map(String));
+    if (raw.level === "all" || Number.isInteger(raw.level)) state.level = raw.level;
+    if (typeof raw.category === "string") state.category = raw.category;
+    if (typeof raw.panel === "string" || raw.panel === null) state.panel = raw.panel;
+    for (const k of ["hideDone", "swap", "lock", "showFinished"]) if (typeof raw[k] === "boolean") state[k] = raw[k];
+  }
+  function serialize() {
+    return Object.assign({}, state, { done: [...state.done] });
+  }
+  function saveState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(serialize())); } catch (e) { /* ignore */ }
+  }
+
+  // ---- data loading ------------------------------------------------------
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = () => reject(new Error("Could not load " + src));
+      document.head.appendChild(s);
+    });
+  }
+  // "7-8" -> [7, 8]; "10" -> [10, 10]
+  function range(levels) {
+    const m = String(levels).match(/\d+/g) || [0];
+    return [Number(m[0]), Number(m[m.length - 1])];
+  }
+  // Wowhead talent calculator address -> [{ tree, index }], one per point in
+  // the order taken. The last path part is the order: a tree digit, then one
+  // letter per point (a talent's position in its tree). An upper-case letter
+  // stands for every rank of that talent taken in a row.
+  const ORDER_ONE = "abcdefghjkmnpqrstvwzxyilou468-~!";
+  const ORDER_ALL = "ABCDEFGHJKMNPQRSTVWZXYILOU579_^.";
+  function decodeBuild(data, problems) {
+    const parts = String(data.build || "").split("/").filter(Boolean);
+    const at = parts.findIndex((p) => /^v\d[\d-]*(_|$)/.test(p));
+    if (at < 0 || !parts[at + 1]) { problems.push("Talent build has no order part: " + data.build); return []; }
+    const points = [];
+    let tree = 0;
+    for (const ch of parts[at + 1]) {
+      const talents = (data.trees[tree] || {}).talents || [];
+      const one = ORDER_ONE.indexOf(ch), all = ORDER_ALL.indexOf(ch);
+      if (/[0-9]/.test(ch) && Number(ch) < data.trees.length) tree = Number(ch);
+      else if (one >= 0 && talents[one]) points.push({ tree, index: one });
+      else if (all >= 0 && talents[all]) for (let i = 0; i < talents[all].max; i++) points.push({ tree, index: all });
+      else problems.push("Talent build: cannot read '" + ch + "' in the order part");
+    }
+    // The points part holds the final rank of every talent; the order must add up to it.
+    const want = parts[at].replace(/^v\d/, "").split("_")[0].split("-");
+    data.trees.forEach((t, ti) => t.talents.forEach((x, xi) => {
+      const got = points.filter((p) => p.tree === ti && p.index === xi).length;
+      const final = Number((want[ti] || "")[xi] || 0);
+      if (got !== final) problems.push("Talent build: " + x.name + " has " + got + " points in the order but " + final + " in the build");
+    }));
+    return points;
+  }
+  // One task per talent point, on the level it is taken. Ids go by level, so a
+  // changed build keeps "the point for level N is spent".
+  function talentTasks(data, maxLevel, problems) {
+    const taken = new Map(), out = [];
+    decodeBuild(data, problems).forEach((p, k) => {
+      const level = data.firstLevel + k;
+      const tree = data.trees[p.tree], t = tree.talents[p.index];
+      const key = p.tree + ":" + p.index;
+      const rank = (taken.get(key) || 0) + 1;
+      taken.set(key, rank);
+      if (level > maxLevel) return;
+      out.push({ level, task: {
+        id: "tal_" + level, category: "talent", priority: "TALENT", icon: t.icon,
+        title: t.name + " " + rank + "/" + t.max, location: tree.name, note: t.ranks[rank - 1],
+        source: data.build, confidence: "confirmed"
+      } });
+    });
+    return out;
+  }
+
+  async function loadData() {
+    for (const f of window.DATA_FILES || []) await loadScript("data/" + f);
+    ROUTE = (window.ROUTE_DATA || []).slice().sort((a, b) => range(a.levels)[0] - range(b.levels)[0]);
+    LEVELS = (window.LEVEL_DATA || []).map((g) => Object.assign({}, g, { tasks: (g.tasks || []).slice() }));
+    MAX_LEVEL = Math.max(1, ...ROUTE.map((z) => range(z.levels)[1]), ...LEVELS.map((g) => g.level));
+
+    const seen = new Set(), problems = [];
+    // Talent rows stop at the last level the loaded data covers.
+    if (window.TALENT_DATA) {
+      for (const { level, task } of talentTasks(window.TALENT_DATA, MAX_LEVEL, problems)) {
+        let g = LEVELS.find((x) => x.level === level);
+        if (!g) LEVELS.push(g = { level, tasks: [] });
+        g.tasks.unshift(task);
+      }
+    }
+    LEVELS.sort((a, b) => a.level - b.level);
+    ALL = ROUTE.concat(LEVELS).flatMap((g) => g.tasks || []);
+
+    for (const t of ALL) {
+      if (!t.id) problems.push("Task without id: " + t.title);
+      else if (seen.has(t.id)) problems.push("Duplicate task id: " + t.id);
+      seen.add(t.id);
+      if (!CATEGORIES[t.category]) problems.push("Unknown category '" + t.category + "' on " + t.id);
+    }
+    if (problems.length) console.warn("Data problems:\n" + problems.join("\n"));
+  }
+
+  // ---- rendering ---------------------------------------------------------
+  let ROUTE = [], LEVELS = [], ALL = [], MAX_LEVEL = 1;
+
+  function renderFilters() {
+    const on = state.level !== "all";
+    $("levelAll").setAttribute("aria-pressed", String(!on));
+    $("levelNow").textContent = on ? "Lv " + state.level : "—";
+    $("levelDown").disabled = on && state.level <= 1;
+    $("levelUp").disabled = on && state.level >= MAX_LEVEL;
+
+    const cRow = $("categoryRow");
+    cRow.querySelectorAll(".chip").forEach((n) => n.remove());
+    const used = new Set(ALL.map((t) => t.category));
+    const add = (key, label) => {
+      const b = el("button", "chip", label);
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(state.category === key));
+      if (key !== "all") b.style.borderLeft = "3px solid var(--c-" + key + ")";
+      b.addEventListener("click", () => set("category", key));
+      cRow.appendChild(b);
+    };
+    add("all", "All");
+    for (const key of Object.keys(CATEGORIES)) if (used.has(key)) add(key, CATEGORIES[key]);
+
+    $("hideDone").checked = state.hideDone;
+    $("main").classList.toggle("swap", state.swap);
+    $("lockBtn").setAttribute("aria-pressed", String(state.lock));
+    $("routeCol").hidden = $("levelCol").hidden = state.lock;
+    $("locked").hidden = !state.lock;
+  }
+
+  function renderTask(t) {
+    const done = state.done.has(t.id);
+    const cat = CATEGORIES[t.category] || t.category;
+    const row = el("label", "task" + (done ? " done" : ""));
+    row.style.setProperty("--cat", "var(--c-" + t.category + ")");
+    row.title = cat;
+
+    const box = el("input");
+    box.type = "checkbox";
+    box.checked = done;
+    box.addEventListener("change", () => toggle(t.id, box.checked));
+    row.appendChild(box);
+
+    if (t.icon && window.TALENT_DATA) {
+      // Wowhead's copy first, then the one in icons/, then the plain word.
+      const data = window.TALENT_DATA;
+      const img = el("img", "ticon");
+      img.alt = "";
+      img.onerror = () => {
+        if (!img.dataset.local) { img.dataset.local = "1"; img.src = data.iconLocal + t.icon + ".jpg"; }
+        else img.replaceWith(el("span", "prio prio-INFO", t.priority));
+      };
+      img.src = data.iconUrl + t.icon + ".jpg";
+      row.appendChild(img);
+    } else {
+      row.appendChild(el("span", "prio prio-" + t.priority, t.priority));
+    }
+
+    const body = el("div");
+    const head = el("div", "head");
+    head.appendChild(el("span", "sr", cat + ": "));
+    head.appendChild(el("span", "title", t.title));
+    if (t.confidence && t.confidence !== "confirmed") {
+      const inferred = t.confidence === "inferred";
+      const c = el("span", "conf conf-" + t.confidence, inferred ? "~" : "?");
+      c.title = inferred
+        ? "From Classic data; not confirmed for Forever"
+        : "No source found; check in-game";
+      c.setAttribute("aria-label", c.title);
+      head.appendChild(c);
+    }
+    // Routine costs stay in the data but off screen; set showCost on a task
+    // whose price is worth planning for (a mount, say).
+    if (t.cost && t.showCost) head.appendChild(el("span", "cost", t.cost));
+    if (t.source) {
+      const a = el("a", "src", "\u2197");
+      a.href = t.source;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.title = "Open source";
+      a.setAttribute("aria-label", "Source for " + t.title);
+      if (!(t.cost && t.showCost)) a.style.marginLeft = "auto";
+      a.addEventListener("click", (e) => e.stopPropagation());
+      head.appendChild(a);
+    }
+    body.appendChild(head);
+
+    if (t.location || t.note) {
+      const note = el("div", "note");
+      if (t.location) note.appendChild(el("span", "loc", t.location + (t.note ? " \u2014 " : "")));
+      if (t.note) note.append(t.note);
+      body.appendChild(note);
+    }
+    row.appendChild(body);
+    return row;
+  }
+
+  // SKIP rows say what not to buy, so they never hold a level open and are
+  // left out of the tallies. Everything else, INFO included, has to be ticked.
+  const counts = (t) => t.priority !== "SKIP";
+  const finished = (groups) => {
+    const tasks = groups.flatMap((g) => g.tasks).filter(counts);
+    return tasks.length > 0 && tasks.every((t) => state.done.has(t.id));
+  };
+  // Counts rows hidden for being finished, for the header button.
+  let hiddenFinished = 0;
+
+  // A group is { label, sub, tasks, match(level) }. Returns null when the
+  // filters leave it empty.
+  function buildGroup(g) {
+    if (state.level !== "all" && !g.match(state.level)) return null;
+    const tasks = g.tasks.filter((t) =>
+      (state.category === "all" || t.category === state.category) &&
+      !(state.hideDone && state.done.has(t.id)));
+    if (!tasks.length) return null;
+
+    const counted = g.tasks.filter(counts);
+    const done = counted.filter((t) => state.done.has(t.id)).length;
+    const sec = el("section", "group" + (counted.length && done === counted.length ? " all-done" : ""));
+    const h = el("h3");
+    h.appendChild(el("span", "lvl", g.label));
+    if (g.sub) h.appendChild(el("span", "zone", g.sub));
+    h.appendChild(el("span", "tally", done + " / " + counted.length));
+    sec.appendChild(h);
+    tasks.forEach((t) => sec.appendChild(renderTask(t)));
+    return sec;
+  }
+
+  // Route: zones whose level range covers the selected level.
+  function routeGroups() {
+    return ROUTE.map((z) => {
+      const [lo, hi] = range(z.levels);
+      return { lo, hi, label: "Lv " + z.levels, sub: z.zone, tasks: z.tasks || [], match: (n) => n >= lo && n <= hi };
+    });
+  }
+  // On level: the selected level and the next one, so the next trainer visit is in view.
+  function levelGroups() {
+    return LEVELS.map((g) => (
+      { level: g.level, label: "Lv " + g.level, tasks: g.tasks || [], match: (n) => g.level === n || g.level === n + 1 }
+    ));
+  }
+
+  function fill(root, sections) {
+    root.textContent = "";
+    sections.forEach((s) => root.appendChild(s));
+    if (!sections.length) root.appendChild(el("div", "empty", "Nothing here with these filters."));
+  }
+
+  function band(routeCell, levelCell, cls) {
+    const row = el("div", "band" + (cls ? " " + cls : ""));
+    const cells = state.swap ? [levelCell, routeCell] : [routeCell, levelCell];
+    cells.forEach((c) => row.appendChild(c));
+    return row;
+  }
+  function cell(sections) {
+    const c = el("div");
+    sections.forEach((s) => c.appendChild(s));
+    return c;
+  }
+
+  function renderLocked() {
+    const root = $("locked");
+    root.textContent = "";
+    root.appendChild(band(cell([el("h2", null, "In zone")]), cell([el("h2", null, "On level")]), "head"));
+
+    const levels = levelGroups();
+    const placed = new Set();
+    const bands = [];
+    for (const z of routeGroups()) {
+      const mine = levels.filter((g) => g.level >= z.lo && g.level <= z.hi && !placed.has(g));
+      mine.forEach((g) => placed.add(g));
+      bands.push({ at: z.lo, route: [z], levels: mine });
+    }
+    // Levels no zone covers get a band of their own, in level order.
+    levels.filter((g) => !placed.has(g)).forEach((g) => bands.push({ at: g.level, route: [], levels: [g] }));
+    bands.sort((x, y) => x.at - y.at);
+
+    let shown = 0;
+    for (const b of bands) {
+      // A band disappears only once both sides are fully ticked.
+      if (!state.showFinished && finished(b.route.concat(b.levels))) {
+        if (state.level === "all" || b.route.concat(b.levels).some((g) => g.match(state.level))) hiddenFinished++;
+        continue;
+      }
+      const routeSecs = b.route.map(buildGroup).filter(Boolean);
+      const levelSecs = b.levels.map(buildGroup).filter(Boolean);
+      if (!routeSecs.length && !levelSecs.length) continue;
+      root.appendChild(band(cell(routeSecs), cell(levelSecs)));
+      shown++;
+    }
+    if (!shown) root.appendChild(el("div", "empty", "Nothing here with these filters."));
+  }
+
+  function renderTasks() {
+    hiddenFinished = 0;
+    if (state.lock) {
+      renderLocked();
+    } else {
+      // Unlocked columns are independent, so each group hides by itself.
+      const open = (g) => {
+        if (state.showFinished || !finished([g])) return true;
+        if (state.level === "all" || g.match(state.level)) hiddenFinished++;
+        return false;
+      };
+      fill($("route"), routeGroups().filter(open).map(buildGroup).filter(Boolean));
+      fill($("levels"), levelGroups().filter(open).map(buildGroup).filter(Boolean));
+    }
+    const btn = $("finishedBtn");
+    btn.hidden = !state.showFinished && !hiddenFinished;
+    btn.setAttribute("aria-pressed", String(state.showFinished));
+    btn.textContent = state.showFinished ? "Hide finished levels" : "Show " + hiddenFinished + " finished";
+  }
+
+  function renderProgress() {
+    const counted = ALL.filter(counts);
+    const done = counted.filter((t) => state.done.has(t.id)).length;
+    $("progressBar").style.width = (counted.length ? (100 * done / counted.length) : 0) + "%";
+    $("progressText").textContent = done + " / " + counted.length + " done";
+  }
+
+  function renderPanels() {
+    const panels = window.PANELS || [];
+    const rail = $("rail");
+    rail.textContent = "";
+    for (const p of panels) {
+      const b = el("button", null, p.tab || p.id);
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(state.panel === p.id));
+      b.addEventListener("click", () => set("panel", state.panel === p.id ? null : p.id));
+      rail.appendChild(b);
+    }
+
+    const root = $("panel");
+    const open = panels.find((p) => p.id === state.panel);
+    root.hidden = !open;
+    root.textContent = "";
+    for (const s of (open && open.sections) || []) {
+      const sec = el("section");
+      if (s.title) sec.appendChild(el("h3", null, s.title));
+      if (s.text) sec.appendChild(el("p", null, s.text));
+      if (s.ordered) {
+        const ol = el("ol");
+        s.ordered.forEach((x) => ol.appendChild(el("li", null, x)));
+        sec.appendChild(ol);
+      }
+      if (s.items) {
+        const dl = el("dl");
+        s.items.forEach(([k, v]) => { dl.appendChild(el("dt", null, k)); dl.appendChild(el("dd", null, v)); });
+        sec.appendChild(dl);
+      }
+      root.appendChild(sec);
+    }
+  }
+
+  function render() { renderFilters(); renderTasks(); renderProgress(); renderPanels(); }
+
+  // ---- actions -----------------------------------------------------------
+  function set(key, value) { state[key] = value; saveState(); render(); }
+  function toggle(id, on) {
+    if (on) state.done.add(id); else state.done.delete(id);
+    saveState();
+    render();
+  }
+  function stepLevel(delta) {
+    const from = state.level === "all" ? (delta > 0 ? 0 : MAX_LEVEL + 1) : state.level;
+    set("level", Math.min(MAX_LEVEL, Math.max(1, from + delta)));
+  }
+
+  function exportProgress() {
+    const payload = Object.assign({ app: "forever-lvl", version: 1, exported: new Date().toISOString() }, serialize());
+    const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
+    const a = el("a");
+    a.href = url;
+    a.download = "forever-lvl-progress-" + new Date().toISOString().slice(0, 10) + ".json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+  function importProgress(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const raw = JSON.parse(reader.result);
+        if (!raw || !Array.isArray(raw.done)) throw new Error("no 'done' list in file");
+        if (!confirm("Replace current progress with " + raw.done.length + " completed tasks from this file?")) return;
+        applyState(raw);
+        saveState();
+        render();
+      } catch (e) {
+        alert("Could not import: " + e.message);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  // ---- boot --------------------------------------------------------------
+  $("levelAll").addEventListener("click", () => set("level", "all"));
+  $("levelDown").addEventListener("click", () => stepLevel(-1));
+  $("levelUp").addEventListener("click", () => stepLevel(1));
+  $("hideDone").addEventListener("change", (e) => set("hideDone", e.target.checked));
+  $("finishedBtn").addEventListener("click", () => set("showFinished", !state.showFinished));
+  $("lockBtn").addEventListener("click", () => set("lock", !state.lock));
+  $("swapBtn").addEventListener("click", () => set("swap", !state.swap));
+  $("exportBtn").addEventListener("click", exportProgress);
+  $("importBtn").addEventListener("click", () => $("importFile").click());
+  $("importFile").addEventListener("change", (e) => {
+    if (e.target.files[0]) importProgress(e.target.files[0]);
+    e.target.value = "";
+  });
+  $("resetBtn").addEventListener("click", () => {
+    if (!state.done.size || !confirm("Clear all " + state.done.size + " completed tasks?")) return;
+    state.done.clear();
+    saveState();
+    render();
+  });
+
+  loadState();
+  loadData().then(() => {
+    // Saved filters may point past the data that is loaded now.
+    if (state.level !== "all") state.level = Math.min(MAX_LEVEL, Math.max(1, state.level));
+    if (state.category !== "all" && !CATEGORIES[state.category]) state.category = "all";
+    render();
+  }).catch((e) => {
+    $("route").appendChild(el("div", "error", e.message + "\nCheck data/index.js and the data/ folder."));
+  });
+})();
+</script>
+</body>
+</html>
