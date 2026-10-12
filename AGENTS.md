@@ -29,8 +29,9 @@ for what it must do and `PLAN.md` for what is next and what is undecided.
   - Keep the raw material of every research run under `research/raw/`, with
     the date in the name: the agent's full answer, and a copy of each page
     that was re-read to check it (`research/raw/pages-<date>/`). The beta
-    sites change, and this is the only way to recheck a row later. The folder
-    is not committed.
+    sites change, and this is the only way to recheck a row later.
+    `research/raw` is a link into the private `forever-lvl-data` repo, checked
+    out beside this one: commit the new files there, never here.
   - Every research report says at the top which agents produced it. Ask `agy` for
     the full page address of every fact, not a bare domain. Where the two agents
     disagree, the row is `unverified`.
