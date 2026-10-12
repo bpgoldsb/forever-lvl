@@ -1,6 +1,6 @@
 # Human Hunter, levels 1-10, in WoW Forever (research, 2026-10-12, build 1.60.1)
 
-Agents: Claude only so far. The required `agy` (Gemini Flash) pass is NOT done: two runs on 2026-10-12 returned nothing because headless `agy` denied its page-fetch tool. Treat this report as incomplete until that pass is merged in.
+Agents: Claude (first pass) and `agy` on Gemini 3.8 Flash (second pass), merged 2026-10-12. The second pass and the checks made on it are in the last section, which overrides the earlier sections where they differ.
 
 Tags: confirmed = a Forever-specific page says so; inferred = Classic assumed; unverified = sources conflict, single odd source, or ambiguous; not found.
 Note: every Forever source here is a third-party guide or database site reading the beta, not a Blizzard client. "Confirmed" means "a Forever-specific page says so". Human Hunter is a NEW combination in Forever (Blizzard lists it among the new race/class pairings), so no Classic data exists to fall back on for trainers or class quests.
@@ -113,3 +113,45 @@ Caveat: warcrafttavern notes the racials are from the BlizzCon 2026 build and ma
 ## Sources not usable
 
 Icy Veins and Mobalytics pages (403 to fetch). Warcraft Wiki trainer tables (not Forever). BoostRoom pages (commercial). A search result suggested the Wowhead Forever spell list; it rendered no spell rows.
+
+## Second pass: agy (Gemini 3.8 Flash), 2026-10-12, merged
+
+The `agy` pass was limited to fetching eleven game sites. Four pages it cited
+were then read again to check it. "Checked" means the page was read and says
+this. Everything under "agy only" was not checked and stays `unverified`.
+
+### What the second pass adds (checked)
+
+| Fact | Tag | Source |
+|---|---|---|
+| warcraftforever.games has one page per spell with class, level learned, rank, Forever training cost, "Source: trainer" or "not from a trainer", and the trainers who teach it. This is the missing source for costs and ranks. | confirmed | https://warcraftforever.games/spells/1494 |
+| Track Beasts: level 1, rank 1, 10 copper, from a trainer (the page names 11 trainers) | confirmed | https://warcraftforever.games/spells/1494 |
+| Tame Beast is "not from a trainer" (so it comes from the quest chain); the page is marked "Confirmed in game" and says beta values may change | confirmed | https://warcraftforever.games/spells/1515 |
+| Stormwind, Dwarven District: hunter trainers Einris Brightspear, Thorfin Stoneshield and Ulfir Ironbeard, and pet trainer Karrina Mekenda. The page lists no hunter trainer in Northshire or Goldshire. Its tables go by faction, not race. | confirmed | https://www.warcrafttavern.com/forever/guides/class-trainers/ |
+| A Human Hunter is sent to Tordrin Sternblade, northeastern side of Northshire Abbey near the stable, about 51.0, 40.4. Marshal McBride (about 48.8, 41.7) offers A Scribbled Letter to a Hunter. The page does not call Tordrin Sternblade a trainer. | confirmed | https://foreverwisp.com/guides/wow-forever-human-leveling-guide |
+| The pet chain is three Taming the Beast lessons and Training the Beast, tied to a "Goldshire branch" | confirmed | same page (first third read only) |
+
+### Where the two passes disagree
+
+- **Trainers.** First pass: no hunter trainer named anywhere. Second pass: three
+  in Stormwind (checked), and Tordrin Sternblade in Northshire, whom agy calls
+  the starting hunter trainer. The guide sends a Hunter to him but does not say
+  he trains. Stormwind is `confirmed`; Northshire is `unverified`.
+- **Pet spells.** First pass could not tell trainer from quest. The spell pages
+  say "not from a trainer" (Tame Beast checked; Call Pet, Feed Pet, Revive Pet
+  and Beast Training are agy only).
+
+### agy only (not checked)
+
+- Coordinates and roles for Josephine Carson (41.2, 66.2, starts the chain) and
+  Isaac Chan (41.8, 66.4): neither name is in the first third of the guide it
+  cited. The rest of that page was not read.
+- Spell costs other than Track Beasts: Aspect of the Monkey and Serpent Sting 95
+  copper at 4; Arcane Shot and Hunter's Mark 95 at 6; Concussive Shot and Raptor
+  Strike rank 2 190 at 8; Aspect of the Hawk and Track Humanoids 380 at 10; Wing
+  Clip at 12. Each has its own warcraftforever.games spell page to check.
+- Aspect of the Viper and Heart of the Lion as "not from a trainer".
+- Stable masters Erma (Goldshire) and Jenova Stoneshield (Stormwind), ammo
+  vendors Brother Danil and Brog Hamfist, and the Worn Shortbow with Rough
+  Arrows: the pages cited are general wiki or Classic pages, not Forever ones.
+  `inferred` at best.

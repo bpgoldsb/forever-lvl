@@ -1,6 +1,6 @@
 # Undead (Forsaken) Paladin, levels 1-10 in WoW Forever (research, 2026-10-12, build 1.60.1)
 
-Agents: Claude only so far. The required `agy` (Gemini Flash) pass is NOT done: two runs on 2026-10-12 returned nothing because headless `agy` denied its page-fetch tool. Treat this report as incomplete until that pass is merged in.
+Agents: Claude (first pass) and `agy` on Gemini 3.8 Flash (second pass), merged 2026-10-12. The second pass and the checks made on it are in the last section, which overrides the earlier sections where they differ.
 
 Tags: confirmed = a Forever-specific page says so; inferred = Classic assumed; unverified = sources conflict or none; not found.
 Note on "confirmed": every Forever source here is a third-party guide site or the Warcraft Wiki (warcraft.wiki.gg Forever pages, which read the beta client and flag themselves "possibly out of date"). None is Blizzard. Wowhead Forever, Mobalytics and Icy Veins pages returned HTTP 403 to plain fetch, so their content is only known from search snippets (marked "snippet").
@@ -112,3 +112,47 @@ Warcraft Tavern lists Touch of the Grave spell ids inconsistently (1260201 versu
 - Mobalytics, Icy Veins and Wowhead Forever pages: 403 or empty to plain fetch. Mobalytics and wow.gg content is from search snippets only.
 - allthings.how pages: auto-generated "Gaming Guide" pages; they contradict each other and the wiki on Undercity paladin trainers. Used only for Touring the Grounds quest data, tagged accordingly.
 - warcraft.wiki.gg Forever pages: flagged "possibly out of date", beta data.
+
+## Second pass: agy (Gemini 3.8 Flash), 2026-10-12, merged
+
+The `agy` pass was limited to fetching eleven game sites. Four of the pages it
+cited were then read again to check it. "Checked" below means the page was read
+and says this; "agy only" means the page was read and does NOT say it, or was not
+read, so the claim stays `unverified`.
+
+### What the second pass adds (checked)
+
+| Fact | Tag | Source |
+|---|---|---|
+| Trainer coordinates: Aramis Hammerhand, Deathknell 31.1, 66.4; Shari Stilwell, Brill 60.3, 52.6; Hilda the Breaker, Bandarion Keep 22.0, 47.2 | confirmed | https://www.warcrafttavern.com/forever/guides/class-trainers/ |
+| Aramis Hammerhand teaches only up to level 6 | confirmed | same page |
+| No paladin trainer in the Undercity: "Horde Paladin class trainers are all new and are limited to Deathknell, Brill, and the Bandarion Keep." | confirmed | same page |
+| The keep is Bandarion Keep, in the Whispering Wood, a part of Tirisfal Glades that was not reachable before | confirmed | https://www.warcrafttavern.com/wow-forever/undead-paladin-overview/ |
+| Spell levels: Holy Light and Seal of Righteousness at 1 (baseline, not bought); Devotion Aura 1; Blessing of Might and Judgment 4; Holy Strike, Seal of the Crusader and Divine Protection 6; Hammer of Justice and Purify 8; Lay on Hands and Seal of Fury 10; Flash of Light 20 | confirmed | https://warcraft.wiki.gg/wiki/Paladin_abilities_(Forever) |
+| Redemption at 12 comes from "The Tome of Divinity", not a trainer | confirmed | same page |
+| Before A Lesson in Divinity: Murlocs at the Gates, Touring the Grounds, The Tarnished, A Token of Good Faith. The lesson needs ten Linen Cloth and goes between the Undercity, Tyr's Watch and Venomweb Vale. Keep the Symbol of Life. | confirmed | https://www.foreverwisp.com/guides/wow-forever-undead-leveling-guide |
+
+### Where the two passes disagree
+
+- **Holy Light.** First pass: granted on accepting Rediscovering the Light at
+  level 2. Second pass and the wiki table: baseline at level 1. The quest asks
+  you to cast it, which fits either reading. `unverified`; the wiki table is the
+  stronger source.
+- **Undercity trainer.** First pass: two unreliable pages name different people.
+  Second pass: there is none, and the trainer guide says so. Take "none".
+- **The keep's name.** Settled as Bandarion Keep. Tyr's Watch is a place the
+  quest chain visits, not the keep.
+
+### agy only (not on the page it cited, or not checked)
+
+- Trainer costs: every figure it gave is the Classic cost. `inferred` at best.
+- Ranks: the wiki table has no rank column, so "Rank 1" is assumed.
+- Parry at 8, Blessing of Protection at 10, Holy Light rank 2 at 6: not in the
+  wiki table as read.
+- Required levels for Murlocs at the Gates (7) and A Token of Good Faith (10),
+  their rewards, and Hilda as their giver: not in the part of the guide that was
+  read (the page is long and only the first third was read).
+- Will of the Forsaken cooldown of 2 minutes: the page it cited gives no
+  cooldown. Still `unverified`, as in section 5.
+- "Holy spells do not damage the Undead paladin in play": the page it cited says
+  only that the Light is "physically painful" as lore. `unverified`.
