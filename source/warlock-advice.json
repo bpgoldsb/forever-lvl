@@ -1,0 +1,111 @@
+{
+  "class": "warlock",
+  "advice": {
+    "warlock.spell.immolate-1": {
+      "priority": "BUY"
+    },
+    "warlock.spell.corruption-1": {
+      "priority": "BUY",
+      "note": "Core DoT for the whole route."
+    },
+    "warlock.spell.curse-of-weakness-1": {
+      "priority": "SKIP",
+      "note": "Not worth the global cooldown solo."
+    },
+    "warlock.grimoire.blood-pact-1": {
+      "priority": "BUY"
+    },
+    "warlock.spell.life-tap-1": {
+      "priority": "BUY"
+    },
+    "warlock.spell.shadow-bolt-2": {
+      "priority": "BUY",
+      "note": "Your pull until you have a wand."
+    },
+    "warlock.item.novices-practice-wand": {
+      "priority": "BUY",
+      "note": "Wand instead of Shadow Bolt once you have one."
+    },
+    "warlock.spell.bane-of-agony-1": {
+      "priority": "BUY"
+    },
+    "warlock.spell.fear-1": {
+      "priority": "BUY"
+    },
+    "warlock.grimoire.firebolt-2": {
+      "priority": "BUY"
+    },
+    "warlock.spell.drain-soul-1": {
+      "priority": "BUY"
+    },
+    "warlock.spell.group.create-healthstone.demon-skin-2": {
+      "priority": "BUY"
+    },
+    "warlock.spell.immolate-2": {
+      "priority": "SKIP",
+      "note": "Skip if you are on DoTs plus wand; buy if you still open with it."
+    },
+    "warlock.trainer.none-in-the-barrens": {
+      "note": "Plan trips back at 10, 14 or 16, and 20."
+    },
+    "warlock.spell.health-funnel-1": {
+      "priority": "BUY",
+      "note": "Keeps the Voidwalker alive."
+    },
+    "warlock.spell.group.shadow-bolt-3.curse-of-weakness-2": {
+      "priority": "SKIP",
+      "note": "Wand instead of Shadow Bolt."
+    },
+    "warlock.grimoire.blood-pact-2": {
+      "priority": "BUY"
+    },
+    "warlock.item.lesser-and-greater-magic-wand": {
+      "priority": "BUY"
+    },
+    "warlock.spell.group.corruption-2.drain-life-1": {
+      "priority": "BUY"
+    },
+    "warlock.spell.curse-of-recklessness-1": {
+      "priority": "SKIP",
+      "note": "Stops runners; buy only if silver is easy."
+    },
+    "warlock.spell.life-tap-2": {
+      "priority": "BUY"
+    },
+    "warlock.spell.unending-breath": {
+      "priority": "SKIP"
+    },
+    "warlock.grimoire.sacrifice-1": {
+      "priority": "BUY"
+    },
+    "warlock.spell.bane-of-agony-2": {
+      "priority": "BUY"
+    },
+    "warlock.spell.create-soulstone": {
+      "priority": "BUY"
+    },
+    "warlock.spell.searing-pain-1": {
+      "priority": "SKIP"
+    },
+    "warlock.grimoire.consume-shadows-1": {
+      "priority": "BUY"
+    },
+    "warlock.spell.demon-armor-1": {
+      "priority": "BUY"
+    },
+    "warlock.spell.health-funnel-2": {
+      "priority": "BUY"
+    },
+    "warlock.spell.curse-of-the-elements": {
+      "priority": "SKIP",
+      "note": "Group utility; skip solo."
+    },
+    "warlock.spell.group.shadow-bolt-4.immolate-3.rain-of-fire.ritual-of-summoning": {
+      "priority": "SKIP",
+      "note": "Buy Shadow Bolt and Rain of Fire only for dungeons."
+    },
+    "warlock.grimoire.torment-2": {
+      "priority": "BUY"
+    }
+  }
+}

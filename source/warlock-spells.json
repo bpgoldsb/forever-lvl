@@ -1,0 +1,384 @@
+{
+  "build": "1.60.1",
+  "class": "warlock",
+  "facts": [
+    {
+      "id": "warlock.spell.immolate-1",
+      "level": 1,
+      "category": "spell",
+      "title": "Immolate (Rank 1)",
+      "cost": "10c",
+      "trainer": "warlock",
+      "note": "Level 1, alongside the free Shadow Bolt and Demon Skin. Trainer name not confirmed for Forever (Nartok in Classic).",
+      "source": [
+        "https://www.method.gg/wow-forever/wow-forever-warlock-leveling-guide-and-talents"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.corruption-1",
+      "level": 4,
+      "category": "spell",
+      "title": "Corruption (Rank 1)",
+      "cost": "1s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 4.",
+      "source": [
+        "https://www.method.gg/wow-forever/wow-forever-warlock-leveling-guide-and-talents"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.curse-of-weakness-1",
+      "level": 4,
+      "category": "spell",
+      "title": "Curse of Weakness (Rank 1)",
+      "cost": "1s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 4.",
+      "source": [
+        "https://www.method.gg/wow-forever/wow-forever-warlock-leveling-guide-and-talents"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.grimoire.blood-pact-1",
+      "level": 4,
+      "category": "grimoire",
+      "title": "Grimoire of Blood Pact (Rank 1)",
+      "cost": "~1s (Classic)",
+      "trainer": "warlock-demon",
+      "note": "Level 4. Grimoires exist in Forever; the demon trainer's name and location were not found.",
+      "source": [
+        "https://www.method.gg/wow-forever/wow-forever-warlock-leveling-guide-and-talents"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.life-tap-1",
+      "level": 6,
+      "category": "spell",
+      "title": "Life Tap (Rank 1)",
+      "cost": "1s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 6. Scales with Spirit in Forever.",
+      "source": [
+        "https://www.method.gg/wow-forever/wow-forever-warlock-leveling-guide-and-talents"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.shadow-bolt-2",
+      "level": 6,
+      "category": "spell",
+      "title": "Shadow Bolt (Rank 2)",
+      "cost": "1s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 6.",
+      "source": [
+        "https://www.method.gg/wow-forever/wow-forever-warlock-leveling-guide-and-talents"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.bane-of-agony-1",
+      "level": 8,
+      "category": "spell",
+      "title": "Bane of Agony (Rank 1)",
+      "cost": "2s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 8. Instant, 72 damage over 24s, 25 mana. Stacks with a Curse on the same target.",
+      "source": [
+        "https://theforeverera.com/en/spells/warlock/bane-of-agony/"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.fear-1",
+      "level": 8,
+      "category": "spell",
+      "title": "Fear (Rank 1)",
+      "cost": "2s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 8.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.grimoire.firebolt-2",
+      "level": 8,
+      "category": "grimoire",
+      "title": "Grimoire of Firebolt (Rank 2)",
+      "cost": "~2s",
+      "trainer": "warlock-demon",
+      "note": "Level 8 in Classic. Grimoires exist in Forever; level, price and vendor not found.",
+      "source": [],
+      "confidence": "inferred"
+    },
+    {
+      "id": "warlock.spell.drain-soul-1",
+      "level": 10,
+      "category": "spell",
+      "title": "Drain Soul (Rank 1)",
+      "cost": "3s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 10. Rising chance per tick to grant a Soul Shard before the kill.",
+      "source": [
+        "https://barrens.chat/viewtopic.php?t=13430&p=43348"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.group.create-healthstone.demon-skin-2",
+      "level": 10,
+      "category": "spell",
+      "title": "Create Healthstone, Demon Skin (Rank 2)",
+      "cost": "3s each (Classic)",
+      "trainer": "warlock",
+      "note": "Level 10.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.immolate-2",
+      "level": 10,
+      "category": "spell",
+      "title": "Immolate (Rank 2)",
+      "cost": "3s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 10.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.trainer.none-in-the-barrens",
+      "level": 10,
+      "category": "spell",
+      "title": "No warlock trainer in the Barrens",
+      "trainer": "warlock",
+      "note": "True in Classic.",
+      "priority": "INFO",
+      "source": [],
+      "confidence": "inferred"
+    },
+    {
+      "id": "warlock.spell.health-funnel-1",
+      "level": 12,
+      "category": "spell",
+      "title": "Health Funnel (Rank 1)",
+      "cost": "6s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 12.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.group.shadow-bolt-3.curse-of-weakness-2",
+      "level": 12,
+      "category": "spell",
+      "title": "Shadow Bolt (Rank 3), Curse of Weakness (Rank 2)",
+      "cost": "6s each (Classic)",
+      "trainer": "warlock",
+      "note": "Level 12.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.grimoire.blood-pact-2",
+      "level": 12,
+      "category": "grimoire",
+      "title": "Grimoire of Blood Pact (Rank 2)",
+      "cost": "~6s",
+      "trainer": "warlock-demon",
+      "note": "Level 12 in Classic. Grimoires exist in Forever; level, price and vendor not found.",
+      "source": [],
+      "confidence": "inferred"
+    },
+    {
+      "id": "warlock.spell.group.corruption-2.drain-life-1",
+      "level": 14,
+      "category": "spell",
+      "title": "Corruption (Rank 2), Drain Life (Rank 1)",
+      "cost": "~9s each (Classic)",
+      "trainer": "warlock",
+      "note": "Level 14.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.curse-of-recklessness-1",
+      "level": 14,
+      "category": "spell",
+      "title": "Curse of Recklessness (Rank 1)",
+      "cost": "~9s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 14.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.life-tap-2",
+      "level": 16,
+      "category": "spell",
+      "title": "Life Tap (Rank 2)",
+      "cost": "~12s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 16.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.unending-breath",
+      "level": 16,
+      "category": "spell",
+      "title": "Unending Breath",
+      "cost": "~12s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 16.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.grimoire.sacrifice-1",
+      "level": 16,
+      "category": "grimoire",
+      "title": "Grimoire of Sacrifice (Rank 1)",
+      "cost": "~12s",
+      "trainer": "warlock-demon",
+      "note": "Level 16 in Classic. Grimoires exist in Forever; level, price and vendor not found.",
+      "source": [],
+      "confidence": "inferred"
+    },
+    {
+      "id": "warlock.spell.bane-of-agony-2",
+      "level": 18,
+      "category": "spell",
+      "title": "Bane of Agony (Rank 2)",
+      "cost": "~15s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 18. 120 damage over 24s, 50 mana.",
+      "source": [
+        "https://theforeverera.com/en/spells/warlock/bane-of-agony/"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.create-soulstone",
+      "level": 18,
+      "category": "spell",
+      "title": "Create Soulstone",
+      "cost": "~15s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 18.",
+      "source": [
+        "https://www.warcrafttavern.com/forever/guides/warlock/"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.searing-pain-1",
+      "level": 18,
+      "category": "spell",
+      "title": "Searing Pain (Rank 1)",
+      "cost": "~15s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 18.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.grimoire.consume-shadows-1",
+      "level": 18,
+      "category": "grimoire",
+      "title": "Grimoire of Consume Shadows (Rank 1)",
+      "cost": "~15s",
+      "trainer": "warlock-demon",
+      "note": "Level 18 in Classic. Grimoires exist in Forever; level, price and vendor not found.",
+      "source": [],
+      "confidence": "inferred"
+    },
+    {
+      "id": "warlock.spell.demon-armor-1",
+      "level": 20,
+      "category": "spell",
+      "title": "Demon Armor (Rank 1)",
+      "cost": "~20s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 20. Replaces Demon Skin.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.health-funnel-2",
+      "level": 20,
+      "category": "spell",
+      "title": "Health Funnel (Rank 2)",
+      "cost": "~20s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 20.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.curse-of-the-elements",
+      "level": 20,
+      "category": "spell",
+      "title": "Curse of the Elements",
+      "cost": "~20s (Classic)",
+      "trainer": "warlock",
+      "note": "Level 20 in Forever (32 in Classic) and now covers all magic damage.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.spell.group.shadow-bolt-4.immolate-3.rain-of-fire.ritual-of-summoning",
+      "level": 20,
+      "category": "spell",
+      "title": "Shadow Bolt (Rank 4), Immolate (Rank 3), Rain of Fire, Ritual of Summoning",
+      "cost": "~20s each (Classic)",
+      "trainer": "warlock",
+      "note": "Level 20.",
+      "source": [
+        "https://warcraftforever.games/classes/warlock"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.grimoire.torment-2",
+      "level": 20,
+      "category": "grimoire",
+      "title": "Grimoire of Torment (Rank 2)",
+      "cost": "~20s",
+      "trainer": "warlock-demon",
+      "note": "Level 20 in Classic; keeps Voidwalker threat ahead of your DoTs. Grimoires exist in Forever; level, price and vendor not found.",
+      "source": [],
+      "confidence": "inferred"
+    }
+  ]
+}

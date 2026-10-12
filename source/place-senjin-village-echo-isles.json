@@ -1,0 +1,55 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "senjin-village-echo-isles",
+    "name": "Sen'jin Village / Echo Isles",
+    "levels": "5-6"
+  },
+  "facts": [
+    {
+      "id": "place.senjin-village-echo-isles.cooking-quests-cook-torka",
+      "category": "fish_cook",
+      "title": "This Fruit Could Bite Back, Break a Few Eggs",
+      "location": "Cook Torka, Razor Hill",
+      "note": "Cooking quests, levels 3 and 6. Cook Torka is also the cooking trainer.",
+      "professions": [
+        "cooking"
+      ],
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-orc-troll-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.senjin-village-echo-isles.herbalism-trainer-mishiki",
+      "category": "herb",
+      "title": "Herbalism trainer: Mishiki",
+      "location": "Sen'jin Village",
+      "note": "Earthroot (skill 15, from Classic) on rocky hillsides.",
+      "professions": [
+        "herbalism"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/herbalism-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.senjin-village-echo-isles.learn-fishing",
+      "category": "fish_cook",
+      "title": "Learn Fishing",
+      "location": "Lau'Tiki, Durotar",
+      "note": "No level requirement. From Classic: Sen'jin Village; coast gives Slitherskin Mackerel and Brilliant Smallfish.",
+      "professions": [
+        "fishing"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/fishing-trainers"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

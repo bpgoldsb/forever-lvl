@@ -1,0 +1,38 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "northern-barrens-sludge-fen",
+    "name": "Northern Barrens / Sludge Fen",
+    "levels": "15-16"
+  },
+  "facts": [
+    {
+      "id": "place.northern-barrens-sludge-fen.keep-wool-cloth",
+      "category": "aid",
+      "title": "Keep Wool Cloth",
+      "location": "Humanoid drops, mob levels 15-30",
+      "note": "Wool Bandage at First Aid 80, Heavy Wool at 115.",
+      "professions": [
+        "first-aid"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.warcrafttavern.com/forever/guides/first-aid/"
+      ],
+      "confidence": "inferred"
+    },
+    {
+      "id": "place.northern-barrens-sludge-fen.bruiseweed",
+      "category": "herb",
+      "title": "Bruiseweed (100)",
+      "location": "Quilboar camps and mountainsides",
+      "note": "Skill level from Classic.",
+      "professions": [
+        "herbalism"
+      ],
+      "priority": "INFO",
+      "source": [],
+      "confidence": "inferred"
+    }
+  ]
+}

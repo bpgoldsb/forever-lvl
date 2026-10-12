@@ -1,0 +1,32 @@
+{
+  "build": "1.60.1",
+  "class": "warlock",
+  "facts": [
+    {
+      "id": "warlock.item.novices-practice-wand",
+      "level": 6,
+      "category": "wand",
+      "title": "Novice's Practice Wand",
+      "cost": "AH price",
+      "location": "Orgrimmar Auction House, or an enchanter",
+      "note": "Enchanting 10 craft (Simple Wood + Mote of Magic). Lesser Magic Wand is now Enchanting 75. Equip levels and vendor wands not found.",
+      "source": [
+        "https://seemeta.com/en/wow-forever/professions/enchanting"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.item.lesser-and-greater-magic-wand",
+      "level": 13,
+      "category": "wand",
+      "title": "Lesser, then Greater Magic Wand",
+      "cost": "AH price",
+      "location": "Orgrimmar Auction House",
+      "note": "Lesser Magic Wand is an Enchanting 75 craft and Greater 110 in Forever. Equip levels not found (5 and 13 in Classic).",
+      "source": [
+        "https://seemeta.com/en/wow-forever/professions/enchanting"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

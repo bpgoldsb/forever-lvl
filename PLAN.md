@@ -7,8 +7,9 @@ Resume point. Last worked 2026-10-12. Start a session in this folder and read
 
 - App works: two locked columns, level stepper, type filter, finished rows hide,
   edge tabs, export/import, talent rows. See SPEC.md.
-- Data: 50 hand-written tasks for levels 1-20 (37 on-level, 13 in-zone) plus 11
-  generated talent rows (levels 10-20).
+- Data: 57 tasks for levels 1-20 (39 on-level, 18 in-zone), built from
+  `source/` by `tools/build-data.mjs` (section I, step 1), plus 11 generated
+  talent rows (levels 10-20).
 - Agents can see the page: `tools/shot.mjs` (headless Chromium under podman on
   the dev machine). Seen rendered so far: the locked view at 1280x1440, talent rows, the
   icon fallback chain, SKIP rows not holding a level open, and (2026-10-12) the
@@ -54,8 +55,8 @@ keep the main session for decisions and review.
 ### B. Talent rows (done for levels 10-20)
 - Rows for levels 21-60 appear by themselves once route or level data covers those
   levels. The build is one line in `data/talents-warlock.js`.
-- The zones in `data/route-01-20.js` leave levels 1-4, 9-10 and 19-20 with nothing
-  on the In zone side. Not checked whether that is intended.
+- The places in `source/place-*.json` leave levels 1-4, 9-10 and 19-20 with
+  nothing on the In zone side. Decided 2026-10-12: they stay empty.
 
 ### C. Content research
 - Profession skill targets per zone (for example the Herbalism skill to have before
@@ -136,7 +137,18 @@ rows for the character; a level with nothing place-specific stays empty.
 
 Build order:
 1. Fact and advice formats and the build script; port the warlock through them.
-   Done when the page renders exactly as it does now (compare screenshots).
+   **Done 2026-10-12.** Screenshots of three views and the page's HTML were
+   the same before and after, byte for byte. What step 1 left as it was:
+   - Rows are not split. A row that lists several spells is still one fact
+     with a descriptive id; ids from the game's spell and quest ids start with
+     new facts.
+   - The trainer list holds the old location text by level for an Orc. The
+     start-zone-then-home-city rule is not written; it is needed when a second
+     race is added (step 3).
+   - Six grimoire rows and six gathering rows are `inferred` with no source.
+     The build prints them as warnings.
+   - The page still shows every built file. Choosing rows by class, race and
+     profession is step 2; built rows already carry `professions`.
 2. Character picker and progress per character.
 3. Human Hunter and Undead Paladin facts for levels 1-10, built and shown.
    Needs more research first: spell costs from the per-spell pages on
@@ -146,8 +158,8 @@ Left out for now: dungeons as places, a profession picker beyond the warlock's
 professions, any class past the two test ones.
 
 ### E. Levels 21-60
-- After the 1-20 shape is settled. New `data/route-21-40.js` and
-  `data/levels-21-40.js` (and so on), added to `data/index.js`.
+- After the 1-20 shape is settled. More facts in `source/` (higher levels in
+  the class and profession files, new `place-*.json` files) and a rebuild.
 
 ## Notes
 

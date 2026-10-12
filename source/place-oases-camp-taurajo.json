@@ -1,0 +1,39 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "oases-camp-taurajo",
+    "name": "Oases / Camp Taurajo",
+    "levels": "17-18"
+  },
+  "facts": [
+    {
+      "id": "place.oases-camp-taurajo.wailing-caverns-blueprints",
+      "category": "camp",
+      "title": "Wailing Caverns blueprints",
+      "location": "Wailing Caverns (18-22)",
+      "note": "Journeyman Campfire from Lord Serpentis (learn at Cooking 90, use at 140). Field Guide from Lady Anacondra (Skinning 140).",
+      "professions": [
+        "cooking",
+        "skinning"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/camping-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.oases-camp-taurajo.skinning-targets",
+      "category": "skin",
+      "title": "Sunscale Raptors, Thunderhawks, Barrens Kodos",
+      "location": "Central and southern Barrens",
+      "note": "Light to Medium Leather. Targets from Classic. Skinning trainer Dranh is at Camp Taurajo.",
+      "professions": [
+        "skinning"
+      ],
+      "priority": "INFO",
+      "source": [],
+      "confidence": "inferred"
+    }
+  ]
+}

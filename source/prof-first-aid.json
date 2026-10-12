@@ -1,0 +1,40 @@
+{
+  "build": "1.60.1",
+  "profession": "first-aid",
+  "facts": [
+    {
+      "id": "prof.first-aid.orgrimmar-trainer-and-supplies",
+      "level": 10,
+      "category": "aid",
+      "title": "First Aid in Orgrimmar: Arnok, vials and spices",
+      "location": "Arnok, Valley of Spirits; Xen'to (spices), Kor'geld (vials)",
+      "note": "Minor Healing Potion at First Aid 55: Peacebloom, Mild Spices and an Empty Vial, so it uses herbs you already pick.",
+      "professions": [
+        "first-aid"
+      ],
+      "priority": "INFO",
+      "order": 10,
+      "source": [
+        "https://www.wow-professions.com/forever/first-aid-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.first-aid.expert-book",
+      "level": 20,
+      "category": "aid",
+      "title": "Expert First Aid is a book, off the route",
+      "location": "Balai Lok'Wein, Brackenwall Village, Dustwallow Marsh",
+      "note": "Trainers stop at 150. The book Under Wraps needs First Aid 125. Artisan is the Triage quest at level 35, untested in the beta.",
+      "professions": [
+        "first-aid"
+      ],
+      "priority": "INFO",
+      "order": 10,
+      "source": [
+        "https://www.wow-professions.com/forever/first-aid-trainers"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

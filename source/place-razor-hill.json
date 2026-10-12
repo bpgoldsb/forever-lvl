@@ -1,0 +1,116 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "razor-hill",
+    "name": "Razor Hill",
+    "levels": "7-8"
+  },
+  "facts": [
+    {
+      "id": "place.razor-hill.learn-first-aid",
+      "category": "aid",
+      "title": "Learn First Aid",
+      "location": "Rawrk, Razor Hill Barracks",
+      "note": "Secondary profession, no level requirement. Rawrk teaches to 150 (Journeyman at 50). In Forever First Aid also makes healing potions and cures for bleeds, disease and poison.",
+      "professions": [
+        "first-aid"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/first-aid-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.razor-hill.keep-linen-cloth",
+      "category": "aid",
+      "title": "Keep Linen Cloth",
+      "location": "Humanoid drops, mob levels 1-19",
+      "note": "Linen Bandage needs First Aid 30 in Forever, not 1; Heavy Linen is 50. Sources disagree on how the first points are made, so read the trainer's list.",
+      "professions": [
+        "first-aid"
+      ],
+      "priority": "INFO",
+      "source": [
+        "https://seemeta.com/en/wow-forever/professions/first-aid"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.razor-hill.camping-101-first-aid-kit",
+      "category": "aid",
+      "title": "Camping 101: First Aid, then the First Aid Kit",
+      "location": "Quest giver not found for Horde",
+      "note": "First Aid 20. Kit is 3 Linen Bandage and 1 Refreshing Spring Water: a Stamina buff that does not stack with Power Word: Fortitude. Wowhead lists only the Alliance quest giver.",
+      "professions": [
+        "first-aid"
+      ],
+      "priority": "BUFF",
+      "source": [
+        "https://www.wowhead.com/forever/quest=96047"
+      ],
+      "confidence": "unverified"
+    },
+    {
+      "id": "place.razor-hill.skinning-targets",
+      "category": "skin",
+      "title": "Boars, scorpids, raptors, crocolisks",
+      "location": "Durotar",
+      "note": "Skinning targets from Classic.",
+      "professions": [
+        "skinning"
+      ],
+      "priority": "INFO",
+      "source": [],
+      "confidence": "inferred"
+    },
+    {
+      "id": "place.razor-hill.great-outdoors-camping-101",
+      "category": "camp",
+      "title": "The Great Outdoors, then Camping 101",
+      "location": "Brakk; Cook Torka (Cooking); Jandi, Orgrimmar (Herbalism)",
+      "note": "Brakk's quest comes first. Camping 101 aims at skill 20 in the profession.",
+      "professions": [
+        "cooking",
+        "herbalism"
+      ],
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-orc-troll-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.razor-hill.basic-campfire",
+      "category": "camp",
+      "title": "Basic Campfire (3 slots)",
+      "location": "Cooking 1",
+      "note": "Costs 1 Simple Wood. Sit 1 minute for the 1-hour buff; placing a fixture puts yours on a 1-hour cooldown.",
+      "professions": [
+        "cooking"
+      ],
+      "priority": "BUFF",
+      "source": [
+        "https://www.wow-professions.com/forever/camping-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "place.razor-hill.fish-bowl-camp-chair-incense-candle",
+      "category": "camp",
+      "title": "Fish Bowl, Camp Chair, Incense Candle",
+      "location": "Fishing 20 / Skinning 20 / Herbalism 20",
+      "note": "+8% all stats, +2% crit, Intellect. You can place only one per hour, so the others need other players.",
+      "professions": [
+        "fishing",
+        "skinning",
+        "herbalism"
+      ],
+      "priority": "BUFF",
+      "source": [
+        "https://www.wow-professions.com/forever/camping-guide"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

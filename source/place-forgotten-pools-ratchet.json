@@ -1,0 +1,24 @@
+{
+  "build": "1.60.1",
+  "place": {
+    "id": "forgotten-pools-ratchet",
+    "name": "Forgotten Pools / Ratchet",
+    "levels": "13-14"
+  },
+  "facts": [
+    {
+      "id": "place.forgotten-pools-ratchet.oasis-and-ratchet-fishing",
+      "category": "fish_cook",
+      "title": "Oasis and Ratchet fishing",
+      "location": "Forgotten Pools, Stagnant Oasis, Lushwater Oasis; Ratchet docks",
+      "note": "From Classic: Longjaw Mud Snapper, Bristle Whisker Catfish and Deviate Fish in the oases. Forever lists no fishing trainer in the Barrens; Journeyman (level 10, skill 50) is Lumak in Orgrimmar. Cooking trainer Duhng is east of the Crossroads.",
+      "professions": [
+        "fishing",
+        "cooking"
+      ],
+      "priority": "INFO",
+      "source": [],
+      "confidence": "inferred"
+    }
+  ]
+}

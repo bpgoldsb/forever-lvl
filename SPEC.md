@@ -68,22 +68,37 @@ Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-
 
 ## Data
 
-- Zero dependencies, no build step, plain HTML, CSS and JavaScript. Must work from
-  `file://` and as a static site.
+- Zero dependencies and no build step for the app: plain HTML, CSS and
+  JavaScript. Must work from `file://` and as a static site.
 - `index.html` is the app. Data lives in `data/*.js`, loaded with script tags in the
-  order listed in `data/index.js`. Adding a level range is new data files plus a
-  line in that list, with no change to `index.html`.
-- Two task lists: `ROUTE_DATA` (per zone, `levels: "7-8"`) and `LEVEL_DATA` (per
-  level, `level: 8`). Reference panels are `PANELS` in `data/reference.js`.
+  order listed in `data/index.js`.
+- The task data is in layers. Facts and advice are JSON in `source/` (formats in
+  `source/README.md`). `node tools/build-data.mjs` checks them and writes the
+  `data/` files, which are committed and never edited by hand:
+  `class-<class>.js` and `prof-<profession>.js` (rows by level),
+  `place-<place>.js` (rows by zone or hub), `trainers.js`, `categories.js` and
+  `index.js`. `data/reference.js` and `data/build.js` are still written by hand.
+  Adding rows is a change in `source/` and a rebuild, with no change to
+  `index.html`.
+- Two task lists: `ROUTE_DATA` (per place, `levels: "7-8"`) and `LEVEL_DATA` (per
+  level, `level: 8`). Several files can add rows to one level; the page joins
+  them, ordered by a row's `order` (default 50) and then by load order.
+  Reference panels are `PANELS` in `data/reference.js`.
 - Task fields: `id`, `category`, `priority`, `title`, `cost`, `location`, `note`,
-  `source`, `confidence`, `showCost`.
-  - `category`: spell, grimoire, quest, herb, skin, fish_cook, wand, camp, aid (First Aid), talent
-    (talent is used only by the generated talent rows).
+  `source`, `confidence`, `showCost`, and optionally `trainer`, `order`,
+  `professions`.
+  - `category`: declared in `source/categories.json` with its label and colour
+    (today spell, grimoire, quest, herb, skin, fish_cook, wand, camp, aid). The
+    page adds talent itself, for the generated talent rows.
+  - `source` is a list of addresses; each shows as its own hover arrow.
+  - A row with a `trainer` and no `location` (a spell, a grimoire) gets its
+    location from the trainer list, by the character's race and the row's level.
   - `priority`: BUY, SKIP, GATE, QUEST, BUFF, INFO.
   - `confidence`: confirmed (a Forever-specific source says so), inferred (Classic
     data assumed unchanged), unverified (sources conflict or none found).
 - Task ids are unique across all data files and never reused; progress is stored
-  by id. Talent rows use `tal_<level>`; they cannot be ticked, and a tick saved for
+  by id. A fact has its own id in `source/`; `source/legacy-ids.json` maps the
+  rows written before the layers to the ids they have always had. Talent rows use `tal_<level>`; they cannot be ticked, and a tick saved for
   one by an older version of the page is ignored.
 - A talent build is a Wowhead Forever talent calculator address with its order
   part, for any class. `data/build.js` holds the example build. Visitors add

@@ -1,0 +1,45 @@
+{
+  "build": "1.60.1",
+  "class": "warlock",
+  "facts": [
+    {
+      "id": "warlock.quest.summon-imp",
+      "level": 2,
+      "category": "quest",
+      "title": "Vile Familiars: Summon Imp",
+      "location": "Zureetha Fargaze, then Ruzan",
+      "note": "Level 2. Bring 6 Vile Familiar Heads to Ruzan to learn Summon Imp, then back to Zureetha.",
+      "priority": "GATE",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-orc-troll-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.quest.voidwalker",
+      "level": 10,
+      "category": "quest",
+      "title": "Voidwalker: Gan'rul's Summons, Creature of the Void, The Binding",
+      "location": "Ophek (Razor Hill), then Gan'rul Bloodeye (Cleft of Shadow)",
+      "note": "Level 10. Tablet of Verga is in the Burning Blade Stash in Skull Rock; summon at the Cleft of Shadow circle.",
+      "priority": "GATE",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-orc-troll-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "warlock.quest.succubus",
+      "level": 20,
+      "category": "quest",
+      "title": "Succubus (Sayaad) quest chain",
+      "location": "Gan'rul Bloodeye, Cleft of Shadow",
+      "note": "Level 20. Short travel chain: Orgrimmar, the Crossroads, Camp Taurajo, possibly Ratchet and Stonetalon (from your own beta run). Some Forever text calls the pet Sayaad.",
+      "priority": "GATE",
+      "source": [
+        "https://www.method.gg/wow-forever/wow-forever-warlock-leveling-guide-and-talents"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

@@ -8,12 +8,14 @@ for what it must do and `PLAN.md` for what is next and what is undecided.
 - No dependencies, no framework, and no build step for the app: `index.html` plus
   the committed `data/*.js`. It must keep working when opened from `file://`.
   `tools/` is for checking the app and building its data, and is not part of it.
-- Data is moving to layers (PLAN.md section I): facts and advice in `source/`,
-  and `data/*.js` generated from them by a script in `tools/` and committed.
-  Once a data file is generated, never edit it by hand; change `source/` and
-  rebuild. Until then, data changes go in `data/`, not in `index.html`, and
-  follow the field list at the top of each data file.
-- Never change or reuse a task `id`; saved progress is keyed on it.
+- Data is in layers (PLAN.md section I): facts and advice in `source/`
+  (formats in `source/README.md`), and `data/*.js` built from them by
+  `node tools/build-data.mjs` and committed. Never edit a built file (it says
+  GENERATED at the top); change `source/`, rebuild, and commit both. Facts and
+  advice stay in separate files: pulling facts again must not touch advice.
+  `data/reference.js`, `data/build.js` and `data/talents-*.js` are not built.
+- Never change or reuse a task `id` or a fact `id`; saved progress is keyed on
+  the task id, and `source/legacy-ids.json` ties the two together.
 - Do not invent game facts. Forever is in beta and differs from Classic. A row is
   `confirmed` only when a Forever-specific page says so; otherwise `inferred` or
   `unverified`, with the source URL when there is one. "Not found" is a valid result.
@@ -36,7 +38,10 @@ for what it must do and `PLAN.md` for what is next and what is undecided.
 
 ## Checking your work
 
-- `node --check data/<file>.js` for each data file you touch.
+- `node tools/build-data.mjs` after any change in `source/`; it checks the
+  data and stops on an error. `node tools/build-data.mjs --check` must say "up
+  to date" before a commit.
+- `node --check data/<file>.js` for each hand-written data file you touch.
 - Look at every UI change: `node tools/shot.mjs --shot out/x.png` renders the page
   in headless Chromium under podman and saves a PNG you can read. It can also set
   saved state, click, hover and run JavaScript in the page, and it prints console

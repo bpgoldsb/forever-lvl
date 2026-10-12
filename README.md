@@ -51,8 +51,10 @@ There is nothing to build or install. Download the repository and open
 
 `SPEC.md` says what the app must do, `PLAN.md` what is next, and `AGENTS.md` holds
 the rules for AI coding agents that work on it. `research/` has the research
-notes behind the data. `tools/shot.mjs` takes screenshots of the page for checking
-changes; it is not part of the app.
+notes behind the data. The rows are written in `source/` (see `source/README.md`)
+and `tools/build-data.mjs` builds the `data/` files from them; the built files are
+committed, so the page itself needs no build. `tools/shot.mjs` takes screenshots
+of the page for checking changes. Neither tool is part of the app.
 
 ## Credits and sources
 

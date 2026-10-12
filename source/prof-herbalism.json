@@ -1,0 +1,41 @@
+{
+  "build": "1.60.1",
+  "profession": "herbalism",
+  "facts": [
+    {
+      "id": "prof.herbalism-skinning.apprentice",
+      "level": 1,
+      "category": "herb",
+      "title": "Learn Herbalism and Skinning",
+      "location": "Zor'la (Valley of Trials); Kagil (The Den)",
+      "note": "No level requirement in Forever. Both train only to 75. Buy a Skinning Knife. Peacebloom and Silverleaf at skill 1.",
+      "professions": [
+        "herbalism",
+        "skinning"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/herbalism-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.herbalism-skinning.journeyman",
+      "level": 10,
+      "category": "herb",
+      "title": "Journeyman Herbalism and Skinning",
+      "cost": "5s each (Classic)",
+      "location": "The Drag, Orgrimmar (Jandi; Thuwd)",
+      "note": "Needs skill 50. The Durotar trainers stop at 75.",
+      "professions": [
+        "herbalism",
+        "skinning"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/skinning-trainers"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

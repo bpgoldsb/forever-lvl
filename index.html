@@ -271,10 +271,12 @@
   "use strict";
 
   const STORAGE_KEY = "forever-lvl.v1";
-  const CATEGORIES = {
-    spell: "Spell", grimoire: "Grimoire", quest: "Quest", herb: "Herb",
-    skin: "Skin", fish_cook: "Fish / Cook", wand: "Wand", camp: "Camp", aid: "First Aid", talent: "Talent"
-  };
+  // Row categories, key -> label. Declared in data/categories.js; the talent
+  // category is the page's own, for the rows it makes from a talent build.
+  const CATEGORIES = {};
+  // The character the page is written for. Rows that name a trainer get their
+  // location from data/trainers.js for this race.
+  const CHARACTER = { class: "warlock", race: "orc" };
 
   const $ = (id) => document.getElementById(id);
   const el = (tag, cls, text) => {
@@ -509,10 +511,33 @@
     ALL = ROUTE.concat(LEVELS).flatMap((g) => g.tasks || []);
   }
 
+  // A row with a `trainer` and no location gets the trainer's location for
+  // this character's race at that level.
+  function withTrainer(t, level) {
+    if (t.location || !t.trainer) return t;
+    const found = (window.TRAINERS || []).find((x) =>
+      x.teaches === t.trainer && x.race === CHARACTER.race && level >= range(x.levels)[0] && level <= range(x.levels)[1]);
+    if (!found) console.warn("No " + t.trainer + " trainer listed for a level " + level + " " + CHARACTER.race + ": " + t.id);
+    return found ? Object.assign({}, t, { location: found.location }) : t;
+  }
+
   async function loadData() {
     for (const f of window.DATA_FILES || []) await loadScript("data/" + f);
     ROUTE = (window.ROUTE_DATA || []).slice().sort((a, b) => range(a.levels)[0] - range(b.levels)[0]);
-    BASE_LEVELS = (window.LEVEL_DATA || []).map((g) => Object.assign({}, g, { tasks: (g.tasks || []).slice() }));
+    for (const c of window.CATEGORY_DATA || []) {
+      CATEGORIES[c.key] = c.label;
+      document.documentElement.style.setProperty("--c-" + c.key, c.color);
+    }
+    CATEGORIES.talent = "Talent";
+    // Several files can hold rows for one level (a class, a profession): one
+    // group per level, rows by `order` (default 50) and then by load order.
+    const byLevel = new Map();
+    for (const g of window.LEVEL_DATA || []) {
+      if (!byLevel.has(g.level)) byLevel.set(g.level, []);
+      for (const t of g.tasks || []) byLevel.get(g.level).push(withTrainer(t, g.level));
+    }
+    const order = (t) => (t.order == null ? 50 : t.order);
+    BASE_LEVELS = [...byLevel].map(([level, tasks]) => ({ level, tasks: tasks.sort((a, b) => order(a) - order(b)) }));
     MAX_LEVEL = Math.max(1, ...ROUTE.map((z) => range(z.levels)[1]), ...BASE_LEVELS.map((g) => g.level));
     await applyBuild();
 
@@ -605,17 +630,18 @@
     // Routine costs stay in the data but off screen; set showCost on a task
     // whose price is worth planning for (a mount, say).
     if (t.cost && t.showCost) head.appendChild(el("span", "cost", t.cost));
-    if (t.source) {
+    // `source` is a list, so a row can cite both sides of a conflict.
+    [].concat(t.source || []).forEach((url, i, all) => {
       const a = el("a", "src", "\u2197");
-      a.href = t.source;
+      a.href = url;
       a.target = "_blank";
       a.rel = "noopener noreferrer";
-      a.title = "Open source";
-      a.setAttribute("aria-label", "Source for " + t.title);
-      if (!(t.cost && t.showCost)) a.style.marginLeft = "auto";
+      a.title = all.length > 1 ? "Open source " + (i + 1) + " of " + all.length : "Open source";
+      a.setAttribute("aria-label", "Source" + (all.length > 1 ? " " + (i + 1) : "") + " for " + t.title);
+      if (i === 0 && !(t.cost && t.showCost)) a.style.marginLeft = "auto";
       a.addEventListener("click", (e) => e.stopPropagation());
       head.appendChild(a);
-    }
+    });
     body.appendChild(head);
 
     if (t.location || t.note) {
