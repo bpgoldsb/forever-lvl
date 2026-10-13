@@ -57,14 +57,15 @@
       "id": "place.westfall.deadmines-blueprint",
       "category": "camp",
       "title": "Deadmines blueprint: Cookie’s Feast",
-      "location": "The Deadmines",
+      "location": "The Deadmines (17-26)",
       "note": "Dropped by Cookie; Cooking 140. Stamina food for the camp.",
       "professions": [
         "cooking"
       ],
       "priority": "INFO",
       "source": [
-        "https://www.wow-professions.com/forever/camping-guide"
+        "https://www.wow-professions.com/forever/camping-guide",
+        "https://warcraftforever.games/dungeons"
       ],
       "confidence": "confirmed"
     }

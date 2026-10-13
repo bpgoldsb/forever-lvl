@@ -10,7 +10,7 @@
       "id": "place.oases-camp-taurajo.wailing-caverns-blueprints",
       "category": "camp",
       "title": "Wailing Caverns blueprints",
-      "location": "Wailing Caverns (18-22)",
+      "location": "Wailing Caverns (17-24)",
       "note": "Journeyman Campfire from Lord Serpentis (learn at Cooking 90, use at 140). Field Guide from Lady Anacondra (Skinning 140).",
       "professions": [
         "cooking",
@@ -18,7 +18,8 @@
       ],
       "priority": "INFO",
       "source": [
-        "https://www.wow-professions.com/forever/camping-guide"
+        "https://www.wow-professions.com/forever/camping-guide",
+        "https://warcraftforever.games/dungeons"
       ],
       "confidence": "confirmed"
     },
