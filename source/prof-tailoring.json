@@ -1,0 +1,134 @@
+{
+  "build": "1.60.1",
+  "profession": "tailoring",
+  "facts": [
+    {
+      "id": "prof.tailoring.human.apprentice",
+      "level": 6,
+      "category": "tailoring",
+      "title": "Learn Tailoring",
+      "location": "Eldrin, house at the Eastvale Logging Camp",
+      "note": "No level requirement in Forever. Lawrence Schneider, Mage Quarter, Stormwind, also teaches Apprentice.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/tailoring-trainers",
+        "https://www.wow-professions.com/forever/tailoring-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.tailoring.orc.apprentice",
+      "level": 10,
+      "category": "tailoring",
+      "title": "Learn Tailoring",
+      "location": "Snang, the Drag, Orgrimmar",
+      "note": "No level requirement in Forever. Durotar has no Tailoring trainer. Kil'hala at the Crossroads also teaches Apprentice.",
+      "races": [
+        "orc"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/tailoring-trainers",
+        "https://www.wow-professions.com/forever/tailoring-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.tailoring.1-55",
+      "level": 10,
+      "category": "tailoring",
+      "title": "Tailoring 1-55: Bolt of Linen Cloth, then Linen Belt",
+      "location": "Any Tailoring trainer",
+      "note": "1-30: 30 Bolt of Linen Cloth (60 Linen Cloth); keep them all. 30-55: 28 Linen Belt (a bolt and a Coarse Thread each). Thread is sold by the Tailoring Supply vendor near most trainers.",
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/tailoring-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.tailoring.orc.journeyman",
+      "level": 10,
+      "category": "tailoring",
+      "title": "Journeyman Tailoring",
+      "location": "Magar, the Drag, Orgrimmar",
+      "note": "Needs Tailoring 50 and level 10. Mahani at Camp Taurajo also teaches Journeyman.",
+      "races": [
+        "orc"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/tailoring-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.tailoring.human.journeyman",
+      "level": 10,
+      "category": "tailoring",
+      "title": "Journeyman Tailoring",
+      "location": "Sellandus, Mage Quarter, Stormwind",
+      "note": "Needs Tailoring 50 and level 10.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/tailoring-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.tailoring.55-125",
+      "level": 10,
+      "category": "tailoring",
+      "title": "Tailoring 55-125: wool, then silk bolts",
+      "location": "Any Journeyman trainer",
+      "note": "55-80: 45 Bolt of Woolen Cloth (135 Wool Cloth); learn Journeyman first, they can take you past 75. 80-95 Woolen Cape; 95-100 Double-stitched Woolen Shoulders; 100-120 Bolt of Silk Cloth (keep them); 120-125 the shoulders again.",
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/tailoring-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.tailoring.orc.expert",
+      "level": 20,
+      "category": "tailoring",
+      "title": "Expert Tailoring is in Undercity",
+      "location": "Josef Gregorian, Magic Quarter, Undercity",
+      "note": "Needs Tailoring 125 and level 20; 50 silver. He is the only Horde Expert trainer listed. The Spinning Wheel, a camp crafting station, needs Tailoring 140 and a blueprint from the Unstable Sentinel in the City of Dalaran.",
+      "races": [
+        "orc"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/tailoring-trainers",
+        "https://www.wow-professions.com/forever/tailoring-leveling-guide",
+        "https://www.wow-professions.com/forever/camping-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.tailoring.human.expert",
+      "level": 20,
+      "category": "tailoring",
+      "title": "Expert Tailoring",
+      "location": "Georgio Bolero, Mage Quarter, Stormwind",
+      "note": "Needs Tailoring 125 and level 20; 50 silver. The Spinning Wheel, a camp crafting station, needs Tailoring 140 and a blueprint from the Unstable Sentinel in the City of Dalaran.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/tailoring-trainers",
+        "https://www.wow-professions.com/forever/tailoring-leveling-guide",
+        "https://www.wow-professions.com/forever/camping-guide"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

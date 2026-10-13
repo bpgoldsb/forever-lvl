@@ -1,0 +1,132 @@
+{
+  "build": "1.60.1",
+  "profession": "engineering",
+  "facts": [
+    {
+      "id": "prof.engineering.orc.apprentice",
+      "level": 7,
+      "category": "engineering",
+      "title": "Learn Engineering",
+      "location": "Mukdrak, Razor Hill, near the forge beside the road to Orgrimmar",
+      "note": "No level requirement in Forever. Buy a Blacksmith Hammer; most recipes need it.",
+      "races": [
+        "orc"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/engineering-trainers",
+        "https://www.wow-professions.com/forever/engineering-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.engineering.human.apprentice",
+      "level": 10,
+      "category": "engineering",
+      "title": "Learn Engineering",
+      "location": "Sprite Jumpsprocket, Dwarven District, Stormwind",
+      "note": "No level requirement in Forever. Elwynn Forest has no Engineering trainer. Buy a Blacksmith Hammer; most recipes need it.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/engineering-trainers",
+        "https://www.wow-professions.com/forever/engineering-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.engineering.1-51",
+      "level": 10,
+      "category": "engineering",
+      "title": "Engineering 1-51: powder, bolts, Arclight Spanner",
+      "location": "Any Engineering trainer",
+      "note": "1-30: 60 Rough Blasting Powder (keep them). 30-50: 30 Handful of Copper Bolts (keep them). 50-51: Arclight Spanner (6 Copper Bar); it is a tool, keep it.",
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/engineering-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.engineering.orc.journeyman",
+      "level": 10,
+      "category": "engineering",
+      "title": "Journeyman Engineering",
+      "location": "Nogg, Valley of Honor, Orgrimmar",
+      "note": "Needs Engineering 50 and level 10.",
+      "races": [
+        "orc"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/engineering-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.engineering.human.journeyman",
+      "level": 10,
+      "category": "engineering",
+      "title": "Journeyman Engineering",
+      "location": "Lilliam Sparkspindle, Dwarven District, Stormwind",
+      "note": "Needs Engineering 50 and level 10.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/engineering-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.engineering.51-150",
+      "level": 10,
+      "category": "engineering",
+      "title": "Engineering 51-150: bombs, dynamite, bronze parts",
+      "location": "Any Journeyman trainer",
+      "note": "51-75 Rough Copper Bomb (learn Journeyman first, they can take you past 75); 75-90 Coarse Blasting Powder; 90-100 Coarse Dynamite; 100-105 Silver Contact; 105-125 Bronze Tube (Weak Flux from the Engineering Supply vendor); 125-135 Standard Scope; 135-150 Heavy Blasting Powder and Whirring Bronze Gizmo, kept for 160.",
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/engineering-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.engineering.orc.expert",
+      "level": 20,
+      "category": "engineering",
+      "title": "Expert Engineering",
+      "location": "Roxxik, Valley of Honor, Orgrimmar",
+      "note": "Needs Engineering 125 and level 20; 50 silver. He is the only Horde Expert trainer listed.",
+      "races": [
+        "orc"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/engineering-trainers",
+        "https://www.wow-professions.com/forever/engineering-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.engineering.human.expert",
+      "level": 20,
+      "category": "engineering",
+      "title": "Expert Engineering is in Ironforge",
+      "location": "Springspindle Fizzlegear, Ironforge",
+      "note": "Needs Engineering 125 and level 20; 50 silver. He is the only Alliance Expert trainer listed.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/engineering-trainers",
+        "https://www.wow-professions.com/forever/engineering-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

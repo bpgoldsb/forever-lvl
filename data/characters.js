@@ -54,6 +54,30 @@ window.CHARACTER_OPTIONS = {
     {
       "key": "first-aid",
       "label": "First Aid"
+    },
+    {
+      "key": "alchemy",
+      "label": "Alchemy"
+    },
+    {
+      "key": "tailoring",
+      "label": "Tailoring"
+    },
+    {
+      "key": "enchanting",
+      "label": "Enchanting"
+    },
+    {
+      "key": "mining",
+      "label": "Mining"
+    },
+    {
+      "key": "blacksmithing",
+      "label": "Blacksmithing"
+    },
+    {
+      "key": "engineering",
+      "label": "Engineering"
     }
   ],
   "default": {

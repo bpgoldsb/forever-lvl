@@ -1,0 +1,132 @@
+{
+  "build": "1.60.1",
+  "profession": "blacksmithing",
+  "facts": [
+    {
+      "id": "prof.blacksmithing.human.apprentice",
+      "level": 6,
+      "category": "smithing",
+      "title": "Learn Blacksmithing",
+      "location": "Smith Argus, Goldshire, across from the inn",
+      "note": "No level requirement in Forever. Buy a Blacksmith Hammer from Tharynn Bouden in Goldshire; most recipes need it.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/blacksmithing-trainers",
+        "https://www.wow-professions.com/forever/blacksmithing-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.blacksmithing.orc.apprentice",
+      "level": 7,
+      "category": "smithing",
+      "title": "Learn Blacksmithing",
+      "location": "Dwukk, at the forge in Razor Hill",
+      "note": "No level requirement in Forever. Buy a Blacksmith Hammer from Flakk in Razor Hill; most recipes need it.",
+      "races": [
+        "orc"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/blacksmithing-trainers",
+        "https://www.wow-professions.com/forever/blacksmithing-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.blacksmithing.1-75",
+      "level": 7,
+      "category": "smithing",
+      "title": "Blacksmithing 1-75: stones, then Runed Copper Gauntlets",
+      "location": "Any Blacksmithing trainer",
+      "note": "1-25: 30 Rough Sharpening Stone. 25-50: 30 Rough Grinding Stone (keep 26). 50-67: 36 Coarse Grinding Stone (keep them for 95). 67-75: 8 Runed Copper Gauntlets (64 Copper Bar, 16 Rough Grinding Stone).",
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/blacksmithing-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.blacksmithing.orc.journeyman",
+      "level": 10,
+      "category": "smithing",
+      "title": "Journeyman Blacksmithing",
+      "location": "Snarl, Valley of Honor, Orgrimmar",
+      "note": "Needs Blacksmithing 50 and level 10. Traugh at the Crossroads also teaches Journeyman.",
+      "races": [
+        "orc"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/blacksmithing-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.blacksmithing.human.journeyman",
+      "level": 10,
+      "category": "smithing",
+      "title": "Journeyman Blacksmithing",
+      "location": "Therum Deepforge, Dwarven District, Stormwind",
+      "note": "Needs Blacksmithing 50 and level 10.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/blacksmithing-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.blacksmithing.75-150",
+      "level": 10,
+      "category": "smithing",
+      "title": "Blacksmithing 75-150: bronze",
+      "location": "Any Journeyman trainer",
+      "note": "75-80 Runed Copper Belt (or Silver Rod); 80-95 Rough Bronze Leggings; 95-100 Patterned Bronze Bracers; 100-112 Heavy Grinding Stone; 112-125 the bracers again; 125-140 Bronze Shortsword; 140-150 Bronze Warhammer. Weak and Strong Flux are sold by the Blacksmithing Supply vendor beside each capital city trainer.",
+      "priority": "INFO",
+      "source": [
+        "https://www.wow-professions.com/forever/blacksmithing-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.blacksmithing.orc.expert",
+      "level": 20,
+      "category": "smithing",
+      "title": "Expert Blacksmithing",
+      "location": "Saru Steelfury, Valley of Honor, Orgrimmar",
+      "note": "Needs Blacksmithing 125 and level 20; 50 silver. He is the only Horde Expert trainer listed.",
+      "races": [
+        "orc"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/blacksmithing-trainers",
+        "https://www.wow-professions.com/forever/blacksmithing-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.blacksmithing.human.expert",
+      "level": 20,
+      "category": "smithing",
+      "title": "Expert Blacksmithing is in Ironforge",
+      "location": "Bengus Deepforge, the Great Forge, Ironforge",
+      "note": "Needs Blacksmithing 125 and level 20; 50 silver. Alard Schmied in Dalaran is also listed, but the trainer page says he may be bugged in the beta.",
+      "races": [
+        "human"
+      ],
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/blacksmithing-trainers",
+        "https://www.wow-professions.com/forever/blacksmithing-leveling-guide"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

@@ -11,5 +11,11 @@ window.CATEGORY_DATA = [
   {"key":"fish_cook","label":"Fish / Cook","color":"#5ab4e6"},
   {"key":"wand","label":"Wand","color":"#e67e6a"},
   {"key":"camp","label":"Camp","color":"#e89a4a"},
-  {"key":"aid","label":"First Aid","color":"#f0f0f0"}
+  {"key":"aid","label":"First Aid","color":"#f0f0f0"},
+  {"key":"alchemy","label":"Alchemy","color":"#e06fa8"},
+  {"key":"tailoring","label":"Tailoring","color":"#9ad0c2"},
+  {"key":"enchanting","label":"Enchanting","color":"#7c8cf8"},
+  {"key":"mining","label":"Mining","color":"#b8b8a0"},
+  {"key":"smithing","label":"Blacksmith","color":"#8fa3b8"},
+  {"key":"engineering","label":"Engineering","color":"#e6d24a"}
 ];
