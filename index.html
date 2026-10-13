@@ -260,6 +260,12 @@
   .fac-horde { --pc: #e0554f; } .fac-alliance { --pc: #5a9be6; }
 
   /* Tour: a ring around one part of the page, the rest dimmed, a card beside it. */
+  #toast { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 20; max-width: min(560px, calc(100% - 24px));
+    background: var(--panel); color: var(--text); border: 1px solid var(--accent); border-radius: 6px; padding: 8px 14px; font-size: 13px; box-shadow: 0 8px 30px rgba(0, 0, 0, .6); }
+  #toast.bad { border-color: var(--bad); }
+  #toast[hidden] { display: none; }
+  dialog .linkbox { margin: 4px 0 0; padding-top: 8px; border-top: 1px solid var(--line); }
+  dialog .linkfield { width: 100%; box-sizing: border-box; margin-bottom: 4px; }
   #tour { position: fixed; inset: 0; z-index: 10; }
   #tour[hidden] { display: none; }
   #tourRing {
@@ -341,6 +347,7 @@
   <aside id="panel" hidden></aside>
 </main>
 <dialog id="charDialog" aria-label="Character"></dialog>
+<div id="toast" role="status" hidden></div>
 <div id="tour" hidden>
   <div id="tourRing"></div>
   <div id="tourCard" role="dialog" aria-label="Tour of the page"></div>
@@ -1265,12 +1272,12 @@
   // race; its zones; its professions), or changes the current
   // one's name, class and race. With no character it cannot be closed.
   const STEPS = ["Character", "Zones", "Professions"];
-  const form = { edit: false, step: 1, mode: "manual", name: "", race: null, class: null, text: "", result: null, zones: null, professions: [] };
+  const form = { edit: false, step: 1, mode: "manual", name: "", race: null, class: null, text: "", result: null, zones: null, professions: [], link: null };
 
   function openDialog(edit) {
     const ch = edit ? me() : null;
     Object.assign(form, {
-      edit: !!ch, step: 1, mode: "manual", text: "", result: null, zones: null, professions: [],
+      edit: !!ch, step: 1, mode: "manual", text: "", result: null, zones: null, professions: [], link: null,
       name: ch ? ch.name : "", race: ch ? ch.race : null, class: ch ? ch.class : null
     });
     renderDialog();
@@ -1380,11 +1387,23 @@
     const d = $("charDialog"), first = !state.characters.length;
     d.textContent = "";
     d.appendChild(el("h2", null, form.edit ? "Edit character" : "New character"));
+    if (linkNotice && !me()) d.appendChild(el("p", "bad", linkNotice));
     if (!form.edit) d.appendChild(el("p", "steps", "Step " + form.step + " of " + STEPS.length + ": " + STEPS[form.step - 1]));
     if (form.edit || form.step === 1) stepCharacter(d, first);
     else if (form.step === 2) stepZones(d);
     else stepProfessions(d);
 
+    if (form.edit && form.link) {
+      const box = el("div", "linkbox");
+      box.appendChild(el("p", null, "This link opens the page with this character already set up: class, race, professions, zones and name. It carries no progress and no other characters."));
+      const f = el("input", "linkfield");
+      f.type = "text"; f.readOnly = true; f.value = form.link.url;
+      f.setAttribute("aria-label", "Character link");
+      f.addEventListener("focus", () => f.select());
+      box.appendChild(f);
+      box.appendChild(el("p", "linkstatus " + (form.link.copied ? "good" : "note"), form.link.copied ? "Link copied" : "Copying..."));
+      d.appendChild(box);
+    }
     const buttons = el("div", "row buttons");
     const button = (text, onClick, cls, off) => {
       const b = el("button", "btn" + (cls ? " " + cls : ""), text);
@@ -1394,7 +1413,7 @@
     };
     const importing = !form.edit && form.mode === "import";
     const ready = !!form.race && (importing ? !!form.text.trim() : !!form.class);
-    if (form.edit) button("Save", saveCharacter, "main", !ready);
+    if (form.edit) { button("Save", saveCharacter, "main", !ready); button("Copy link", copyLink, null, !ready); }
     else {
       if (form.step === 1 && importing) button("Check", async () => { form.result = await readBuild(form.text); renderDialog(); });
       if (form.step > 1) button("Back", () => { form.step--; renderDialog(); });
@@ -1612,6 +1631,122 @@
     reader.readAsText(file);
   }
 
+  // ---- character links ------------------------------------------------------
+  // A link is the page's address plus a fragment that describes a character:
+  //   #c1~<class>~<race>~<professions>~<zones>~<name>
+  // c1 is the version (a later format gets c2 and old links still read as c1).
+  // Parts are split on "~", lists on ","; a space in a zone is "_" (no zone name
+  // holds "_", "~" or ","); the name, last and optional, is percent-encoded.
+  // It carries no ticks, no other characters and no talent builds (a build is a
+  // long address of its own). An empty list is "-".
+  const LINK_VERSION = "c1", NAME_MAX = 40;
+  let linkNotice = null;
+  function linkFor(ch) {
+    const race = raceOf(ch), ok = zoneChoices(race);
+    const list = (a) => (a.length ? a.join(",") : "-");
+    const parts = [LINK_VERSION, ch.class, ch.race, list(ch.professions),
+      list(zonesOf(ch).filter((z) => ok.includes(z)).map((z) => z.replace(/ /g, "_")))];
+    if (ch.name) parts.push(encodeURIComponent(ch.name).replace(/~/g, "%7E"));
+    // file:// has no usable origin; the page's own address is the whole thing.
+    return (location.protocol === "file:" ? location.href.split("#")[0] : location.origin + location.pathname) + "#" + parts.join("~");
+  }
+  // "#c1~..." -> { character } or { error: reason }. Nothing is trusted.
+  function readLink(hash) {
+    const bad = (why) => ({ error: why });
+    const parts = String(hash).replace(/^#/, "").split("~");
+    if (!/^c\d+$/.test(parts[0])) return bad("this is not a character link");
+    if (parts[0] !== LINK_VERSION) return bad("link version " + parts[0].slice(0, 12) + " is not known to this page");
+    if (parts.length < 5 || parts.length > 6) return bad("it has the wrong number of parts");
+    const o = options(), shown = (s) => JSON.stringify(String(s).slice(0, 30));
+    const [, cls, race, profs, zonesText] = parts;
+    if (!(o.classes || []).some((x) => x.key === cls)) return bad("unknown class " + shown(cls));
+    const r = (o.races || []).find((x) => x.key === race);
+    if (!r) return bad("unknown race " + shown(race));
+    if (r.classes && !r.classes.includes(cls)) return bad("race " + r.label + " cannot be class " + label("classes", cls));
+    const items = (s) => (s === "-" || s === "" ? [] : s.split(","));
+    const professions = items(profs);
+    for (const p of professions) if (!(o.professions || []).some((x) => x.key === p)) return bad("unknown profession " + shown(p));
+    if (new Set(professions).size !== professions.length) return bad("a profession is listed twice");
+    const primary = professions.filter((p) => isPrimary((o.professions || []).find((x) => x.key === p)));
+    if (primary.length > MAX_PRIMARY) return bad("more than " + MAX_PRIMARY + " primary professions");
+    const zones = items(zonesText).map((z) => z.replace(/_/g, " "));
+    const ok = zoneChoices(r);
+    for (const z of zones) if (!ok.includes(z)) return bad("zone " + shown(z) + " is unknown or closed to " + r.label);
+    if (new Set(zones).size !== zones.length) return bad("a zone is listed twice");
+    let name = "";
+    if (parts[5]) {
+      try { name = decodeURIComponent(parts[5]); } catch (e) { return bad("the name is not readable"); }
+      name = name.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, NAME_MAX);
+    }
+    return { character: readCharacter({ name, class: cls, race, professions, zones, places: [] }) };
+  }
+  const sameList = (a, b) => a.length === b.length && a.every((x) => b.includes(x));
+  const sameCharacter = (a, b) => a.class === b.class && a.race === b.race && a.name === b.name &&
+    sameList(a.professions, b.professions) && sameList(zonesOf(a), zonesOf(b));
+  // Reads the address fragment, adds or selects the character it describes,
+  // then clears the fragment. Returns true when a character was added or chosen
+  // (a visitor with none then skips the creation dialog).
+  function openLink() {
+    const hash = location.hash;
+    if (!hash || hash === "#") return false;
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { /* ignore */ }
+    const got = readLink(hash);
+    if (got.error) {
+      linkNotice = "This character link is not valid: " + got.error + ".";
+      toast(linkNotice, true);
+      return false;
+    }
+    const at = state.characters.findIndex((c) => sameCharacter(c, got.character));
+    if (at >= 0) state.character = at;
+    else { state.characters.push(got.character); state.character = state.characters.length - 1; }
+    saveState();
+    toast(at >= 0 ? "You already have this character; selected it." : "Added " + charName(got.character) + " from the link.");
+    return true;
+  }
+  let toastTimer = null;
+  function toast(text, bad) {
+    const t = $("toast");
+    t.textContent = text;
+    t.className = bad ? "bad" : "";
+    t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.hidden = true; }, bad ? 9000 : 4000);
+  }
+  // A link pasted into a tab that is already open.
+  window.addEventListener("hashchange", () => {
+    if (!location.hash || location.hash === "#") return;
+    const first = !state.characters.length;
+    if ($("charDialog").open) $("charDialog").close();
+    if (openLink()) applyCharacter().then(() => { render(); if (first) startTour(); });
+    else render();
+  });
+
+  // Copy link, in the Edit dialog: the field is always shown and selected, so
+  // the link can be copied by hand where the clipboard is not offered
+  // (file://, plain http on a LAN address); the clipboard is tried as well.
+  async function copyLink() {
+    const url = linkFor(me());
+    let copied = false;
+    try {
+      if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(url); copied = true; }
+    } catch (e) { /* fall through to the older way */ }
+    form.link = { url, copied };
+    renderDialog();
+    const box = $("charDialog").querySelector(".linkfield");
+    if (box) {
+      box.focus(); box.select();
+      if (!copied) {
+        try { copied = document.execCommand("copy"); } catch (e) { copied = false; }
+        form.link.copied = copied;
+        const s = $("charDialog").querySelector(".linkstatus");
+        if (s) {
+          s.textContent = copied ? "Link copied" : "Press Ctrl+C (Cmd+C) to copy the link above.";
+          s.className = "linkstatus " + (copied ? "good" : "note");
+        }
+      }
+    }
+  }
+
   // ---- boot --------------------------------------------------------------
   $("charSelect").addEventListener("change", (e) => chooseCharacter(Number(e.target.value)));
   $("charEdit").addEventListener("click", () => openDialog(true));
@@ -1621,7 +1756,7 @@
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && tourAt >= 0) endTour(); });
   // Escape closes the dialog only when there is a character to go back to.
   $("charDialog").addEventListener("cancel", (e) => { if (!me()) e.preventDefault(); });
-  $("charDialog").addEventListener("close", () => { if (!me()) openDialog(false); });
+  $("charDialog").addEventListener("close", () => { linkNotice = null; if (!me()) openDialog(false); });
   $("levelAll").addEventListener("click", () => set("level", "all"));
   $("levelDown").addEventListener("click", () => stepLevel(-1));
   $("levelUp").addEventListener("click", () => stepLevel(1));
@@ -1646,10 +1781,11 @@
   // races and professions.
   loadData().then(() => {
     loadState();
+    const first = !state.characters.length, linked = openLink();
     // A saved filter may name a category that is gone.
     if (state.category !== "all" && !CATEGORIES[state.category]) state.category = "all";
-    return applyCharacter();
-  }).then(render).catch((e) => {
+    return applyCharacter().then(() => { render(); if (linked && first) startTour(); });
+  }).catch((e) => {
     $("route").appendChild(el("div", "error", e.message + "\nCheck data/index.js and the data/ folder."));
   });
 })();

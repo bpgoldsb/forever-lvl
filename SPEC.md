@@ -196,6 +196,26 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
   new race's path. Zones past level 20 are ticked by hand. **No In zone rows are written for
   zones past level 20 yet** (a later part of the work); ticking one today only
   fills the profession trainer lists.
+- **A character can be shared as a link.** Edit has **Copy link**: it shows the
+  page's own address (`origin + path`, or the file address from `file://`) plus
+  a fragment, in a read-only field that is selected, and tries the clipboard
+  (`navigator.clipboard` where the page is a secure context, else
+  `execCommand("copy")`); it says "Link copied", or asks for Ctrl+C when
+  neither worked. The fragment is `#c1~<class>~<race>~<professions>~<zones>~<name>`:
+  `c1` is the version, parts split on `~`, lists on `,` (empty list is `-`),
+  a space in a zone name is `_`, and the optional name is percent-encoded.
+  Example: `#c1~warlock~orc~alchemy,mining~Durotar,The_Barrens~Zug%20Zug`. It
+  holds no ticks, no other characters and no talent builds (a build is a long
+  address of its own). Opening one (at load, or by `hashchange` in an open tab)
+  checks the version, class, race, that the race can be that class, the
+  professions (known, no repeats, at most two primary), and that each zone is
+  one the race's faction can pick; the name is cut to 40 characters and only
+  ever shown as text. A bad link shows "This character link is not valid" with
+  the reason and changes nothing. A good one adds the character and selects it,
+  or selects an existing one identical in class, race, professions, zones and
+  name; other characters and progress are untouched. A visitor with no
+  characters skips the creation dialog but still gets the tour. The fragment is
+  removed afterwards with `history.replaceState`. No storage change.
 - The header holds the character picker, **Edit** (one step of the same
   dialog: name, class, race, and Remove) and **+ New**.
 - The **Professions** edge tab has two lists, in two columns, each profession
