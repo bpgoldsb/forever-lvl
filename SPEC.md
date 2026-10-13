@@ -28,12 +28,13 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
 
 - Sized for a browser window about 1280px wide, a quarter of a 49" ultrawide,
   beside the game. Read at a glance, mid-play. May change later.
-- Two columns: **In zone** (grouped by zone, with its level range) and **On level**
-  (grouped by exact character level).
+- Two columns: **On level** (grouped by exact character level), on the left by
+  default, and **In zone** (grouped by zone, with its level range).
 - **Lock scroll**, on by default: one scroller made of bands, each pairing a zone
   with the levels it covers, so both columns move together. Off: two columns that
   scroll independently.
-- **Swap** flips which column is on the left.
+- **Swap** flips which column is on the left. The saved `swap` value means "not
+  the default order", so a save from when In zone was on the left flips too.
 - Level control: `All`, or a stepper to one level. At level N, In zone shows the
   zone covering N and On level shows N and N+1.
 - Type chips filter both columns by category.
@@ -131,31 +132,47 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
   with the classes it can be in Forever (`research/races-classes-paths.md`).
   The Skyborne is listed once per faction, since its classes differ.
 - **A new visitor has no character.** The character dialog opens on first
-  load and cannot be closed until one is made. It has two modes:
-  - **Manual**: name (optional), class, then race. Only the races that can
-    be the chosen class are offered.
-  - **Import from Wowhead**: a Wowhead Forever talent calculator address,
-    the same one the Talents tab takes. The class and the talents come from
-    it and the build is saved with the character. The address holds no race,
-    so the race is still picked by hand, from the races that can be that
-    class.
-  A new character starts with no professions; the Professions tab opens
-  once it is made.
-- **Zones for levels 1-20 come from the race.** Each race has a `path`, the
-  game zones of its usual way to level 20 (Orc and Troll: Durotar, the
-  Barrens; Tauren: Mulgore, the Barrens; Undead: Tirisfal Glades, Silverpine
-  Forest, Hillsbrad Foothills). Each place file names its game zone, and a
-  place whose range starts at level 20 or below is shown when that zone is on
-  the path. Places past level 20 are ticked by hand.
-- The header holds the character picker, **Edit** (the same dialog: name,
-  race, class, and Remove) and **+ New**.
+  load and cannot be closed until one is made. It runs in three steps, with
+  Back and Next:
+  1. **Character.** Name (optional), then class and race. Class is a list of
+     all nine classes in the game's class colours; race is two lists, Horde
+     and Alliance, in the faction's colour. Either can be picked first:
+     picking one greys out the entries of the other it cannot be paired
+     with, and clicking a picked entry again clears it. Two modes:
+     **Manual**, or **Import from Wowhead**, which takes a Wowhead Forever
+     talent calculator address (the same one the Talents tab takes). The
+     class and the talents come from the address and the build is saved
+     with the character; the address holds no race, so the race is still
+     picked by hand.
+  2. **Zones.** A checklist of the game zones for levels 1-20 of the
+     character's faction, with the race's usual ones ticked.
+  3. **Professions.** A short reason for asking, then the same two lists as
+     the Professions tab.
+  A new character keeps what was ticked; no tab opens by itself afterwards.
+- **A first visit ends with a tour**: five cards over the loaded page (On
+  level, In zone, Level and Type, the edge tabs, the header), each with a
+  ring around the part it describes, with Back, Next and Skip. **?** in the
+  header shows it again. "+ New" runs the three steps without the tour, and
+  a visitor who already has a saved character sees neither.
+- **Zones for levels 1-20 are ticked per character**, as game zones. Each
+  race has a `path`, the zones of its usual way to level 20 (Orc and Troll:
+  Durotar, the Barrens; Tauren: Mulgore, the Barrens; Undead: Tirisfal
+  Glades, Silverpine Forest, Hillsbrad Foothills); those are the starting
+  ticks. Each place file names its game zone, and a place whose range starts
+  at level 20 or below is shown when that zone is ticked. A character saved
+  before zones could be ticked has no list of its own and follows its race's
+  path until a zone is ticked. Changing the race in Edit goes back to the
+  new race's path. Places past level 20 are ticked by hand, place by place.
+- The header holds the character picker, **Edit** (one step of the same
+  dialog: name, class, race, and Remove) and **+ New**.
 - The **Professions** edge tab has two lists. Primary professions: at most
   two, and the rest cannot be ticked while two are. Secondary professions
   (Cooking, Fishing, First Aid; `kind` in `source/characters.json`): any
   number. A saved character with more than two primary ones keeps them and
   gets a note.
-- The **Zones** edge tab lists the path's places (not tickable) and holds
-  the ticks for places past level 20; none are written yet.
+- The **Zones** edge tab holds the zone ticks for levels 1-20 (the faction's
+  zones, the race's own first) and the ticks for places past level 20; none
+  of the latter are written yet.
 - Rows are chosen for the current character: a class file's rows for that
   class; any row that names `professions` (any one is enough), `races` or
   `classes` only when the character matches. In zone shows the character's places (see above) that have rows for it; a

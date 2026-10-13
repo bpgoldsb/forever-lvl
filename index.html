@@ -87,8 +87,8 @@
   }
   .col { overflow-y: auto; padding: 8px 12px 10px; }
   .col + .col { border-left: 1px solid var(--line); }
-  main.swap #routeCol { order: 2; border-left: 1px solid var(--line); }
-  main.swap #levelCol { order: 1; border-left: 0; }
+  main.swap #levelCol { order: 2; border-left: 1px solid var(--line); }
+  main.swap #routeCol { order: 1; border-left: 0; }
   .col > h2 {
     font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted);
     margin: 0 0 8px; font-weight: 600;
@@ -213,7 +213,7 @@
 
   /* Character dialog: make a character, or change the current one. */
   dialog {
-    width: min(440px, calc(100% - 24px));
+    width: min(560px, calc(100% - 24px));
     background: var(--panel); color: var(--text);
     border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, .6);
@@ -226,14 +226,52 @@
   dialog .btn { padding: 4px 12px; }
   dialog .btn.main { border-color: var(--accent); color: var(--accent); font-weight: 600; }
 
+  dialog h3 { font-size: 13px; margin: 0 0 4px; color: var(--accent); }
+  dialog section { margin-bottom: 10px; }
+  dialog .steps { color: var(--text); }
+
+  /* Class and race lists: one button each, in the class or faction colour. */
+  .pickcols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 12px; margin-bottom: 8px; }
+  .pick {
+    display: block; width: 100%; text-align: left; cursor: pointer;
+    background: var(--panel-2); border: 1px solid var(--line); border-left: 4px solid var(--pc);
+    border-radius: 4px; padding: 3px 8px; margin-bottom: 3px; color: var(--pc); font-weight: 600;
+  }
+  .pick:hover:enabled { border-color: var(--pc); }
+  .pick[aria-pressed="true"] { background: var(--pc); border-color: var(--pc); color: #17131f; }
+  .pick:disabled { opacity: .3; cursor: default; }
+  .pick[aria-pressed="true"]:disabled { opacity: 1; }
+  .cls-warrior { --pc: #c79c6e; } .cls-paladin { --pc: #f58cba; } .cls-hunter { --pc: #abd473; }
+  .cls-rogue { --pc: #fff569; } .cls-priest { --pc: #ffffff; } .cls-shaman { --pc: #0070de; }
+  .cls-mage { --pc: #69ccf0; } .cls-warlock { --pc: #9482c9; } .cls-druid { --pc: #ff7d0a; }
+  .fac-horde { --pc: #e0554f; } .fac-alliance { --pc: #5a9be6; }
+
+  /* Tour: a ring around one part of the page, the rest dimmed, a card beside it. */
+  #tour { position: fixed; inset: 0; z-index: 10; }
+  #tour[hidden] { display: none; }
+  #tourRing {
+    position: fixed; border: 2px solid var(--accent); border-radius: 4px; pointer-events: none;
+    box-shadow: 0 0 0 9999px rgba(10, 8, 14, .72);
+  }
+  #tourCard {
+    position: fixed; width: min(330px, calc(100% - 24px));
+    background: var(--panel); border: 1px solid var(--accent); border-radius: 6px; padding: 12px 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .6);
+  }
+  #tourCard h2 { font-size: 15px; margin: 0 0 6px; color: var(--accent); }
+  #tourCard p { margin: 0 0 8px; font-size: 13px; }
+  #tourCard .count { color: var(--muted); font-size: 12px; }
+  #tourCard .btn { padding: 4px 12px; }
+  #tourCard .btn.main { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
   .empty, .error { color: var(--muted); padding: 20px; text-align: center; }
   .error { color: var(--bad); text-align: left; white-space: pre-wrap; }
 
   @media (max-width: 760px) {
-    main { grid-template-columns: 1fr; grid-template-rows: none; overflow-y: auto; }
+    main { grid-template-columns: 1fr; grid-template-rows: none; align-content: start; overflow-y: auto; }
     #locked { overflow: visible; }
     .col { overflow: visible; }
-    .col + .col, main.swap #routeCol { border-left: 0; border-top: 1px solid var(--line); }
+    .col + .col, main.swap #levelCol { border-left: 0; border-top: 1px solid var(--line); }
     .band { grid-template-columns: 1fr; }
     .band > div + div { border-left: 0; }
     .band.head { display: none; }
@@ -265,6 +303,7 @@
     <button class="btn" id="exportBtn" title="Download progress as a JSON file">Export</button>
     <button class="btn" id="importBtn" title="Load progress from a JSON file">Import</button>
     <button class="btn" id="resetBtn" title="Clear this character's completed tasks">Reset</button>
+    <button class="btn" id="tourBtn" type="button" title="Show the short tour of the page again">?</button>
     <input type="file" id="importFile" accept="application/json,.json" hidden>
   </div>
   <div class="row">
@@ -282,13 +321,17 @@
 </header>
 
 <main id="main">
-  <div class="col" id="routeCol"><h2>In zone</h2><div id="route"></div></div>
   <div class="col" id="levelCol"><h2>On level</h2><div id="levels"></div></div>
+  <div class="col" id="routeCol"><h2>In zone</h2><div id="route"></div></div>
   <div id="locked" hidden></div>
   <nav id="rail" aria-label="Reference panels"></nav>
   <aside id="panel" hidden></aside>
 </main>
 <dialog id="charDialog" aria-label="Character"></dialog>
+<div id="tour" hidden>
+  <div id="tourRing"></div>
+  <div id="tourCard" role="dialog" aria-label="Tour of the page"></div>
+</div>
 
 <!-- data/index.js lists the data files; the app loads each one in order. -->
 <script src="data/index.js"></script>
@@ -307,10 +350,23 @@
   const label = (list, key) => ((options()[list] || []).find((x) => x.key === key) || {}).label || key;
   // The game allows two primary professions and every secondary one.
   const MAX_PRIMARY = 2;
-  // Up to this level a character's zones come from its race's usual path;
-  // past it the zones are picked by hand.
+  // Up to this level a character's zones start as its race's usual path;
+  // past it the zones are picked by hand, place by place.
   const PATH_MAX_LEVEL = 20;
-  const raceOf = (ch) => (options().races || []).find((x) => x.key === ch.race) || {};
+  const raceByKey = (key) => (options().races || []).find((x) => x.key === key) || {};
+  const raceOf = (ch) => raceByKey(ch.race);
+  // The game zones for levels 1-PATH_MAX_LEVEL a race can tick: its own path
+  // first, then the rest of its faction's.
+  function zoneChoices(race) {
+    const out = (race.path || []).slice();
+    for (const r of options().races || []) {
+      if (r.faction === race.faction) for (const z of r.path || []) if (!out.includes(z)) out.push(z);
+    }
+    return out;
+  }
+  // A character's ticked zones; one saved before zones could be ticked has
+  // none of its own and follows its race's path.
+  const zonesOf = (ch) => ch.zones || raceOf(ch).path || [];
   const racesFor = (cls) => (options().races || []).filter((r) => !cls || !r.classes || r.classes.includes(cls));
   const isPrimary = (x) => x.kind !== "secondary";
 
@@ -323,16 +379,18 @@
   };
 
   // ---- state -------------------------------------------------------------
-  // level: "all" or a character level. swap: On level column on the left.
+  // level: "all" or a character level. swap: In zone column on the left
+  // (On level is on the left by default).
   // lock: both columns scroll as one, each zone beside the levels it covers.
   // showFinished: keep rows whose tasks are all ticked on screen.
   // panel: id of the open reference panel, or null.
   // characters: every saved character; character: which one is shown. A new
   // visitor has none, and the character dialog stays open until one is made.
   //
-  // A character is { name, class, race, professions, places, done, level,
-  // builds, build }. name is "" until the user types one. places are the
-  // zones and hubs shown under In zone. done, level, builds and build belong
+  // A character is { name, class, race, professions, zones, places, done,
+  // level, builds, build }. name is "" until the user types one. zones are
+  // the game zones ticked for levels 1-20 (null: the race's path); places are
+  // the hubs ticked past level 20. done, level, builds and build belong
   // to the character and are reached through state as before:
   // builds: talent builds the user pasted in, [{ name, url }]. build: which one
   // is shown, counting the data file's own build (if any) as number 0.
@@ -358,6 +416,7 @@
       race: known("races", raw.race) ? raw.race : first.race || ((o.races || [])[0] || {}).key,
       professions: (Array.isArray(raw.professions) ? raw.professions : first.professions || []).filter((x) => known("professions", x)),
       places: (Array.isArray(raw.places) ? raw.places : first.places || []).map(String),
+      zones: Array.isArray(raw.zones) ? raw.zones.map(String) : null,
       done: new Set(Array.isArray(raw.done) ? raw.done.map(String) : []),
       level: raw.level === "all" || Number.isInteger(raw.level) ? raw.level : "all",
       builds: (Array.isArray(raw.builds) ? raw.builds : []).filter((b) => b && typeof b.url === "string")
@@ -611,9 +670,10 @@
   }
 
   // Is a place on this character's way? Up to PATH_MAX_LEVEL that is decided
-  // by the race's path, a list of game zones; later places are ticked by hand.
+  // by its ticked game zones (the race's path to start with); later places
+  // are ticked by hand.
   const onPath = (z) => range(z.levels)[0] <= PATH_MAX_LEVEL;
-  const visits = (z, ch) => (onPath(z) ? (raceOf(ch).path || []).includes(z.area) : ch.places.includes(z.place));
+  const visits = (z, ch) => (onPath(z) ? zonesOf(ch).includes(z.area) : ch.places.includes(z.place));
 
   // Pick the rows for the current character, then add its talent build.
   // In zone shows the places the character chose that have rows for it.
@@ -828,7 +888,7 @@
 
   function band(routeCell, levelCell, cls) {
     const row = el("div", "band" + (cls ? " " + cls : ""));
-    const cells = state.swap ? [levelCell, routeCell] : [routeCell, levelCell];
+    const cells = state.swap ? [routeCell, levelCell] : [levelCell, routeCell];
     cells.forEach((c) => row.appendChild(c));
     return row;
   }
@@ -1025,25 +1085,14 @@
     return row;
   }
   const inList = (list, key, on) => { const at = list.indexOf(key); if (on && at < 0) list.push(key); if (!on && at >= 0) list.splice(at, 1); };
-  // A picker over one of the lists in data/characters.js.
-  function pickList(list, value, onPick, name) {
-    const sel = el("select");
-    sel.setAttribute("aria-label", name);
-    for (const x of options()[list] || []) {
-      const opt = el("option", null, x.label);
-      opt.value = x.key; opt.selected = x.key === value;
-      sel.appendChild(opt);
-    }
-    sel.addEventListener("change", () => onPick(sel.value));
-    return sel;
-  }
-
-  function renderProfessionPanel(root) {
-    const ch = me(), all = options().professions || [];
-    const has = (x) => ch.professions.includes(x.key);
+  // The two profession lists, over `mine` (a list of profession keys); used
+  // by the Professions panel and by the character dialog.
+  function professionPickers(root, mine, onChange) {
+    const all = options().professions || [];
+    const has = (x) => mine.includes(x.key);
     const rows = (sec, list, full) => {
       for (const x of list) {
-        sec.appendChild(tickRow(x.label, has(x), (on) => { inList(ch.professions, x.key, on); changed(); }, null, full && !has(x)));
+        sec.appendChild(tickRow(x.label, has(x), (on) => { inList(mine, x.key, on); onChange(); }, null, full && !has(x)));
       }
     };
     const primary = all.filter(isPrimary), count = primary.filter(has).length;
@@ -1061,6 +1110,13 @@
     rows(two, all.filter((x) => !isPrimary(x)), false);
     root.appendChild(two);
   }
+  function renderProfessionPanel(root) { professionPickers(root, me().professions, changed); }
+
+  // One tick per game zone a race can level in to PATH_MAX_LEVEL. `sub(zone)`
+  // is the muted text under a zone's name, if any.
+  function zoneTicks(sec, race, ticked, onTick, sub) {
+    for (const zone of zoneChoices(race)) sec.appendChild(tickRow(zone, ticked.includes(zone), (on) => onTick(zone, on), sub(zone)));
+  }
 
   function renderZonePanel(root) {
     const ch = me(), race = raceOf(ch), all = placesFor(ch);
@@ -1068,13 +1124,19 @@
 
     const early = el("section", "builds");
     early.appendChild(el("h3", null, "Levels 1-" + PATH_MAX_LEVEL));
-    const path = race.path || [];
-    early.appendChild(el("p", null, path.length
-      ? "Set by race. " + label("races", ch.race) + ": " + path.join(", then ") + "."
-      : "No path is written for " + label("races", ch.race) + " yet."));
-    const mine = all.filter((z) => onPath(z) && visits(z, ch));
-    for (const z of mine) early.appendChild(tickRow(z.zone, true, () => {}, rowsText(z), true));
-    if (path.length && !mine.length) early.appendChild(el("p", null, "No rows are written for these zones yet."));
+    early.appendChild(el("p", null, "Tick the zones you level in. A new " + label("races", ch.race) + " starts with its usual ones: " +
+      ((race.path || []).join(", then ") || "none written yet") + "."));
+    const written = all.filter(onPath);
+    zoneTicks(early, race, zonesOf(ch), (zone, on) => {
+      if (!ch.zones) ch.zones = zonesOf(ch).slice();
+      inList(ch.zones, zone, on);
+      changed();
+    }, (zone) => {
+      const here = written.filter((z) => z.area === zone);
+      if (!here.length) return "no rows written yet";
+      const n = here.reduce((sum, z) => sum + z.tasks.length, 0);
+      return n ? n + (n === 1 ? " row" : " rows") + " for this character" : "no rows for this character";
+    });
     root.appendChild(early);
 
     const late = el("section", "builds");
@@ -1088,30 +1150,47 @@
   }
 
   // ---- character dialog --------------------------------------------------
-  // Makes a character (by hand, or from a Wowhead talent calculator address,
-  // which holds the class and the talents but no race) or changes the current
-  // one. With no character it cannot be closed.
-  const form = { edit: false, mode: "manual", name: "", race: null, class: null, text: "", result: null };
+  // Makes a character in three steps (who it is, by hand or from a Wowhead
+  // talent calculator address, which holds the class and the talents but no
+  // race; its zones for levels 1-20; its professions), or changes the current
+  // one's name, class and race. With no character it cannot be closed.
+  const STEPS = ["Character", "Zones", "Professions"];
+  const form = { edit: false, step: 1, mode: "manual", name: "", race: null, class: null, text: "", result: null, zones: null, professions: [] };
 
   function openDialog(edit) {
-    const o = options(), ch = edit ? me() : null;
+    const ch = edit ? me() : null;
     Object.assign(form, {
-      edit: !!ch, mode: "manual", text: "", result: null,
-      name: ch ? ch.name : "",
-      race: ch ? ch.race : ((o.races || [])[0] || {}).key,
-      class: ch ? ch.class : ((o.classes || [])[0] || {}).key
+      edit: !!ch, step: 1, mode: "manual", text: "", result: null, zones: null, professions: [],
+      name: ch ? ch.name : "", race: ch ? ch.race : null, class: ch ? ch.class : null
     });
     renderDialog();
     if (!$("charDialog").open) $("charDialog").showModal();
   }
 
-  function renderDialog() {
-    const d = $("charDialog"), first = !state.characters.length;
-    const importing = !form.edit && form.mode === "import";
-    d.textContent = "";
-    d.appendChild(el("h2", null, form.edit ? "Edit character" : "New character"));
-    if (first) d.appendChild(el("p", null, "There is no character yet. Make one to see its rows. It is saved in this browser only."));
+  // The class the dialog is working with: the picked one, or the one in the
+  // pasted address when importing.
+  const formClass = () => (!form.edit && form.mode === "import" ? parseAddress(form.text).slug || null : form.class);
 
+  // A column of buttons, one per entry; the picked one is filled in, and
+  // clicking it again clears it. `can(x)` says whether x may be picked.
+  function pickColumn(title, items, picked, css, can, onPick) {
+    const box = el("div");
+    box.appendChild(el("h3", null, title));
+    for (const x of items) {
+      const b = el("button", "pick " + css(x), x.label);
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(x.key === picked));
+      b.disabled = !onPick || (x.key !== picked && !can(x));
+      if (onPick) b.addEventListener("click", () => { onPick(x.key === picked ? null : x.key); renderDialog(); });
+      box.appendChild(b);
+    }
+    return box;
+  }
+
+  // Step 1, and the whole of Edit: name, class and race.
+  function stepCharacter(d, first) {
+    const importing = !form.edit && form.mode === "import";
+    if (first) d.appendChild(el("p", null, "There is no character yet. Make one to see its rows. It is saved in this browser only."));
     if (!form.edit) {
       const modes = el("div", "row");
       for (const [key, text] of [["manual", "Manual"], ["import", "Import from Wowhead"]]) {
@@ -1130,35 +1209,15 @@
     name.addEventListener("input", () => { form.name = name.value; });
     d.appendChild(name);
 
-    // Class first, then the races that can be that class. When importing,
-    // the class is the one in the pasted address.
-    const cls = () => (importing ? parseAddress(form.text).slug : form.class);
-    const race = el("select");
-    race.setAttribute("aria-label", "Race");
-    race.addEventListener("change", () => { form.race = race.value; });
-    const fillRaces = () => {
-      const can = racesFor(cls());
-      if (!can.some((r) => r.key === form.race)) form.race = (can[0] || {}).key;
-      race.textContent = "";
-      for (const r of can) {
-        const opt = el("option", null, r.label);
-        opt.value = r.key; opt.selected = r.key === form.race;
-        race.appendChild(opt);
-      }
-    };
-    fillRaces();
-    const picks = el("div", "row");
-    if (!importing) picks.appendChild(pickList("classes", form.class, (v) => { form.class = v; fillRaces(); }, "Class"));
-
     if (importing) {
       d.appendChild(el("p", null, "The class and the talents come from the address; it does not hold a race, so pick that below. " + HOW_TO));
       const box = el("textarea");
       box.rows = 3; box.placeholder = "https://www.wowhead.com/forever/talent-calc/..."; box.value = form.text;
       box.setAttribute("aria-label", "Wowhead talent calculator address");
-      box.addEventListener("input", () => { form.text = box.value; form.result = null; fillRaces(); });
+      box.addEventListener("input", () => { form.text = box.value; form.result = null; });
+      // The class lists follow the address once the box is left.
+      box.addEventListener("change", renderDialog);
       d.appendChild(box);
-      picks.appendChild(race);
-      d.appendChild(picks);
       const r = form.result;
       if (r && r.error) d.appendChild(el("p", "bad", r.error));
       if (r && !r.error) {
@@ -1166,20 +1225,72 @@
         r.notes.forEach((n) => d.appendChild(el("p", "note", n)));
       }
     } else {
-      picks.appendChild(race);
-      d.appendChild(picks);
-      if (!form.edit) d.appendChild(el("p", null, "The zones for levels 1-" + PATH_MAX_LEVEL + " come from the race. Professions are picked afterwards, in the Professions tab."));
+      d.appendChild(el("p", null, "Pick a class and a race, in either order. Picking one greys out what it cannot be paired with; click a picked one again to clear it."));
     }
 
+    // Either list can be picked from first; each one greys out what the
+    // other's pick rules out.
+    const cls = formClass(), race = form.race && raceByKey(form.race);
+    if (race && cls && !form.edit && !(race.classes || []).includes(cls)) form.race = null;
+    const races = options().races || [];
+    const canRace = (r) => !cls || !r.classes || r.classes.includes(cls);
+    const pickRace = (v) => { form.race = v; form.zones = null; };
+    const cols = el("div", "pickcols");
+    cols.appendChild(pickColumn("Class", options().classes || [], cls, (c) => "cls-" + c.key,
+      (c) => !form.race || !raceByKey(form.race).classes || raceByKey(form.race).classes.includes(c.key),
+      importing ? null : (v) => { form.class = v; }));
+    for (const [faction, title] of [["horde", "Horde"], ["alliance", "Alliance"]]) {
+      cols.appendChild(pickColumn(title, races.filter((r) => r.faction === faction), form.race, (r) => "fac-" + r.faction, canRace, pickRace));
+    }
+    d.appendChild(cols);
+  }
+
+  // Step 2: the zones for levels 1-PATH_MAX_LEVEL, the race's usual ones ticked.
+  function stepZones(d) {
+    const race = raceByKey(form.race);
+    const sec = el("section", "builds");
+    sec.appendChild(el("h3", null, "Zones for levels 1-" + PATH_MAX_LEVEL));
+    sec.appendChild(el("p", null, "In zone shows rows for the zones ticked here. The usual ones for " + race.label +
+      " are ticked. You can change them later in the Zones tab."));
+    const written = new Set((window.ROUTE_DATA || []).filter(onPath).map((z) => z.area));
+    zoneTicks(sec, race, form.zones, (zone, on) => inList(form.zones, zone, on), (zone) => (written.has(zone) ? null : "no rows written yet"));
+    d.appendChild(sec);
+  }
+
+  // Step 3: professions, with why the page asks.
+  function stepProfessions(d) {
+    d.appendChild(el("p", null, "Professions decide many rows. Crafting ranks need a character level as well as skill " +
+      "(Journeyman: skill 50 and level 10; Expert: skill 125 and level 20), and the camp items come from Cooking, Fishing, " +
+      "Skinning and Herbalism. The page puts each on the level or in the zone where it comes up. " +
+      "You can change them later in the Professions tab."));
+    professionPickers(d, form.professions, renderDialog);
+  }
+
+  function renderDialog() {
+    const d = $("charDialog"), first = !state.characters.length;
+    d.textContent = "";
+    d.appendChild(el("h2", null, form.edit ? "Edit character" : "New character"));
+    if (!form.edit) d.appendChild(el("p", "steps", "Step " + form.step + " of " + STEPS.length + ": " + STEPS[form.step - 1]));
+    if (form.edit || form.step === 1) stepCharacter(d, first);
+    else if (form.step === 2) stepZones(d);
+    else stepProfessions(d);
+
     const buttons = el("div", "row buttons");
-    const button = (text, onClick, cls) => {
+    const button = (text, onClick, cls, off) => {
       const b = el("button", "btn" + (cls ? " " + cls : ""), text);
-      b.type = "button";
+      b.type = "button"; b.disabled = !!off;
       b.addEventListener("click", onClick);
       buttons.appendChild(b);
     };
-    if (importing) button("Check", async () => { form.result = await readBuild(form.text); renderDialog(); });
-    button(form.edit ? "Save" : "Create", form.edit ? saveCharacter : createCharacter, "main");
+    const importing = !form.edit && form.mode === "import";
+    const ready = !!form.race && (importing ? !!form.text.trim() : !!form.class);
+    if (form.edit) button("Save", saveCharacter, "main", !ready);
+    else {
+      if (form.step === 1 && importing) button("Check", async () => { form.result = await readBuild(form.text); renderDialog(); });
+      if (form.step > 1) button("Back", () => { form.step--; renderDialog(); });
+      if (form.step < STEPS.length) button("Next", nextStep, "main", !ready && !importing);
+      else button("Create", createCharacter, "main");
+    }
     if (!first) button("Cancel", () => d.close());
     if (form.edit) {
       buttons.appendChild(el("span", "spacer"));
@@ -1188,13 +1299,27 @@
     d.appendChild(buttons);
   }
 
-  async function createCharacter() {
-    const raw = { name: form.name.trim(), race: form.race, class: form.class, professions: [], places: [] };
+  // Leaving step 1 checks the pasted address, when there is one.
+  async function nextStep() {
+    if (form.step === 1) {
+      if (form.mode === "import") {
+        let r = await readBuild(form.text);
+        if (!r.error && !(options().classes || []).some((x) => x.key === r.slug)) r = { error: "This page does not offer the " + r.slug + " class yet." };
+        if (!r.error && !racesFor(r.slug).some((x) => x.key === form.race)) r = { error: "Pick a race that can be a " + label("classes", r.slug) + "." };
+        form.result = r;
+        if (r.error) { renderDialog(); return; }
+      }
+      if (!form.zones) form.zones = (raceByKey(form.race).path || []).slice();
+    }
+    form.step++;
+    renderDialog();
+  }
+
+  function createCharacter() {
+    const first = !state.characters.length;
+    const raw = { name: form.name.trim(), race: form.race, class: form.class, professions: form.professions.slice(), places: [], zones: form.zones.slice() };
     if (form.mode === "import") {
-      const r = form.result = await readBuild(form.text);
-      if (!r.error && !(options().classes || []).some((x) => x.key === r.slug)) r.error = "This page does not offer the " + r.slug + " class yet.";
-      if (!r.error && !racesFor(r.slug).some((x) => x.key === form.race)) r.error = "Pick a race that can be a " + label("classes", r.slug) + ".";
-      if (r.error) { form.result = { error: r.error }; renderDialog(); return; }
+      const r = form.result;
       raw.class = r.slug;
       raw.builds = [{ name: (r.cls.name || r.slug) + " build", url: r.url }];
     }
@@ -1202,11 +1327,14 @@
     state.character = state.characters.length - 1;
     // The pasted build is the last on the list, after the page's own example.
     me().build = Math.max(0, buildList().length - 1);
-    state.panel = "professions";
     $("charDialog").close();
-    changed();
+    saveState();
+    // A first visit ends with the tour of the page.
+    applyCharacter().then(() => { render(); if (first) startTour(); });
   }
   function saveCharacter() {
+    // A new race brings its own usual zones.
+    if (form.race !== me().race) me().zones = null;
     Object.assign(me(), { name: form.name.trim().slice(0, 40), race: form.race, class: form.class });
     $("charDialog").close();
     changed();
@@ -1220,6 +1348,78 @@
     changed();
   }
 
+  // ---- tour ---------------------------------------------------------------
+  // A click-through over the loaded page: one ring and one card per part.
+  // Shown after a first visit's character is made, and again from "?".
+  const narrow = () => window.matchMedia("(max-width: 760px)").matches;
+  // A column's box. Locked, the two columns are the halves of one scroller.
+  function columnBox(which) {
+    if (!state.lock) return $(which + "Col").getBoundingClientRect();
+    const r = $("locked").getBoundingClientRect();
+    if (narrow()) return r;
+    const left = (which === "level") !== state.swap;
+    return { left: left ? r.left : r.left + r.width / 2, top: r.top, width: r.width / 2, height: r.height };
+  }
+  const boxOf = (node) => node.getBoundingClientRect();
+  const TOUR = [
+    { title: "On level", at: () => columnBox("level"),
+      text: "What to do when you reach each level: what to train and what to skip, profession ranks, and your talent point. Tick a row when it is done. A level goes away once everything in it is ticked." },
+    { title: "In zone", at: () => columnBox("route"),
+      text: "What to do while you are in a zone, whatever your level there: gathering, fishing, camp items, quests tied to your class or professions. Only the zones you ticked show, and only when they have rows for this character. It is not a quest route." },
+    { title: "Level and Type", at: () => boxOf($("levelAll").parentNode),
+      text: "Step Level to where you are and both columns narrow to that level and the next one. Type shows one kind of row. Finished levels and done tasks can be brought back from the right." },
+    { title: "Edge tabs", at: () => boxOf($("rail")),
+      text: "Professions, Zones and Talents hold this character's choices; paste a Wowhead talent address under Talents to get a talent row per level. The tabs after them are reference notes. A tab opens a panel over the page; click it again to close." },
+    { title: "Characters and saving", at: () => boxOf($("charSelect").parentNode),
+      text: "Switch, edit or add characters on the left. Lock scroll ties the two columns together and Swap flips them. Everything is saved in this browser only: use Export and Import to move it. The ? button shows this tour again." }
+  ];
+  let tourAt = -1;
+  function startTour() {
+    if (!me()) return;
+    if (state.panel) { state.panel = null; render(); }
+    tourAt = 0;
+    $("tour").hidden = false;
+    renderTour();
+  }
+  function endTour() { tourAt = -1; $("tour").hidden = true; }
+  function renderTour() {
+    if (tourAt < 0) return;
+    const step = TOUR[tourAt], card = $("tourCard"), ring = $("tourRing");
+    card.textContent = "";
+    card.appendChild(el("p", "count", (tourAt + 1) + " of " + TOUR.length));
+    card.appendChild(el("h2", null, step.title));
+    card.appendChild(el("p", null, step.text));
+    const buttons = el("div", "row");
+    const button = (text, onClick, cls) => {
+      const b = el("button", "btn" + (cls ? " " + cls : ""), text);
+      b.type = "button";
+      b.addEventListener("click", onClick);
+      buttons.appendChild(b);
+      return b;
+    };
+    const last = tourAt === TOUR.length - 1;
+    if (tourAt > 0) button("Back", () => { tourAt--; renderTour(); });
+    const next = button(last ? "Done" : "Next", () => { if (last) endTour(); else { tourAt++; renderTour(); } }, "main");
+    buttons.appendChild(el("span", "spacer"));
+    if (!last) button("Skip", endTour);
+    card.appendChild(buttons);
+
+    // The ring, kept inside the window; then the card: inside a big box,
+    // else under it, else beside it.
+    const W = window.innerWidth, H = window.innerHeight, pad = 4, r = step.at();
+    const top = Math.max(pad, r.top), left = Math.max(pad, r.left);
+    const box = { top, left, width: Math.min(W - pad, r.left + r.width) - left, height: Math.min(H - pad, r.top + r.height) - top };
+    for (const k of ["top", "left", "width", "height"]) ring.style[k] = box[k] + "px";
+    const cw = card.offsetWidth, ch = card.offsetHeight;
+    let x, y;
+    if (box.height > ch + 40 && box.width > cw + 40) { x = box.left + (box.width - cw) / 2; y = box.top + 40; }
+    else if (H - (box.top + box.height) > ch + 16) { x = box.left; y = box.top + box.height + 10; }
+    else { x = box.left - cw - 10; y = box.top + 10; }
+    card.style.left = Math.max(12, Math.min(W - cw - 12, x)) + "px";
+    card.style.top = Math.max(12, Math.min(H - ch - 12, y)) + "px";
+    next.focus();
+  }
+
   function renderHeader() {
     const sel = $("charSelect");
     sel.textContent = "";
@@ -1228,7 +1428,7 @@
       opt.value = i; opt.selected = i === state.character;
       sel.appendChild(opt);
     });
-    sel.hidden = $("charEdit").hidden = !state.characters.length;
+    sel.hidden = $("charEdit").hidden = $("tourBtn").hidden = !state.characters.length;
     document.title = (me() ? charName(me()) + " · " : "") + "WoW Forever";
   }
 
@@ -1306,6 +1506,9 @@
   $("charSelect").addEventListener("change", (e) => chooseCharacter(Number(e.target.value)));
   $("charEdit").addEventListener("click", () => openDialog(true));
   $("charNew").addEventListener("click", () => openDialog(false));
+  $("tourBtn").addEventListener("click", startTour);
+  window.addEventListener("resize", renderTour);
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && tourAt >= 0) endTour(); });
   // Escape closes the dialog only when there is a character to go back to.
   $("charDialog").addEventListener("cancel", (e) => { if (!me()) e.preventDefault(); });
   $("charDialog").addEventListener("close", () => { if (!me()) openDialog(false); });
