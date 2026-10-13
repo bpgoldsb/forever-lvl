@@ -51,6 +51,9 @@ const kind = (n) => { const i = KINDS.indexOf(n.replace(/\.json$/, "").split("-"
 const names = readdirSync(SOURCE).filter((n) => n.endsWith(".json")).sort((x, y) => kind(x) - kind(y) || x.localeCompare(y));
 const categories = read("categories.json").categories || [];
 const trainers = read("trainers.json").trainers || [];
+// Every profession trainer, written by tools/read-trainers.mjs.
+const profTrainers = read("trainers-professions.json").trainers || [];
+const RANKS = { apprentice: 75, journeyman: 150, expert: 225, artisan: 300 };
 const legacy = read("legacy-ids.json");
 const legacyIds = legacy.ids || {}, retired = new Set(legacy.retired || []);
 const characters = read("characters.json");
@@ -62,7 +65,7 @@ const teaches = new Set(trainers.map((t) => t.teaches));
 // ---- read facts and advice ------------------------------------------------
 const classes = {}, profs = {}, places = {}, advice = {};
 for (const name of names) {
-  if (["categories.json", "characters.json", "trainers.json", "legacy-ids.json"].includes(name)) continue;
+  if (["categories.json", "characters.json", "trainers.json", "trainers-professions.json", "legacy-ids.json"].includes(name)) continue;
   const doc = read(name);
   if (name.endsWith("-advice.json")) {
     if (!doc.class) errors.push(name + ": no class");
@@ -78,6 +81,8 @@ for (const name of names) {
     if (!profKeys.has(doc.profession)) errors.push(name + ": profession is not in characters.json: " + doc.profession);
     // A profession's row is for that profession unless it names others.
     for (const f of facts) if (!f.professions) f.professions = [doc.profession];
+    // A rank row names the rank; the page finds who teaches it.
+    for (const f of facts) if (f.learn) f.learn = { profession: doc.profession, rank: f.learn };
     (profs[doc.profession] = profs[doc.profession] || []).push(...facts);
   } else if (name.startsWith("place-")) {
     const p = doc.place || {};
@@ -121,6 +126,12 @@ function row(f, byLevel) {
   for (const p of f.professions || []) if (!profKeys.has(p)) errors.push(where + ": profession is not in characters.json: " + p);
   for (const r of f.races || []) if (!raceKeys.has(r)) errors.push(where + ": race is not in characters.json: " + r);
   for (const c of f.classes || []) if (!classKeys.has(c)) errors.push(where + ": class is not in characters.json: " + c);
+  if (f.learn) {
+    const max = RANKS[f.learn.rank];
+    if (!max) errors.push(where + ": learn must be one of " + Object.keys(RANKS).join(", "));
+    if (f.location || f.trainer) errors.push(where + ": a learn row takes its location from the profession trainer list");
+    if (!profTrainers.some((t) => t.profession === f.learn.profession && t.lo < max && max <= t.hi)) errors.push(where + ": no trainer in trainers-professions.json teaches this rank");
+  }
   if (f.trainer && !teaches.has(f.trainer)) errors.push(where + ": no trainer list entry teaches " + f.trainer);
 
   const note = [f.note, a && a.note].filter(Boolean).join(" ");
@@ -128,6 +139,7 @@ function row(f, byLevel) {
   if (f.cost) t.cost = f.cost;
   if (f.showCost) t.showCost = true;
   if (f.trainer) t.trainer = f.trainer;
+  if (f.learn) t.learn = Object.assign({ max: RANKS[f.learn.rank] }, f.learn);
   if (f.location) t.location = f.location;
   if (note) t.note = note;
   if (Array.isArray(f.source) && f.source.length) t.source = f.source;
@@ -159,7 +171,8 @@ const groups = (list) => "[\n" + list.map((g) => {
 
 files.set("categories.js", HEADER + "// Row categories, in the order of the Type filter.\nwindow.CATEGORY_DATA = " + lines(categories) + ";\n");
 files.set("characters.js", HEADER + "// What a character can be, and `legacy`: the character that a save from\n// before characters belongs to. A new visitor starts with no character.\nwindow.CHARACTER_OPTIONS = " + JSON.stringify(characters, null, 2) + ";\n");
-files.set("trainers.js", HEADER + "// Where a class trainer is, by race and character level. A row with a\n// `trainer` field and no `location` gets its location from this list.\nwindow.TRAINERS = " + lines(trainers) + ";\n");
+files.set("trainers.js", HEADER + "// Where a class trainer is, by race and character level. A row with a\n// `trainer` field and no `location` gets its location from this list.\nwindow.TRAINERS = " + lines(trainers) + ";\n" +
+  "// Every profession trainer: the skill range its section of the trainer page\n// teaches (lo-hi), its faction (or both) and where it stands. A row with\n// `learn` gets its location from this list, by the character's zones and\n// its faction's capital cities.\nwindow.PROF_TRAINERS = " + lines(profTrainers) + ";\n");
 for (const c of Object.keys(classes).sort()) {
   files.set("class-" + c + ".js", HEADER + "// On-level rows for the " + c + ": what depends on character level.\nwindow.LEVEL_DATA = (window.LEVEL_DATA || []).concat(" + groups(byLevel(classes[c], { class: c })) + ");\n");
 }
@@ -178,6 +191,13 @@ for (const t of trainers) {
   if (!t.teaches || !t.race || !t.levels || !t.location) errors.push("trainers.json: an entry needs teaches, race, levels and location");
   else if (!raceKeys.has(t.race)) errors.push("trainers.json: race is not in characters.json: " + t.race);
 }
+const factionKeys = keys(characters.factions);
+for (const t of profTrainers) {
+  if (!profKeys.has(t.profession) || !t.name || !t.zone || !(t.lo < t.hi)) errors.push("trainers-professions.json: an entry needs a known profession, name, zone, lo and hi: " + JSON.stringify(t));
+  else if (t.faction !== "both" && !factionKeys.has(t.faction)) errors.push("trainers-professions.json: unknown faction on " + t.name);
+}
+for (const f of characters.factions || []) if (!f.key || !f.label || !Array.isArray(f.capitals)) errors.push("characters.json: a faction needs key, label and capitals");
+for (const r of characters.races || []) if (!factionKeys.has(r.faction)) errors.push("characters.json: race " + r.key + " has a faction that is not in factions");
 for (const c of categories) if (!c.key || !c.label || !c.color) errors.push("categories.json: an entry needs key, label and color");
 for (const k of ["classes", "races", "professions"]) {
   for (const x of characters[k] || []) if (!x.key || !x.label) errors.push("characters.json: an entry in " + k + " needs key and label");

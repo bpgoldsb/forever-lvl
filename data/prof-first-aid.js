@@ -2,6 +2,12 @@
 // source/ and run `node tools/build-data.mjs`.
 // On-level rows for first-aid.
 window.LEVEL_DATA = (window.LEVEL_DATA || []).concat([
+  { "level": 5, "tasks": [
+    {"id":"prof.first-aid.learn.apprentice","category":"aid","priority":"GATE","title":"Learn First Aid","learn":{"max":75,"profession":"first-aid","rank":"apprentice"},"note":"No skill or level needed; teaches to skill 75.","source":["https://www.wow-professions.com/forever/first-aid-trainers"],"confidence":"confirmed","professions":["first-aid"]}
+  ] },
+  { "level": 7, "tasks": [
+    {"id":"prof.first-aid.learn.journeyman","category":"aid","priority":"GATE","title":"Journeyman First Aid at skill 50","learn":{"max":150,"profession":"first-aid","rank":"journeyman"},"note":"Needs First Aid 50, no level; teaches to 150. The trainer page lists no trainer past 150.","source":["https://www.wow-professions.com/forever/first-aid-trainers"],"confidence":"confirmed","professions":["first-aid"]}
+  ] },
   { "level": 10, "tasks": [
     {"id":"t_9_09","category":"aid","priority":"INFO","title":"First Aid in Orgrimmar: Arnok, vials and spices","location":"Arnok, Valley of Spirits; Xen'to (spices), Kor'geld (vials)","note":"Minor Healing Potion at First Aid 55: Peacebloom, Mild Spices and an Empty Vial, so it uses herbs you already pick.","source":["https://www.wow-professions.com/forever/first-aid-leveling-guide"],"confidence":"confirmed","order":10,"professions":["first-aid"],"races":["orc"]}
   ] },

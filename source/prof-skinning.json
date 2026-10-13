@@ -3,31 +3,12 @@
   "profession": "skinning",
   "facts": [
     {
-      "id": "prof.skinning.human.apprentice",
+      "id": "prof.skinning.learn.apprentice",
       "level": 1,
       "category": "skin",
       "title": "Learn Skinning",
-      "location": "Riley Peltskinner, Northshire Valley",
-      "note": "No level requirement in Forever. Riley teaches only Apprentice, to skill 75.",
-      "races": [
-        "human"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/skinning-trainers"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.skinning.human.journeyman",
-      "level": 6,
-      "category": "skin",
-      "title": "Journeyman Skinning at skill 50",
-      "location": "Helene Peltskinner, Goldshire",
-      "note": "No level requirement for any Skinning rank: Journeyman at 50, Expert at 125, Artisan at 200. Helene teaches every rank; so do Maris Granger (Old Town, Stormwind) and Wilma Ranthal (Redridge Mountains).",
-      "races": [
-        "human"
-      ],
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75. Junior trainers teach only this rank. Buy a Skinning Knife.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/skinning-trainers"
@@ -47,6 +28,19 @@
       "priority": "BUFF",
       "source": [
         "https://www.wow-professions.com/forever/camping-guide"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.skinning.learn.journeyman",
+      "level": 7,
+      "category": "skin",
+      "title": "Journeyman Skinning at skill 50",
+      "learn": "journeyman",
+      "note": "No level requirement for any Skinning rank: Journeyman at 50, Expert at 125, Artisan at 200, all from the same trainers.",
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/skinning-trainers"
       ],
       "confidence": "confirmed"
     }

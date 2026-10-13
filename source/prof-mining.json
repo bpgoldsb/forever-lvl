@@ -3,32 +3,12 @@
   "profession": "mining",
   "facts": [
     {
-      "id": "prof.mining.orc.apprentice",
+      "id": "prof.mining.learn.apprentice",
       "level": 1,
       "category": "mining",
       "title": "Learn Mining",
-      "location": "Norzsh, the Den, Durotar",
-      "note": "No level requirement in Forever. Norzsh is a junior trainer: Apprentice only, to skill 75. Poor Copper Veins in the starting zones give Copper Ore and Rough Stone from level 1.",
-      "races": [
-        "orc"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/mining-trainers",
-        "https://www.warcrafttavern.com/forever/guides/mining-overview-ore-smelting-bonuses/"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.mining.human.apprentice",
-      "level": 1,
-      "category": "mining",
-      "title": "Learn Mining",
-      "location": "Kelsey Fargo, Elwynn Forest (a second guide says Northshire)",
-      "note": "No level requirement in Forever. Kelsey is a junior trainer: Apprentice only, to skill 75. Poor Copper Veins in the starting zones give Copper Ore and Rough Stone from level 1.",
-      "races": [
-        "human"
-      ],
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75. Junior trainers teach only this rank. Poor Copper Veins in the starting zones give Copper Ore and Rough Stone from level 1.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/mining-trainers",
@@ -50,31 +30,12 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.mining.orc.journeyman",
+      "id": "prof.mining.learn.journeyman",
       "level": 7,
       "category": "mining",
       "title": "Journeyman Mining at skill 50",
-      "location": "Krunn, Razor Hill",
-      "note": "No level requirement for any Mining rank: Journeyman at 50, Expert at 125, Artisan at 200. Krunn teaches every rank; so does Makaru in the Valley of Honor, Orgrimmar.",
-      "races": [
-        "orc"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/mining-trainers"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.mining.human.journeyman",
-      "level": 10,
-      "category": "mining",
-      "title": "Journeyman Mining at skill 50",
-      "location": "Gelman Stonehand, Dwarven District, Stormwind",
-      "note": "No level requirement for any Mining rank: Journeyman at 50, Expert at 125, Artisan at 200. Gelman teaches every rank; Elwynn Forest has only the junior trainer.",
-      "races": [
-        "human"
-      ],
+      "learn": "journeyman",
+      "note": "No level requirement for any Mining rank: Journeyman at 50, Expert at 125, Artisan at 200, all from the same trainers.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/mining-trainers"

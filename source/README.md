@@ -37,6 +37,7 @@ Fields of a fact:
 | `title` | What the row is. |
 | `cost`, `showCost` | Cost as text. It is shown only when `showCost` is true. |
 | `trainer` | Who teaches it (`warlock`, `warlock-demon`). The page fills the location from `trainers.json`. A spell has `trainer` and no `location`. |
+| `learn` | In a profession file: the rank the row is for (`apprentice`, `journeyman`, `expert`, `artisan`). The row has no `location`; the page lists who teaches that rank from `trainers-professions.json`, for the character's faction, zones and capital cities. Rank rows are written once, for every race. |
 | `location` | Where, for a row that is not taught by a class trainer. |
 | `note` | The factual part of the note. |
 | `priority` | `BUY`, `SKIP`, `GATE`, `QUEST`, `BUFF` or `INFO`, when it is part of the fact (a quest, a profession step). A spell has none; its advice gives it. |
@@ -70,6 +71,15 @@ after the fact's note.
   characters belongs to. A new visitor starts with no character.
 - `trainers.json`: where a trainer is, as `teaches`, `race`, `levels`,
   `location` and `confidence`.
+- `trainers-professions.json`: every profession trainer, as `profession`, `lo`
+  and `hi` (the skill range of its section of the trainer page), `faction`
+  (`horde`, `alliance` or `both`), `name`, `zone` and sometimes `town`. Written
+  by `node tools/read-trainers.mjs` from the saved wow-professions.com trainer
+  pages; never edited by hand. A trainer teaches a rank when `lo` is below the
+  rank's top skill (75, 150, 225, 300) and `hi` reaches it. Built into
+  `data/trainers.js` beside the class trainers.
+- `characters.json` also has `factions`, each with `key`, `label` and
+  `capitals`, the cities whose trainers every character of that faction sees.
 - `legacy-ids.json`: `ids` maps a fact id to the row id the page used before
   this format, so saved progress survives. `retired` lists row ids that must
   never be used again.

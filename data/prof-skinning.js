@@ -3,10 +3,12 @@
 // On-level rows for skinning.
 window.LEVEL_DATA = (window.LEVEL_DATA || []).concat([
   { "level": 1, "tasks": [
-    {"id":"prof.skinning.human.apprentice","category":"skin","priority":"GATE","title":"Learn Skinning","location":"Riley Peltskinner, Northshire Valley","note":"No level requirement in Forever. Riley teaches only Apprentice, to skill 75.","source":["https://www.wow-professions.com/forever/skinning-trainers"],"confidence":"confirmed","professions":["skinning"],"races":["human"]}
+    {"id":"prof.skinning.learn.apprentice","category":"skin","priority":"GATE","title":"Learn Skinning","learn":{"max":75,"profession":"skinning","rank":"apprentice"},"note":"No skill or level needed; teaches to skill 75. Junior trainers teach only this rank. Buy a Skinning Knife.","source":["https://www.wow-professions.com/forever/skinning-trainers"],"confidence":"confirmed","professions":["skinning"]}
   ] },
   { "level": 6, "tasks": [
-    {"id":"prof.skinning.human.journeyman","category":"skin","priority":"GATE","title":"Journeyman Skinning at skill 50","location":"Helene Peltskinner, Goldshire","note":"No level requirement for any Skinning rank: Journeyman at 50, Expert at 125, Artisan at 200. Helene teaches every rank; so do Maris Granger (Old Town, Stormwind) and Wilma Ranthal (Redridge Mountains).","source":["https://www.wow-professions.com/forever/skinning-trainers"],"confidence":"confirmed","professions":["skinning"],"races":["human"]},
     {"id":"prof.skinning.human.camp-chair","category":"camp","priority":"BUFF","title":"Camp Chair (Skinning 20)","location":"Skinning trainer, or the Camping 101 quest","note":"3 Light Leather and 2 Simple Wood. +2% crit chance; does not stack with Moonkin Aura.","source":["https://www.wow-professions.com/forever/camping-guide"],"confidence":"confirmed","professions":["skinning"],"races":["human"]}
+  ] },
+  { "level": 7, "tasks": [
+    {"id":"prof.skinning.learn.journeyman","category":"skin","priority":"GATE","title":"Journeyman Skinning at skill 50","learn":{"max":150,"profession":"skinning","rank":"journeyman"},"note":"No level requirement for any Skinning rank: Journeyman at 50, Expert at 125, Artisan at 200, all from the same trainers.","source":["https://www.wow-professions.com/forever/skinning-trainers"],"confidence":"confirmed","professions":["skinning"]}
   ] }
 ]);

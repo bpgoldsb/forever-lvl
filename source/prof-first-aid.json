@@ -3,6 +3,32 @@
   "profession": "first-aid",
   "facts": [
     {
+      "id": "prof.first-aid.learn.apprentice",
+      "level": 5,
+      "category": "aid",
+      "title": "Learn First Aid",
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75.",
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/first-aid-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.first-aid.learn.journeyman",
+      "level": 7,
+      "category": "aid",
+      "title": "Journeyman First Aid at skill 50",
+      "learn": "journeyman",
+      "note": "Needs First Aid 50, no level; teaches to 150. The trainer page lists no trainer past 150.",
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/first-aid-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
       "id": "prof.first-aid.orgrimmar-trainer-and-supplies",
       "level": 10,
       "category": "aid",

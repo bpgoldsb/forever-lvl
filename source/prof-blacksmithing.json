@@ -3,32 +3,12 @@
   "profession": "blacksmithing",
   "facts": [
     {
-      "id": "prof.blacksmithing.human.apprentice",
-      "level": 6,
+      "id": "prof.blacksmithing.learn.apprentice",
+      "level": 5,
       "category": "smithing",
       "title": "Learn Blacksmithing",
-      "location": "Smith Argus, Goldshire, across from the inn",
-      "note": "No level requirement in Forever. Buy a Blacksmith Hammer from Tharynn Bouden in Goldshire; most recipes need it.",
-      "races": [
-        "human"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/blacksmithing-trainers",
-        "https://www.wow-professions.com/forever/blacksmithing-leveling-guide"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.blacksmithing.orc.apprentice",
-      "level": 7,
-      "category": "smithing",
-      "title": "Learn Blacksmithing",
-      "location": "Dwukk, at the forge in Razor Hill",
-      "note": "No level requirement in Forever. Buy a Blacksmith Hammer from Flakk in Razor Hill; most recipes need it.",
-      "races": [
-        "orc"
-      ],
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75. Buy a Blacksmith Hammer; most recipes need it.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/blacksmithing-trainers",
@@ -50,31 +30,12 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.blacksmithing.orc.journeyman",
+      "id": "prof.blacksmithing.learn.journeyman",
       "level": 10,
       "category": "smithing",
       "title": "Journeyman Blacksmithing",
-      "location": "Snarl, Valley of Honor, Orgrimmar",
-      "note": "Needs Blacksmithing 50 and level 10. Traugh at the Crossroads also teaches Journeyman.",
-      "races": [
-        "orc"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/blacksmithing-trainers"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.blacksmithing.human.journeyman",
-      "level": 10,
-      "category": "smithing",
-      "title": "Journeyman Blacksmithing",
-      "location": "Therum Deepforge, Dwarven District, Stormwind",
-      "note": "Needs Blacksmithing 50 and level 10.",
-      "races": [
-        "human"
-      ],
+      "learn": "journeyman",
+      "note": "Needs Blacksmithing 50 and level 10; teaches to 150.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/blacksmithing-trainers"
@@ -95,36 +56,15 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.blacksmithing.orc.expert",
+      "id": "prof.blacksmithing.learn.expert",
       "level": 20,
       "category": "smithing",
       "title": "Expert Blacksmithing",
-      "location": "Saru Steelfury, Valley of Honor, Orgrimmar",
-      "note": "Needs Blacksmithing 125 and level 20; 50 silver. He is the only Horde Expert trainer listed.",
-      "races": [
-        "orc"
-      ],
+      "learn": "expert",
+      "note": "Needs Blacksmithing 125 and level 20; teaches to 225.",
       "priority": "GATE",
       "source": [
-        "https://www.wow-professions.com/forever/blacksmithing-trainers",
-        "https://www.wow-professions.com/forever/blacksmithing-leveling-guide"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.blacksmithing.human.expert",
-      "level": 20,
-      "category": "smithing",
-      "title": "Expert Blacksmithing is in Ironforge",
-      "location": "Bengus Deepforge, the Great Forge, Ironforge",
-      "note": "Needs Blacksmithing 125 and level 20; 50 silver. Alard Schmied in Dalaran is also listed, but the trainer page says he may be bugged in the beta.",
-      "races": [
-        "human"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/blacksmithing-trainers",
-        "https://www.wow-professions.com/forever/blacksmithing-leveling-guide"
+        "https://www.wow-professions.com/forever/blacksmithing-trainers"
       ],
       "confidence": "confirmed"
     }

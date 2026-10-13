@@ -3,15 +3,12 @@
   "profession": "enchanting",
   "facts": [
     {
-      "id": "prof.enchanting.orc.apprentice",
+      "id": "prof.enchanting.learn.apprentice",
       "level": 5,
       "category": "enchanting",
       "title": "Learn Enchanting",
-      "location": "Pa'zula, Sen'jin Village",
-      "note": "No level requirement in Forever. No starting zone has an Enchanting Supply vendor: the Copper Rod and Mote of Magic for the first points are sold beside Jhag in the Drag, Orgrimmar. Disenchant is in the Enchanting box of the Professions window, not the spellbook.",
-      "races": [
-        "orc"
-      ],
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75. Disenchant is in the Enchanting box of the Professions window, not the spellbook.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/enchanting-trainers",
@@ -20,19 +17,15 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.enchanting.human.apprentice",
+      "id": "prof.enchanting.learn.journeyman",
       "level": 10,
       "category": "enchanting",
-      "title": "Learn Enchanting",
-      "location": "Betty Quin, Stormwind City",
-      "note": "No level requirement in Forever. Elwynn Forest has no Enchanting trainer. The trainer page puts her in the Canals, the guide in the Mage Quarter. The Enchanting Supply vendor stands beside her. Disenchant is in the Enchanting box of the Professions window, not the spellbook.",
-      "races": [
-        "human"
-      ],
+      "title": "Journeyman Enchanting",
+      "learn": "journeyman",
+      "note": "Needs Enchanting 50 and level 10; teaches to 150.",
       "priority": "GATE",
       "source": [
-        "https://www.wow-professions.com/forever/enchanting-trainers",
-        "https://www.wow-professions.com/forever/enchanting-leveling-guide"
+        "https://www.wow-professions.com/forever/enchanting-trainers"
       ],
       "confidence": "confirmed"
     },
@@ -50,38 +43,6 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.enchanting.orc.journeyman",
-      "level": 10,
-      "category": "enchanting",
-      "title": "Journeyman Enchanting",
-      "location": "Godan, the Drag, Orgrimmar",
-      "note": "Needs Enchanting 50 and level 10.",
-      "races": [
-        "orc"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/enchanting-trainers"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.enchanting.human.journeyman",
-      "level": 10,
-      "category": "enchanting",
-      "title": "Journeyman Enchanting",
-      "location": "Lucan Cordell, the Canals, Stormwind",
-      "note": "Needs Enchanting 50 and level 10.",
-      "races": [
-        "human"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/enchanting-trainers"
-      ],
-      "confidence": "confirmed"
-    },
-    {
       "id": "prof.enchanting.70-150",
       "level": 10,
       "category": "enchanting",
@@ -95,36 +56,15 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.enchanting.orc.expert",
+      "id": "prof.enchanting.learn.expert",
       "level": 20,
       "category": "enchanting",
-      "title": "Expert Enchanting is in Stonetalon",
-      "location": "Hgarth, on the hill above Sun Rock Retreat, Stonetalon Mountains",
-      "note": "Needs Enchanting 125 and level 20; 50 silver. He is the only Horde Expert trainer.",
-      "races": [
-        "orc"
-      ],
+      "title": "Expert Enchanting",
+      "learn": "expert",
+      "note": "Needs Enchanting 125 and level 20; teaches to 225.",
       "priority": "GATE",
       "source": [
-        "https://www.wow-professions.com/forever/enchanting-trainers",
-        "https://www.wow-professions.com/forever/enchanting-leveling-guide"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.enchanting.human.expert",
-      "level": 20,
-      "category": "enchanting",
-      "title": "Expert Enchanting is in Elwynn Forest",
-      "location": "Kitta Firewind, top of the Tower of Azora, Elwynn Forest",
-      "note": "Needs Enchanting 125 and level 20; 50 silver. Vanessa Sellers in Dalaran is also listed, but the trainer page says she may be bugged in the beta.",
-      "races": [
-        "human"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/enchanting-trainers",
-        "https://www.wow-professions.com/forever/enchanting-leveling-guide"
+        "https://www.wow-professions.com/forever/enchanting-trainers"
       ],
       "confidence": "confirmed"
     }

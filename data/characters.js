@@ -210,6 +210,26 @@ window.CHARACTER_OPTIONS = {
       ]
     }
   ],
+  "factions": [
+    {
+      "key": "horde",
+      "label": "Horde",
+      "capitals": [
+        "Orgrimmar",
+        "Thunder Bluff",
+        "Undercity"
+      ]
+    },
+    {
+      "key": "alliance",
+      "label": "Alliance",
+      "capitals": [
+        "Stormwind City",
+        "Ironforge",
+        "Darnassus"
+      ]
+    }
+  ],
   "professions": [
     {
       "key": "herbalism",

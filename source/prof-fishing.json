@@ -1,0 +1,32 @@
+{
+  "build": "1.60.1",
+  "profession": "fishing",
+  "facts": [
+    {
+      "id": "prof.fishing.learn.apprentice",
+      "level": 5,
+      "category": "fish_cook",
+      "title": "Learn Fishing",
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75.",
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/fishing-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.fishing.learn.journeyman",
+      "level": 10,
+      "category": "fish_cook",
+      "title": "Journeyman Fishing",
+      "learn": "journeyman",
+      "note": "Needs Fishing 50 and level 10; teaches to 150. The trainer page lists no trainer past 150.",
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/fishing-trainers"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

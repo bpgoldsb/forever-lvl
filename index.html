@@ -656,6 +656,26 @@
     return found ? Object.assign({}, t, { location: found.location }) : t;
   }
 
+  // A rank row (`learn`) gets the trainers who teach that rank to this
+  // character's faction: those in its ticked zones first, then the ones in
+  // its faction's capital cities. A trainer teaches a rank when the skill
+  // range of its section of the trainer page reaches the rank's top skill.
+  function withProfessionTrainers(t, ch) {
+    if (!t.learn) return t;
+    const race = raceOf(ch);
+    const capitals = ((options().factions || []).find((f) => f.key === race.faction) || {}).capitals || [];
+    const places = (window.ROUTE_DATA || []).filter((z) => ch.places.includes(z.place)).map((z) => z.area);
+    const zones = zonesOf(ch).concat(places);
+    const all = (window.PROF_TRAINERS || []).filter((x) => x.profession === t.learn.profession &&
+      x.lo < t.learn.max && t.learn.max <= x.hi && (x.faction === "both" || x.faction === race.faction));
+    const say = (x) => [x.name, x.town, x.zone].filter(Boolean).join(", ");
+    const near = all.filter((x) => zones.includes(x.zone)), city = all.filter((x) => capitals.includes(x.zone) && !near.includes(x));
+    const location = near.length || city.length ? near.concat(city).map(say).join("; ")
+      : all.length ? "None in your zones or capital cities. Listed: " + all.map(say).join("; ")
+        : "No trainer listed for your faction";
+    return Object.assign({}, t, { location });
+  }
+
   // Does a row apply to this character? A row can name classes, races and
   // professions; for professions, having any one of them is enough.
   function applies(t, ch) {
@@ -689,7 +709,7 @@
       for (const t of g.tasks || []) {
         if (!applies(t, ch)) continue;
         if (!byLevel.has(g.level)) byLevel.set(g.level, []);
-        byLevel.get(g.level).push(withTrainer(t, g.level, ch));
+        byLevel.get(g.level).push(withProfessionTrainers(withTrainer(t, g.level, ch), ch));
       }
     }
     const order = (t) => (t.order == null ? 50 : t.order);

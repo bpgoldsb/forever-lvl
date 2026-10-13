@@ -1,0 +1,32 @@
+{
+  "build": "1.60.1",
+  "profession": "cooking",
+  "facts": [
+    {
+      "id": "prof.cooking.learn.apprentice",
+      "level": 5,
+      "category": "fish_cook",
+      "title": "Learn Cooking",
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75.",
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/cooking-trainers"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "prof.cooking.learn.journeyman",
+      "level": 7,
+      "category": "fish_cook",
+      "title": "Journeyman Cooking at skill 50",
+      "learn": "journeyman",
+      "note": "Needs Cooking 50, no level; teaches to 150. The trainer page lists no trainer past 150.",
+      "priority": "GATE",
+      "source": [
+        "https://www.wow-professions.com/forever/cooking-trainers"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

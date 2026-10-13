@@ -3,32 +3,12 @@
   "profession": "alchemy",
   "facts": [
     {
-      "id": "prof.alchemy.orc.apprentice",
+      "id": "prof.alchemy.learn.apprentice",
       "level": 5,
       "category": "alchemy",
       "title": "Learn Alchemy",
-      "location": "Miao'zan, first hut on the left, Sen'jin Village",
-      "note": "No level requirement in Forever. Whuut in the Drag, Orgrimmar, also teaches Apprentice. Empty Vials are sold by Alchemy Supply and Trade Supply vendors.",
-      "races": [
-        "orc"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/alchemy-trainers",
-        "https://www.wow-professions.com/forever/alchemy-leveling-guide"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.alchemy.human.apprentice",
-      "level": 6,
-      "category": "alchemy",
-      "title": "Learn Alchemy",
-      "location": "Alchemist Mallory, cottage in the hills between Stormwind and Northshire",
-      "note": "No level requirement in Forever. Tel'Athir in the Alchemy Needs shop, Mage Quarter, Stormwind, also teaches Apprentice. Empty Vials are sold by Alchemy Supply and Trade Supply vendors.",
-      "races": [
-        "human"
-      ],
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75. Empty Vials are sold by Alchemy Supply and Trade Supply vendors.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/alchemy-trainers",
@@ -50,31 +30,12 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.alchemy.orc.journeyman",
+      "id": "prof.alchemy.learn.journeyman",
       "level": 10,
       "category": "alchemy",
       "title": "Journeyman Alchemy",
-      "location": "Yelmak, Yelmak's Alchemy and Potions, the Drag, Orgrimmar",
-      "note": "Needs Alchemy 50 and level 10. Whuut in the same shop teaches only Apprentice.",
-      "races": [
-        "orc"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/alchemy-trainers"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.alchemy.human.journeyman",
-      "level": 10,
-      "category": "alchemy",
-      "title": "Journeyman Alchemy",
-      "location": "Lilyssia Nightbreeze, Mage Quarter, Stormwind",
-      "note": "Needs Alchemy 50 and level 10. Tel'Athir in the same quarter teaches only Apprentice.",
-      "races": [
-        "human"
-      ],
+      "learn": "journeyman",
+      "note": "Needs Alchemy 50 and level 10; teaches to 150.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/alchemy-trainers"
@@ -95,33 +56,12 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.alchemy.orc.expert",
+      "id": "prof.alchemy.learn.expert",
       "level": 20,
       "category": "alchemy",
-      "title": "Expert Alchemy is in Undercity",
-      "location": "Doctor Herbert Halsey, the Apothecarium, Undercity",
-      "note": "Needs Alchemy 125 and level 20; 50 silver. He is the only Horde Expert trainer listed. The Fermenter, a camp crafting station, needs Alchemy 140 and a blueprint from Rath'mael in the Ruins of Lordaeron.",
-      "races": [
-        "orc"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/alchemy-trainers",
-        "https://www.wow-professions.com/forever/alchemy-leveling-guide",
-        "https://www.wow-professions.com/forever/camping-guide"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.alchemy.human.expert",
-      "level": 20,
-      "category": "alchemy",
-      "title": "Expert Alchemy is in Darnassus",
-      "location": "Ainethil, Craftsmen's Terrace, Darnassus",
-      "note": "Needs Alchemy 125 and level 20; 50 silver. Linzy Blackbolt in Dalaran is also listed, but the trainer page says she may be bugged in the beta. The Fermenter, a camp crafting station, needs Alchemy 140 and a blueprint from Rath'mael in the Ruins of Lordaeron.",
-      "races": [
-        "human"
-      ],
+      "title": "Expert Alchemy",
+      "learn": "expert",
+      "note": "Needs Alchemy 125 and level 20; teaches to 225. The Fermenter, a camp crafting station, needs Alchemy 140 and a blueprint from Rath'mael in the Ruins of Lordaeron.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/alchemy-trainers",

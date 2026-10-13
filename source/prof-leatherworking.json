@@ -3,19 +3,15 @@
   "profession": "leatherworking",
   "facts": [
     {
-      "id": "prof.leatherworking.human.apprentice",
-      "level": 6,
+      "id": "prof.leatherworking.learn.apprentice",
+      "level": 5,
       "category": "leather",
       "title": "Learn Leatherworking",
-      "location": "Adele Fielder, small house by Crystal Lake, north-east of Goldshire",
-      "note": "No level requirement in Forever. Adele teaches only Apprentice, to skill 75. No supply vendor beside her: Salt and Coarse Thread are sold by Tharynn Bouden in Goldshire.",
-      "races": [
-        "human"
-      ],
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75.",
       "priority": "GATE",
       "source": [
-        "https://www.wow-professions.com/forever/leatherworking-trainers",
-        "https://www.wow-professions.com/forever/leatherworking-leveling-guide"
+        "https://www.wow-professions.com/forever/leatherworking-trainers"
       ],
       "confidence": "confirmed"
     },
@@ -26,9 +22,6 @@
       "title": "Leatherworking 1-55: Light Leather, then Cured Light Hide",
       "location": "Any Leatherworking trainer",
       "note": "1-30: Light Leather from Ruined Leather Scraps (yellow at 20), or Light Armor Kits if you have Light Leather. 30-55: Cured Light Hide, 1 Light Hide and 1 Salt each. Keep 24 of the hides for Light Leather Pants at 100.",
-      "races": [
-        "human"
-      ],
       "priority": "INFO",
       "source": [
         "https://www.wow-professions.com/forever/leatherworking-leveling-guide"
@@ -42,9 +35,6 @@
       "title": "Camp Tent (Leatherworking 20)",
       "location": "Leatherworking trainer, or the Camping 101 quest",
       "note": "5 Light Leather. Rested experience up to 5% of a level, once an hour.",
-      "races": [
-        "human"
-      ],
       "priority": "BUFF",
       "source": [
         "https://www.wow-professions.com/forever/camping-guide"
@@ -52,15 +42,12 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.leatherworking.human.journeyman",
+      "id": "prof.leatherworking.learn.journeyman",
       "level": 10,
       "category": "leather",
       "title": "Journeyman Leatherworking",
-      "location": "Simon Tanner, the Protective Hide, Old Town, Stormwind",
-      "note": "Needs Leatherworking 50 and level 10. Randal Worth in the same shop teaches only Apprentice.",
-      "races": [
-        "human"
-      ],
+      "learn": "journeyman",
+      "note": "Needs Leatherworking 50 and level 10; teaches to 150.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/leatherworking-trainers"
@@ -74,9 +61,6 @@
       "title": "Leatherworking 55-130: gloves, belts, pants",
       "location": "Any Journeyman trainer",
       "note": "55-75 Embossed Leather Gloves; 75-80 Medium Leather; 80-90 Cured Medium Hide (keep them); 90-100 Fine Leather Belt (keep 10); 100-115 Light Leather Pants; 115-125 Dark Leather Belt; 125-130 Heavy Leather. Most Classic recipes turn grey 25 points earlier in Forever.",
-      "races": [
-        "human"
-      ],
       "priority": "INFO",
       "source": [
         "https://www.wow-professions.com/forever/leatherworking-leveling-guide"
@@ -84,15 +68,12 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.leatherworking.human.expert",
+      "id": "prof.leatherworking.learn.expert",
       "level": 20,
       "category": "leather",
-      "title": "Expert Leatherworking is in Darnassus",
-      "location": "Telonis, Craftsmen’s Terrace, Darnassus",
-      "note": "Needs Leatherworking 125 and level 20; 50 silver. He is the only Alliance Expert trainer listed. A Tanning Rack (Leatherworking 140, blueprint from Shadowfang Keep) is needed for many later recipes.",
-      "races": [
-        "human"
-      ],
+      "title": "Expert Leatherworking",
+      "learn": "expert",
+      "note": "Needs Leatherworking 125 and level 20; teaches to 225. A Tanning Rack (Leatherworking 140, blueprint from Shadowfang Keep) is needed for many later recipes.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/leatherworking-trainers",

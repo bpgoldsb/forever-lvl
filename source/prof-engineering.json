@@ -3,15 +3,12 @@
   "profession": "engineering",
   "facts": [
     {
-      "id": "prof.engineering.orc.apprentice",
-      "level": 7,
+      "id": "prof.engineering.learn.apprentice",
+      "level": 5,
       "category": "engineering",
       "title": "Learn Engineering",
-      "location": "Mukdrak, Razor Hill, near the forge beside the road to Orgrimmar",
-      "note": "No level requirement in Forever. Buy a Blacksmith Hammer; most recipes need it.",
-      "races": [
-        "orc"
-      ],
+      "learn": "apprentice",
+      "note": "No skill or level needed; teaches to skill 75. Buy a Blacksmith Hammer; most recipes need it.",
       "priority": "GATE",
       "source": [
         "https://www.wow-professions.com/forever/engineering-trainers",
@@ -20,19 +17,15 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.engineering.human.apprentice",
+      "id": "prof.engineering.learn.journeyman",
       "level": 10,
       "category": "engineering",
-      "title": "Learn Engineering",
-      "location": "Sprite Jumpsprocket, Dwarven District, Stormwind",
-      "note": "No level requirement in Forever. Elwynn Forest has no Engineering trainer. Buy a Blacksmith Hammer; most recipes need it.",
-      "races": [
-        "human"
-      ],
+      "title": "Journeyman Engineering",
+      "learn": "journeyman",
+      "note": "Needs Engineering 50 and level 10; teaches to 150.",
       "priority": "GATE",
       "source": [
-        "https://www.wow-professions.com/forever/engineering-trainers",
-        "https://www.wow-professions.com/forever/engineering-leveling-guide"
+        "https://www.wow-professions.com/forever/engineering-trainers"
       ],
       "confidence": "confirmed"
     },
@@ -50,38 +43,6 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.engineering.orc.journeyman",
-      "level": 10,
-      "category": "engineering",
-      "title": "Journeyman Engineering",
-      "location": "Nogg, Valley of Honor, Orgrimmar",
-      "note": "Needs Engineering 50 and level 10.",
-      "races": [
-        "orc"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/engineering-trainers"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.engineering.human.journeyman",
-      "level": 10,
-      "category": "engineering",
-      "title": "Journeyman Engineering",
-      "location": "Lilliam Sparkspindle, Dwarven District, Stormwind",
-      "note": "Needs Engineering 50 and level 10.",
-      "races": [
-        "human"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/engineering-trainers"
-      ],
-      "confidence": "confirmed"
-    },
-    {
       "id": "prof.engineering.51-150",
       "level": 10,
       "category": "engineering",
@@ -95,36 +56,15 @@
       "confidence": "confirmed"
     },
     {
-      "id": "prof.engineering.orc.expert",
+      "id": "prof.engineering.learn.expert",
       "level": 20,
       "category": "engineering",
       "title": "Expert Engineering",
-      "location": "Roxxik, Valley of Honor, Orgrimmar",
-      "note": "Needs Engineering 125 and level 20; 50 silver. He is the only Horde Expert trainer listed.",
-      "races": [
-        "orc"
-      ],
+      "learn": "expert",
+      "note": "Needs Engineering 125 and level 20; teaches to 225.",
       "priority": "GATE",
       "source": [
-        "https://www.wow-professions.com/forever/engineering-trainers",
-        "https://www.wow-professions.com/forever/engineering-leveling-guide"
-      ],
-      "confidence": "confirmed"
-    },
-    {
-      "id": "prof.engineering.human.expert",
-      "level": 20,
-      "category": "engineering",
-      "title": "Expert Engineering is in Ironforge",
-      "location": "Springspindle Fizzlegear, Ironforge",
-      "note": "Needs Engineering 125 and level 20; 50 silver. He is the only Alliance Expert trainer listed.",
-      "races": [
-        "human"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/engineering-trainers",
-        "https://www.wow-professions.com/forever/engineering-leveling-guide"
+        "https://www.wow-professions.com/forever/engineering-trainers"
       ],
       "confidence": "confirmed"
     }

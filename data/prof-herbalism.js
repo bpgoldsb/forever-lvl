@@ -3,9 +3,9 @@
 // On-level rows for herbalism.
 window.LEVEL_DATA = (window.LEVEL_DATA || []).concat([
   { "level": 1, "tasks": [
-    {"id":"t_1_04","category":"herb","priority":"GATE","title":"Learn Herbalism and Skinning","location":"Zor'la (Valley of Trials); Kagil (The Den)","note":"No level requirement in Forever. Both train only to 75. Buy a Skinning Knife. Peacebloom and Silverleaf at skill 1.","source":["https://www.wow-professions.com/forever/herbalism-trainers"],"confidence":"confirmed","professions":["herbalism","skinning"],"races":["orc"]}
+    {"id":"prof.herbalism.learn.apprentice","category":"herb","priority":"GATE","title":"Learn Herbalism","learn":{"max":75,"profession":"herbalism","rank":"apprentice"},"note":"No skill or level needed; teaches to skill 75. Junior trainers teach only this rank. Peacebloom and Silverleaf at skill 1.","source":["https://www.wow-professions.com/forever/herbalism-trainers"],"confidence":"confirmed","professions":["herbalism"]}
   ] },
-  { "level": 10, "tasks": [
-    {"id":"t_9_08","category":"herb","priority":"GATE","title":"Journeyman Herbalism and Skinning","cost":"5s each (Classic)","location":"The Drag, Orgrimmar (Jandi; Thuwd)","note":"Needs skill 50. The Durotar trainers stop at 75.","source":["https://www.wow-professions.com/forever/skinning-trainers"],"confidence":"confirmed","professions":["herbalism","skinning"],"races":["orc"]}
+  { "level": 7, "tasks": [
+    {"id":"prof.herbalism.learn.journeyman","category":"herb","priority":"GATE","title":"Journeyman Herbalism at skill 50","learn":{"max":150,"profession":"herbalism","rank":"journeyman"},"note":"No level requirement for any Herbalism rank: Journeyman at 50, Expert at 125, Artisan at 200, all from the same trainers.","source":["https://www.wow-professions.com/forever/herbalism-trainers"],"confidence":"confirmed","professions":["herbalism"]}
   ] }
 ]);

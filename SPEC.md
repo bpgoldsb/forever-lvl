@@ -97,6 +97,12 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
   - `source` is a list of addresses; each shows as its own hover arrow.
   - A row with a `trainer` and no `location` (a spell, a grimoire) gets its
     location from the trainer list, by the character's race and the row's level.
+  - A profession rank row (`learn`: Learn, Journeyman, Expert) is written once
+    for every race. Its location is the trainers who teach that rank to the
+    character's faction: those in its ticked zones first, then the ones in
+    its faction's capital cities, which are always included. When there is
+    none in either, every listed trainer is shown, marked as such. The list
+    is every trainer on the twelve wow-professions.com trainer pages.
   - `priority`: BUY, SKIP, GATE, QUEST, BUFF, INFO.
   - `confidence`: confirmed (a Forever-specific source says so), inferred (Classic
     data assumed unchanged), unverified (sources conflict or none found).
