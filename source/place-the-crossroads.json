@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "the-crossroads",
+    "zone": "The Barrens",
     "name": "The Crossroads",
     "levels": "11-12"
   },

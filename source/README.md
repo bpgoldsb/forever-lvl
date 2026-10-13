@@ -23,8 +23,9 @@ There are two kinds of content:
 A fact file is `{ "build": "1.60.1", "class": "warlock", "facts": [...] }`.
 `build` is the beta build the facts were read from; a fact can carry its own.
 A profession file has `"profession"` in place of `"class"`. A place file has
-`"place": { "id", "name", "levels" }`, where `levels` is the level range the
-place is shown for (`"7-8"`).
+`"place": { "id", "name", "zone", "levels" }`, where `levels` is the level
+range the place is shown for (`"7-8"`) and `zone` is the game zone it is in
+(`"Durotar"`), matched against a race's `path`.
 
 Fields of a fact:
 
@@ -61,7 +62,9 @@ after the fact's note.
 - `categories.json`: row categories in the order of the Type filter, each with
   `key`, `label` and `color`.
 - `characters.json`: the classes, races and professions a character can
-  have, each with `key` and `label`. A profession also has `kind`, `primary`
+  have, each with `key` and `label`. A race also has `faction`, `classes`
+  (the classes it can be) and `path` (the game zones of its levels 1-20, in
+  order). A profession also has `kind`, `primary`
   or `secondary`; a character has at most two primary ones. `legacy` is the
   character (class, race, professions, places) that a save from before
   characters belongs to. A new visitor starts with no character.

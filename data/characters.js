@@ -44,15 +44,170 @@ window.CHARACTER_OPTIONS = {
   "races": [
     {
       "key": "orc",
-      "label": "Orc"
+      "label": "Orc",
+      "faction": "horde",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "shaman",
+        "mage",
+        "warlock"
+      ],
+      "path": [
+        "Durotar",
+        "The Barrens"
+      ]
     },
     {
       "key": "human",
-      "label": "Human"
+      "label": "Human",
+      "faction": "alliance",
+      "classes": [
+        "warrior",
+        "paladin",
+        "hunter",
+        "rogue",
+        "priest",
+        "mage",
+        "warlock"
+      ],
+      "path": [
+        "Elwynn Forest",
+        "Stormwind City",
+        "Westfall",
+        "Redridge Mountains"
+      ]
     },
     {
       "key": "undead",
-      "label": "Undead"
+      "label": "Undead",
+      "faction": "horde",
+      "classes": [
+        "warrior",
+        "paladin",
+        "rogue",
+        "priest",
+        "mage",
+        "warlock"
+      ],
+      "path": [
+        "Tirisfal Glades",
+        "Silverpine Forest",
+        "Hillsbrad Foothills"
+      ]
+    },
+    {
+      "key": "tauren",
+      "label": "Tauren",
+      "faction": "horde",
+      "classes": [
+        "warrior",
+        "hunter",
+        "shaman",
+        "druid"
+      ],
+      "path": [
+        "Mulgore",
+        "The Barrens"
+      ]
+    },
+    {
+      "key": "troll",
+      "label": "Troll",
+      "faction": "horde",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "priest",
+        "shaman",
+        "mage",
+        "warlock"
+      ],
+      "path": [
+        "Durotar",
+        "The Barrens"
+      ]
+    },
+    {
+      "key": "dwarf",
+      "label": "Dwarf",
+      "faction": "alliance",
+      "classes": [
+        "warrior",
+        "paladin",
+        "hunter",
+        "rogue",
+        "priest",
+        "shaman"
+      ],
+      "path": [
+        "Dun Morogh",
+        "Loch Modan"
+      ]
+    },
+    {
+      "key": "gnome",
+      "label": "Gnome",
+      "faction": "alliance",
+      "classes": [
+        "warrior",
+        "rogue",
+        "priest",
+        "mage",
+        "warlock"
+      ],
+      "path": [
+        "Dun Morogh",
+        "Loch Modan"
+      ]
+    },
+    {
+      "key": "night-elf",
+      "label": "Night Elf",
+      "faction": "alliance",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "priest",
+        "druid"
+      ],
+      "path": [
+        "Teldrassil",
+        "Darkshore"
+      ]
+    },
+    {
+      "key": "skyborne-horde",
+      "label": "Skyborne (Horde)",
+      "faction": "horde",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "druid",
+        "shaman"
+      ],
+      "path": [
+        "Zephras Isle"
+      ]
+    },
+    {
+      "key": "skyborne-alliance",
+      "label": "Skyborne (Alliance)",
+      "faction": "alliance",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "druid",
+        "mage"
+      ],
+      "path": [
+        "Zephras Isle"
+      ]
     }
   ],
   "professions": [

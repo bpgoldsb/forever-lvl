@@ -2,7 +2,7 @@
 // source/ and run `node tools/build-data.mjs`.
 // In-zone rows for Northern Barrens / Sludge Fen.
 window.ROUTE_DATA = (window.ROUTE_DATA || []).concat([
-  { "place": "northern-barrens-sludge-fen", "levels": "15-16", "zone": "Northern Barrens / Sludge Fen", "tasks": [
+  { "place": "northern-barrens-sludge-fen", "levels": "15-16", "zone": "Northern Barrens / Sludge Fen", "area": "The Barrens", "tasks": [
     {"id":"t_15_09","category":"aid","priority":"INFO","title":"Keep Wool Cloth","location":"Humanoid drops, mob levels 15-30","note":"Wool Bandage at First Aid 80, Heavy Wool at 115.","source":["https://www.warcrafttavern.com/forever/guides/first-aid/"],"confidence":"inferred","professions":["first-aid"]},
     {"id":"t_15_07","category":"herb","priority":"INFO","title":"Bruiseweed (100)","location":"Quilboar camps and mountainsides","note":"Skill level from Classic.","confidence":"inferred","professions":["herbalism"]}
   ] }

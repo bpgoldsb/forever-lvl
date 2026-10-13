@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "goldshire-elwynn-forest",
+    "zone": "Elwynn Forest",
     "name": "Goldshire / Elwynn Forest",
     "levels": "6-9"
   },

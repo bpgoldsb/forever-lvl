@@ -81,9 +81,9 @@ for (const name of names) {
     (profs[doc.profession] = profs[doc.profession] || []).push(...facts);
   } else if (name.startsWith("place-")) {
     const p = doc.place || {};
-    if (!p.id || !p.name || !p.levels) errors.push(name + ": place needs id, name and levels");
+    if (!p.id || !p.name || !p.levels || !p.zone) errors.push(name + ": place needs id, name, zone and levels");
     if (places[p.id]) errors.push(name + ": second file for place " + p.id);
-    places[p.id] = { name: p.name, levels: p.levels, facts };
+    places[p.id] = { name: p.name, area: p.zone, levels: p.levels, facts };
   } else {
     if (!classKeys.has(doc.class)) errors.push(name + ": class is not in characters.json: " + doc.class);
     (classes[doc.class] = classes[doc.class] || []).push(...facts);
@@ -169,7 +169,7 @@ for (const p of Object.keys(profs).sort()) {
 for (const p of Object.keys(places).sort((a, b) => range(places[a].levels)[0] - range(places[b].levels)[0] || a.localeCompare(b))) {
   const z = places[p];
   files.set("place-" + p + ".js", HEADER + "// In-zone rows for " + z.name + ".\nwindow.ROUTE_DATA = (window.ROUTE_DATA || []).concat(" +
-    groups([{ place: p, levels: z.levels, zone: z.name, tasks: z.facts.map((f) => row(f, false)) }]) + ");\n");
+    groups([{ place: p, levels: z.levels, zone: z.name, area: z.area, tasks: z.facts.map((f) => row(f, false)) }]) + ");\n");
 }
 
 for (const [id, a] of Object.entries(advice)) if (!a.used) errors.push(a.file + ": advice for a fact that is missing: " + id);
@@ -185,6 +185,15 @@ for (const k of ["classes", "races", "professions"]) {
 }
 for (const x of characters.professions || []) {
   if (!["primary", "secondary"].includes(x.kind)) errors.push("characters.json: profession " + x.key + " needs kind primary or secondary");
+}
+for (const r of characters.races || []) {
+  if (!["horde", "alliance"].includes(r.faction)) errors.push("characters.json: race " + r.key + " needs faction horde or alliance");
+  if (!(r.classes || []).length) errors.push("characters.json: race " + r.key + " needs the classes it can be");
+  for (const c of r.classes || []) if (!classKeys.has(c)) errors.push("characters.json: race " + r.key + " names a class that is not in the list: " + c);
+  if (!Array.isArray(r.path)) errors.push("characters.json: race " + r.key + " needs path, the zones of its levels 1-20");
+}
+for (const c of characters.classes || []) {
+  if (!(characters.races || []).some((r) => (r.classes || []).includes(c.key))) errors.push("characters.json: no race can be a " + c.key);
 }
 const first = characters.legacy || {};
 if (!classKeys.has(first.class) || !raceKeys.has(first.race)) errors.push("characters.json: legacy needs a class and a race from the lists");

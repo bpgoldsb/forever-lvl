@@ -2,7 +2,7 @@
 // source/ and run `node tools/build-data.mjs`.
 // In-zone rows for Westfall.
 window.ROUTE_DATA = (window.ROUTE_DATA || []).concat([
-  { "place": "westfall", "levels": "11-16", "zone": "Westfall", "tasks": [
+  { "place": "westfall", "levels": "11-16", "zone": "Westfall", "area": "Westfall", "tasks": [
     {"id":"place.westfall.no-leatherworking-trainer","category":"leather","priority":"INFO","title":"No Leatherworking trainer listed in Westfall or Redridge","location":"Simon Tanner, Old Town, Stormwind","note":"Train on trips back to Stormwind. The trainer page says it is still in progress, so it may be incomplete.","source":["https://www.wow-professions.com/forever/leatherworking-trainers"],"confidence":"unverified","professions":["leatherworking"]},
     {"id":"place.westfall.skinning-targets","category":"skin","priority":"INFO","title":"Goretusks and coyotes","location":"Westfall fields","note":"Light Leather, then Medium Leather from the higher ones. Targets from the Classic wiki; not checked for Forever.","source":["https://warcraft.wiki.gg/wiki/Westfall"],"confidence":"unverified","professions":["skinning","leatherworking"]},
     {"id":"place.westfall.cooking-quests","category":"fish_cook","priority":"QUEST","title":"Westfall Stew, Goretusk Liver Pie","location":"Salma Saldean, Saldean’s Farm","note":"Cooking recipe quests in Classic; not checked for Forever.","source":["https://warcraft.wiki.gg/wiki/Westfall_Stew","https://warcraft.wiki.gg/wiki/Goretusk_Liver_Pie"],"confidence":"inferred","professions":["cooking"]},

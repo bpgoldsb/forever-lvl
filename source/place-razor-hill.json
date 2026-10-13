@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "razor-hill",
+    "zone": "Durotar",
     "name": "Razor Hill",
     "levels": "7-8"
   },

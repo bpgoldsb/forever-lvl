@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "oases-camp-taurajo",
+    "zone": "The Barrens",
     "name": "Oases / Camp Taurajo",
     "levels": "17-18"
   },

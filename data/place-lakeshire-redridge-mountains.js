@@ -2,7 +2,7 @@
 // source/ and run `node tools/build-data.mjs`.
 // In-zone rows for Lakeshire / Redridge Mountains.
 window.ROUTE_DATA = (window.ROUTE_DATA || []).concat([
-  { "place": "lakeshire-redridge-mountains", "levels": "17-20", "zone": "Lakeshire / Redridge Mountains", "tasks": [
+  { "place": "lakeshire-redridge-mountains", "levels": "17-20", "zone": "Lakeshire / Redridge Mountains", "area": "Redridge Mountains", "tasks": [
     {"id":"place.lakeshire-redridge-mountains.skinning-trainer","category":"skin","priority":"INFO","title":"Skinning trainer: Wilma Ranthal","location":"Redridge Mountains","note":"Teaches every rank. The trainer page names the zone but no town.","source":["https://www.wow-professions.com/forever/skinning-trainers"],"confidence":"confirmed","professions":["skinning"]},
     {"id":"place.lakeshire-redridge-mountains.skinning-targets","category":"skin","priority":"INFO","title":"Great Goretusks, Black Whelps","location":"Redridge Mountains; whelps in Render’s Valley","note":"Light and Medium Leather. Targets from the Classic wiki; not checked for Forever.","source":["https://warcraft.wiki.gg/wiki/Redridge_Mountains"],"confidence":"unverified","professions":["skinning","leatherworking"]},
     {"id":"place.lakeshire-redridge-mountains.herbalism-trainer","category":"herb","priority":"INFO","title":"Herbalism trainer: Alma Jainrose","location":"Lakeshire","source":["https://www.wow-professions.com/forever/herbalism-trainers"],"confidence":"confirmed","professions":["herbalism"]},

@@ -127,16 +127,26 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
 
 - A character is a class, a race, professions and chosen places (shown as
   zones), with an optional name. `source/characters.json` lists what can be
-  picked: all nine classes, though most have no rows yet, and three races.
+  picked: all nine classes, though most have no rows yet, and every race
+  with the classes it can be in Forever (`research/races-classes-paths.md`).
+  The Skyborne is listed once per faction, since its classes differ.
 - **A new visitor has no character.** The character dialog opens on first
   load and cannot be closed until one is made. It has two modes:
-  - **Manual**: name (optional), race and class.
+  - **Manual**: name (optional), class, then race. Only the races that can
+    be the chosen class are offered.
   - **Import from Wowhead**: a Wowhead Forever talent calculator address,
     the same one the Talents tab takes. The class and the talents come from
     it and the build is saved with the character. The address holds no race,
-    so the race is still picked by hand.
-  A new character starts with no professions and no places; the Professions
-  tab opens once it is made.
+    so the race is still picked by hand, from the races that can be that
+    class.
+  A new character starts with no professions; the Professions tab opens
+  once it is made.
+- **Zones for levels 1-20 come from the race.** Each race has a `path`, the
+  game zones of its usual way to level 20 (Orc and Troll: Durotar, the
+  Barrens; Tauren: Mulgore, the Barrens; Undead: Tirisfal Glades, Silverpine
+  Forest, Hillsbrad Foothills). Each place file names its game zone, and a
+  place whose range starts at level 20 or below is shown when that zone is on
+  the path. Places past level 20 are ticked by hand.
 - The header holds the character picker, **Edit** (the same dialog: name,
   race, class, and Remove) and **+ New**.
 - The **Professions** edge tab has two lists. Primary professions: at most
@@ -144,11 +154,12 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
   (Cooking, Fishing, First Aid; `kind` in `source/characters.json`): any
   number. A saved character with more than two primary ones keeps them and
   gets a note.
-- The **Zones** edge tab ticks the places shown under In zone.
+- The **Zones** edge tab lists the path's places (not tickable) and holds
+  the ticks for places past level 20; none are written yet.
 - Rows are chosen for the current character: a class file's rows for that
   class; any row that names `professions` (any one is enough), `races` or
-  `classes` only when the character matches. In zone shows the places the
-  character ticked that have rows for it; a level with nothing stays empty.
+  `classes` only when the character matches. In zone shows the character's places (see above) that have rows for it; a
+  level with nothing stays empty.
 - A reference panel can be tied to a class or a race (the Warlock and Orc
   panels). The example talent build shows only for its own class.
 - Ticks, the level stepper and talent builds belong to the character.

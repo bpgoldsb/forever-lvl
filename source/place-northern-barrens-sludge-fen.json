@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "northern-barrens-sludge-fen",
+    "zone": "The Barrens",
     "name": "Northern Barrens / Sludge Fen",
     "levels": "15-16"
   },

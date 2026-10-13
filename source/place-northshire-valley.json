@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "northshire-valley",
+    "zone": "Elwynn Forest",
     "name": "Northshire Valley",
     "levels": "1-5"
   },

@@ -2,7 +2,7 @@
 // source/ and run `node tools/build-data.mjs`.
 // In-zone rows for Northshire Valley.
 window.ROUTE_DATA = (window.ROUTE_DATA || []).concat([
-  { "place": "northshire-valley", "levels": "1-5", "zone": "Northshire Valley", "tasks": [
+  { "place": "northshire-valley", "levels": "1-5", "zone": "Northshire Valley", "area": "Elwynn Forest", "tasks": [
     {"id":"place.northshire-valley.skinning-targets","category":"skin","priority":"INFO","title":"Young Wolves, Timber Wolves","location":"Northshire Valley","note":"Ruined Leather Scraps, some Light Leather. Targets from the Classic wiki; not checked for Forever.","source":["https://warcraft.wiki.gg/wiki/Northshire_Abbey"],"confidence":"unverified","professions":["skinning"]}
   ] }
 ]);

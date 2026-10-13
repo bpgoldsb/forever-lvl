@@ -307,6 +307,11 @@
   const label = (list, key) => ((options()[list] || []).find((x) => x.key === key) || {}).label || key;
   // The game allows two primary professions and every secondary one.
   const MAX_PRIMARY = 2;
+  // Up to this level a character's zones come from its race's usual path;
+  // past it the zones are picked by hand.
+  const PATH_MAX_LEVEL = 20;
+  const raceOf = (ch) => (options().races || []).find((x) => x.key === ch.race) || {};
+  const racesFor = (cls) => (options().races || []).filter((r) => !cls || !r.classes || r.classes.includes(cls));
   const isPrimary = (x) => x.kind !== "secondary";
 
   const $ = (id) => document.getElementById(id);
@@ -605,12 +610,17 @@
       .map((z) => Object.assign({}, z, { tasks: (z.tasks || []).filter((t) => applies(t, ch)) }));
   }
 
+  // Is a place on this character's way? Up to PATH_MAX_LEVEL that is decided
+  // by the race's path, a list of game zones; later places are ticked by hand.
+  const onPath = (z) => range(z.levels)[0] <= PATH_MAX_LEVEL;
+  const visits = (z, ch) => (onPath(z) ? (raceOf(ch).path || []).includes(z.area) : ch.places.includes(z.place));
+
   // Pick the rows for the current character, then add its talent build.
   // In zone shows the places the character chose that have rows for it.
   async function applyCharacter() {
     const ch = me();
     if (!ch) { ROUTE = []; BASE_LEVELS = []; LEVELS = []; ALL = []; ACTIVE = null; return; }
-    ROUTE = placesFor(ch).filter((z) => z.tasks.length && (!z.place || ch.places.includes(z.place)));
+    ROUTE = placesFor(ch).filter((z) => z.tasks.length && (!z.place || visits(z, ch)));
     // Several files can hold rows for one level (a class, a profession): one
     // group per level, rows by `order` (default 50) and then by load order.
     const byLevel = new Map();
@@ -806,8 +816,8 @@
   function emptyText() {
     if (!me()) return "No character yet.";
     if (ROUTE.length || BASE_LEVELS.length) return "Nothing here with these filters.";
-    if (LEVELS.length) return "Only talent rows so far. Pick professions and zones in the Professions and Zones tabs.";
-    return "Nothing to show for this " + raceClass(me()) + " yet. Pick professions and zones in the Professions and Zones tabs, " +
+    if (LEVELS.length) return "Only talent rows so far. Pick professions in the Professions tab.";
+    return "Nothing to show for this " + raceClass(me()) + " yet. Pick professions in the Professions tab, " +
       "and add a talent build in the Talents tab.";
   }
   function fill(root, sections) {
@@ -1053,16 +1063,28 @@
   }
 
   function renderZonePanel(root) {
-    const ch = me();
-    const sec = el("section", "builds");
-    sec.appendChild(el("h3", null, "Zones"));
-    sec.appendChild(el("p", null, "In zone shows the zones ticked here that have rows for this character."));
-    for (const z of placesFor(ch)) {
-      const n = z.tasks.length;
-      sec.appendChild(tickRow(z.zone, ch.places.includes(z.place), (on) => { inList(ch.places, z.place, on); changed(); },
-        "Lv " + z.levels + ", " + (n ? n + (n === 1 ? " row" : " rows") : "no rows for this character")));
+    const ch = me(), race = raceOf(ch), all = placesFor(ch);
+    const rowsText = (z) => { const n = z.tasks.length; return "Lv " + z.levels + ", " + (n ? n + (n === 1 ? " row" : " rows") : "no rows for this character"); };
+
+    const early = el("section", "builds");
+    early.appendChild(el("h3", null, "Levels 1-" + PATH_MAX_LEVEL));
+    const path = race.path || [];
+    early.appendChild(el("p", null, path.length
+      ? "Set by race. " + label("races", ch.race) + ": " + path.join(", then ") + "."
+      : "No path is written for " + label("races", ch.race) + " yet."));
+    const mine = all.filter((z) => onPath(z) && visits(z, ch));
+    for (const z of mine) early.appendChild(tickRow(z.zone, true, () => {}, rowsText(z), true));
+    if (path.length && !mine.length) early.appendChild(el("p", null, "No rows are written for these zones yet."));
+    root.appendChild(early);
+
+    const late = el("section", "builds");
+    late.appendChild(el("h3", null, "After level " + PATH_MAX_LEVEL));
+    const pick = all.filter((z) => !onPath(z));
+    late.appendChild(el("p", null, pick.length ? "Tick the zones you go to." : "No zones past level " + PATH_MAX_LEVEL + " are written yet. You will pick them here."));
+    for (const z of pick) {
+      late.appendChild(tickRow(z.zone, ch.places.includes(z.place), (on) => { inList(ch.places, z.place, on); changed(); }, rowsText(z)));
     }
-    root.appendChild(sec);
+    root.appendChild(late);
   }
 
   // ---- character dialog --------------------------------------------------
@@ -1108,26 +1130,45 @@
     name.addEventListener("input", () => { form.name = name.value; });
     d.appendChild(name);
 
+    // Class first, then the races that can be that class. When importing,
+    // the class is the one in the pasted address.
+    const cls = () => (importing ? parseAddress(form.text).slug : form.class);
+    const race = el("select");
+    race.setAttribute("aria-label", "Race");
+    race.addEventListener("change", () => { form.race = race.value; });
+    const fillRaces = () => {
+      const can = racesFor(cls());
+      if (!can.some((r) => r.key === form.race)) form.race = (can[0] || {}).key;
+      race.textContent = "";
+      for (const r of can) {
+        const opt = el("option", null, r.label);
+        opt.value = r.key; opt.selected = r.key === form.race;
+        race.appendChild(opt);
+      }
+    };
+    fillRaces();
     const picks = el("div", "row");
-    picks.appendChild(pickList("races", form.race, (v) => { form.race = v; }, "Race"));
-    if (!importing) picks.appendChild(pickList("classes", form.class, (v) => { form.class = v; }, "Class"));
-    d.appendChild(picks);
+    if (!importing) picks.appendChild(pickList("classes", form.class, (v) => { form.class = v; fillRaces(); }, "Class"));
 
     if (importing) {
-      d.appendChild(el("p", null, "The class and the talents come from the address; it does not hold a race, so pick that above. " + HOW_TO));
+      d.appendChild(el("p", null, "The class and the talents come from the address; it does not hold a race, so pick that below. " + HOW_TO));
       const box = el("textarea");
       box.rows = 3; box.placeholder = "https://www.wowhead.com/forever/talent-calc/..."; box.value = form.text;
       box.setAttribute("aria-label", "Wowhead talent calculator address");
-      box.addEventListener("input", () => { form.text = box.value; form.result = null; });
+      box.addEventListener("input", () => { form.text = box.value; form.result = null; fillRaces(); });
       d.appendChild(box);
+      picks.appendChild(race);
+      d.appendChild(picks);
       const r = form.result;
       if (r && r.error) d.appendChild(el("p", "bad", r.error));
       if (r && !r.error) {
         d.appendChild(el("p", "good", r.summary));
         r.notes.forEach((n) => d.appendChild(el("p", "note", n)));
       }
-    } else if (!form.edit) {
-      d.appendChild(el("p", null, "Professions and zones are picked afterwards, in the Professions and Zones tabs."));
+    } else {
+      picks.appendChild(race);
+      d.appendChild(picks);
+      if (!form.edit) d.appendChild(el("p", null, "The zones for levels 1-" + PATH_MAX_LEVEL + " come from the race. Professions are picked afterwards, in the Professions tab."));
     }
 
     const buttons = el("div", "row buttons");
@@ -1152,6 +1193,7 @@
     if (form.mode === "import") {
       const r = form.result = await readBuild(form.text);
       if (!r.error && !(options().classes || []).some((x) => x.key === r.slug)) r.error = "This page does not offer the " + r.slug + " class yet.";
+      if (!r.error && !racesFor(r.slug).some((x) => x.key === form.race)) r.error = "Pick a race that can be a " + label("classes", r.slug) + ".";
       if (r.error) { form.result = { error: r.error }; renderDialog(); return; }
       raw.class = r.slug;
       raw.builds = [{ name: (r.cls.name || r.slug) + " build", url: r.url }];

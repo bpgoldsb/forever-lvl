@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "lakeshire-redridge-mountains",
+    "zone": "Redridge Mountains",
     "name": "Lakeshire / Redridge Mountains",
     "levels": "17-20"
   },

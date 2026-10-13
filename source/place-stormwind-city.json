@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "stormwind-city",
+    "zone": "Stormwind City",
     "name": "Stormwind City",
     "levels": "10"
   },

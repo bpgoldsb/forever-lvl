@@ -2,7 +2,7 @@
 // source/ and run `node tools/build-data.mjs`.
 // In-zone rows for The Crossroads.
 window.ROUTE_DATA = (window.ROUTE_DATA || []).concat([
-  { "place": "the-crossroads", "levels": "11-12", "zone": "The Crossroads", "tasks": [
+  { "place": "the-crossroads", "levels": "11-12", "zone": "The Crossroads", "area": "The Barrens", "tasks": [
     {"id":"t_11_09","category":"aid","priority":"GATE","title":"No First Aid trainer listed in the Barrens","location":"Arnok, Valley of Spirits, Orgrimmar","note":"Learn Wool Bandage (80) and Heavy Wool Bandage (115) on trips back to Orgrimmar or Razor Hill. No source lists a Barrens trainer; the trainer page may be incomplete.","source":["https://www.wow-professions.com/forever/first-aid-trainers"],"confidence":"unverified","professions":["first-aid"]},
     {"id":"t_11_06","category":"skin","priority":"INFO","title":"Plainstriders, Savanna Prowlers, Zhevras","location":"Around the Crossroads","note":"Light Leather. Targets from Classic; they overlap the kill quests.","confidence":"inferred","professions":["skinning"]},
     {"id":"t_11_07","category":"herb","priority":"INFO","title":"Mageroyal (50), Briarthorn (70)","location":"Barrens plains; trees and raptor nests","note":"Skill levels from Classic.","confidence":"inferred","professions":["herbalism"]}

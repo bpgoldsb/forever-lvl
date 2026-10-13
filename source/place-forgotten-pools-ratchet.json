@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "forgotten-pools-ratchet",
+    "zone": "The Barrens",
     "name": "Forgotten Pools / Ratchet",
     "levels": "13-14"
   },

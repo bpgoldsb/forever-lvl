@@ -2,6 +2,7 @@
   "build": "1.60.1",
   "place": {
     "id": "senjin-village-echo-isles",
+    "zone": "Durotar",
     "name": "Sen'jin Village / Echo Isles",
     "levels": "5-6"
   },
