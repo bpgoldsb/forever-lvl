@@ -92,3 +92,9 @@ Raids, open 2026-12-09: Barrow Deeps (10 players, 8 bosses), Hyjal Summit (20 pl
 - No place is added for a zone past 20 from this research alone: a place is shown only when it has rows, and zone order is the quest path, which the spec leaves to a guide addon.
 - When a row needs a place past 20, its level range is Classic's and `inferred`, except Zephras Isle (1-12) and Riverglades (mid-30s to mid-40s).
 - Dungeon ranges in existing rows now follow the table: Wailing Caverns 17-24, The Deadmines 17-26.
+
+## Zone list check, 2026-10-12 (part 1 of "zones through 60")
+
+Claude, by curl, no `agy` run. https://warcraftforever.games/maps (saved as `fw-maps-index.*`, plus `fw-map-<zone>.html` for Riverglades, Shen'dralas, Mount Hyjal and Darkspear Islands, and `fw-home-20261012.html`) lists the beta client's zones: 26 Eastern Kingdoms, 23 Kalimdor, with Riverglades, Mount Hyjal and Shen'dralas marked new, and Darkspear Islands and Zephras Isle under "Battlegrounds & islands". No per-zone page, and no list, states a level range for an old zone; the map pages hold NPC levels only, which are not a zone range. The only Forever ranges are still Zephras Isle 1-12, Riverglades "mid-30s to mid-40s" and Mount Hyjal 60 (the home page).
+- Darkspear Islands is a battleground, not a leveling zone. Ruins of Gilneas is not on the maps page. Bandarion Keep is a town in Tirisfal Glades (the trainer list says so). None is a zone entry.
+- Stonetalon Mountains is not in the `agy` table; its Classic range (15-27) and faction are from memory, `inferred`, not re-read.

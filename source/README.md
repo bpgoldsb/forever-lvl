@@ -72,13 +72,21 @@ after the fact's note.
   character (class, race, professions, places) that a save from before
   characters belongs to. A new visitor starts with no character.
 - `characters.json` also has `continents` (the groups of the zone list, in
-  the order shown) and `zones`, one entry per game zone named in a race's
-  `path`: `name`, `continent` (one of `continents`; left out when not known, and
-  the zone is then listed under "Other"; do not guess one), and, when a level
-  range is known, `lo`, `hi`, `confidence` and `source`. The range is the
-  zone's own, not a place's; Classic's ranges are `inferred`. A zone with no
-  range sorts last and gets no colour. Names must match the place files'
-  `zone` and the races' `path`; the build checks the path names.
+  the order shown) and `zones`, one entry per game zone a character can tick
+  (every leveling zone to level 60, the capital cities, and Forever's new
+  zones): `name`, `faction` (`alliance`, `horde` or `both`: the factions whose
+  characters see it in the list; a race's `path` zones are always shown to it),
+  `continent` (one of `continents`; left out when not known, and the zone is
+  then listed under "Other"; do not guess one), and, when a level range is
+  known, `lo`, `hi`, `confidence` and `source`. The range is the zone's own,
+  not a place's; Classic's ranges are `inferred`. `approx: true` marks a
+  Forever range that the source gives only roughly (Riverglades, "mid-30s to
+  mid-40s"); it is shown as "Lv ~35-45". A zone with no range (a capital city,
+  Shen'dralas) sorts last and gets no colour. Names must match the place
+  files' `zone`, the races' `path` and the `zone` of `trainers-professions.json`;
+  the build checks the path names, the faction, and that a path zone is open to
+  its race's faction. Battlegrounds (Darkspear Islands) and places inside a
+  zone (Bandarion Keep is in Tirisfal Glades) are not zones here.
 - `trainers.json`: where a trainer is, as `teaches`, `race`, `levels`,
   `location` and `confidence`.
 - `trainers-professions.json`: every profession trainer, as `profession`, `lo`

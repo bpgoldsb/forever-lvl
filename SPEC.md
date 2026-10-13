@@ -150,18 +150,21 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
      class and the talents come from the address and the build is saved
      with the character; the address holds no race, so the race is still
      picked by hand.
-  2. **Zones.** A checklist of the game zones for levels 1-20 of the
-     character's faction, with the race's usual ones ticked. The same list is
+  2. **Zones.** A checklist of every game zone to level 60 that the
+     character's faction can go to (`faction` in `source/characters.json`;
+     contested zones are in both factions' lists), with the race's usual
+     levels 1-20 ones ticked and every zone past level 20 left unticked, to
+     be hand-picked. The same list is
      in the Zones tab, from one piece of code. It is in groups. In the dialog
      Eastern Kingdoms is the left column and Kalimdor the right, each with
      its heading and a muted "none for this faction" when it has no zones,
      and "Other" is full width below, only when it has zones; at narrow
-     width (under 520px) the columns stack, Eastern Kingdoms first. The Zones
+     width (under 520px) the columns stack, Eastern Kingdoms first. The dialog scrolls inside itself and keeps Back/Next in view. The Zones
      tab is too narrow for two columns and stacks the groups. The groups are Eastern
      Kingdoms then Kalimdor, then "Other" for a zone with no known continent
      (Zephras Isle); each group is ordered by minimum level, then maximum
      level, then name, and a zone with no known range (Stormwind City) comes
-     last. The level range shows beside the name, marked "(Classic)" unless a
+     last (the capital cities, Shen'dralas). The level range shows beside the name, marked "(Classic)" unless a
      Forever page gave it. The name and a bar at the left are coloured by
      minimum level on WoW's quest difficulty colours (green, yellow, orange,
      red) across the whole zone list, so a level has one colour in every
@@ -176,7 +179,7 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
   ring around the part it describes, with Back, Next and Skip. **?** in the
   header shows it again. "+ New" runs the three steps without the tour, and
   a visitor who already has a saved character sees neither.
-- **Zones for levels 1-20 are ticked per character**, as game zones. Each
+- **Zones are ticked per character**, as game zones (all of them to level 60; the starting ticks are for levels 1-20). Each
   race has a `path`, the zones of its usual way to level 20 (Orc and Troll:
   Durotar, the Barrens; Tauren: Mulgore, the Barrens; Undead: Tirisfal
   Glades, Silverpine Forest, Hillsbrad Foothills); those are the starting
@@ -184,7 +187,9 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
   at level 20 or below is shown when that zone is ticked. A character saved
   before zones could be ticked has no list of its own and follows its race's
   path until a zone is ticked. Changing the race in Edit goes back to the
-  new race's path. Places past level 20 are ticked by hand, place by place.
+  new race's path. Zones past level 20 are ticked by hand. **No In zone rows are written for
+  zones past level 20 yet** (a later part of the work); ticking one today only
+  fills the profession trainer lists.
 - The header holds the character picker, **Edit** (one step of the same
   dialog: name, class, race, and Remove) and **+ New**.
 - The **Professions** edge tab has two lists, in two columns, each profession
@@ -194,9 +199,8 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
   (Cooking, Fishing, First Aid; `kind` in `source/characters.json`): any
   number. A saved character with more than two primary ones keeps them and
   gets a note.
-- The **Zones** edge tab holds the zone ticks for levels 1-20 (the faction's
-  zones, the race's own first) and the ticks for places past level 20; none
-  of the latter are written yet.
+- The **Zones** edge tab holds the zone ticks (the faction's zones to level 60)
+  and the ticks for places past level 20; none of the latter are written yet.
 - Rows are chosen for the current character: a class file's rows for that
   class; any row that names `professions` (any one is enough), `races` or
   `classes` only when the character matches. In zone shows the character's places (see above) that have rows for it; a

@@ -331,6 +331,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Elwynn Forest",
       "continent": "Eastern Kingdoms",
+      "faction": "alliance",
       "lo": 1,
       "hi": 10,
       "confidence": "inferred",
@@ -340,11 +341,13 @@ window.CHARACTER_OPTIONS = {
     },
     {
       "name": "Stormwind City",
-      "continent": "Eastern Kingdoms"
+      "continent": "Eastern Kingdoms",
+      "faction": "alliance"
     },
     {
       "name": "Westfall",
       "continent": "Eastern Kingdoms",
+      "faction": "alliance",
       "lo": 10,
       "hi": 20,
       "confidence": "inferred",
@@ -355,6 +358,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Redridge Mountains",
       "continent": "Eastern Kingdoms",
+      "faction": "alliance",
       "lo": 15,
       "hi": 25,
       "confidence": "inferred",
@@ -365,6 +369,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Dun Morogh",
       "continent": "Eastern Kingdoms",
+      "faction": "alliance",
       "lo": 1,
       "hi": 10,
       "confidence": "inferred",
@@ -375,6 +380,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Loch Modan",
       "continent": "Eastern Kingdoms",
+      "faction": "alliance",
       "lo": 10,
       "hi": 20,
       "confidence": "inferred",
@@ -385,6 +391,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Tirisfal Glades",
       "continent": "Eastern Kingdoms",
+      "faction": "horde",
       "lo": 1,
       "hi": 10,
       "confidence": "inferred",
@@ -395,6 +402,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Silverpine Forest",
       "continent": "Eastern Kingdoms",
+      "faction": "horde",
       "lo": 10,
       "hi": 20,
       "confidence": "inferred",
@@ -405,6 +413,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Hillsbrad Foothills",
       "continent": "Eastern Kingdoms",
+      "faction": "both",
       "lo": 20,
       "hi": 35,
       "confidence": "inferred",
@@ -415,6 +424,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Durotar",
       "continent": "Kalimdor",
+      "faction": "horde",
       "lo": 1,
       "hi": 10,
       "confidence": "inferred",
@@ -425,6 +435,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "The Barrens",
       "continent": "Kalimdor",
+      "faction": "horde",
       "lo": 10,
       "hi": 25,
       "confidence": "inferred",
@@ -435,6 +446,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Mulgore",
       "continent": "Kalimdor",
+      "faction": "horde",
       "lo": 1,
       "hi": 10,
       "confidence": "inferred",
@@ -445,6 +457,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Teldrassil",
       "continent": "Kalimdor",
+      "faction": "alliance",
       "lo": 1,
       "hi": 10,
       "confidence": "inferred",
@@ -455,6 +468,7 @@ window.CHARACTER_OPTIONS = {
     {
       "name": "Darkshore",
       "continent": "Kalimdor",
+      "faction": "alliance",
       "lo": 10,
       "hi": 20,
       "confidence": "inferred",
@@ -464,11 +478,364 @@ window.CHARACTER_OPTIONS = {
     },
     {
       "name": "Zephras Isle",
+      "faction": "both",
       "lo": 1,
       "hi": 12,
       "confidence": "confirmed",
       "source": [
         "https://news.blizzard.com/en-us/article/24303862"
+      ]
+    },
+    {
+      "name": "Duskwood",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 18,
+      "hi": 30,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Wetlands",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 20,
+      "hi": 30,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Alterac Mountains",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 30,
+      "hi": 40,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Arathi Highlands",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 30,
+      "hi": 40,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Stranglethorn Vale",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 30,
+      "hi": 45,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Badlands",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 35,
+      "hi": 45,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Swamp of Sorrows",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 35,
+      "hi": 45,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "The Hinterlands",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 40,
+      "hi": 50,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Searing Gorge",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 45,
+      "hi": 50,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Blasted Lands",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 45,
+      "hi": 55,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Burning Steppes",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 50,
+      "hi": 58,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Western Plaguelands",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 51,
+      "hi": 58,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Eastern Plaguelands",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 53,
+      "hi": 60,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Deadwind Pass",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 55,
+      "hi": 60,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Ironforge",
+      "continent": "Eastern Kingdoms",
+      "faction": "alliance"
+    },
+    {
+      "name": "Orgrimmar",
+      "continent": "Kalimdor",
+      "faction": "horde"
+    },
+    {
+      "name": "Thunder Bluff",
+      "continent": "Kalimdor",
+      "faction": "horde"
+    },
+    {
+      "name": "Undercity",
+      "continent": "Eastern Kingdoms",
+      "faction": "horde"
+    },
+    {
+      "name": "Darnassus",
+      "continent": "Kalimdor",
+      "faction": "alliance"
+    },
+    {
+      "name": "Stonetalon Mountains",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 15,
+      "hi": 27,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Ashenvale",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 18,
+      "hi": 30,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Thousand Needles",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 25,
+      "hi": 35,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Desolace",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 30,
+      "hi": 40,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Dustwallow Marsh",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 35,
+      "hi": 45,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Feralas",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 40,
+      "hi": 50,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Tanaris",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 40,
+      "hi": 50,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Azshara",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 45,
+      "hi": 55,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Felwood",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 48,
+      "hi": 55,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Un'Goro Crater",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 48,
+      "hi": 55,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Winterspring",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 53,
+      "hi": 60,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Moonglade",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 55,
+      "hi": 60,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Silithus",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 55,
+      "hi": 60,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Riverglades",
+      "continent": "Eastern Kingdoms",
+      "faction": "both",
+      "lo": 35,
+      "hi": 45,
+      "approx": true,
+      "confidence": "confirmed",
+      "source": [
+        "https://news.blizzard.com/en-us/article/24303862",
+        "https://warcraftforever.games"
+      ]
+    },
+    {
+      "name": "Shen'dralas",
+      "continent": "Kalimdor",
+      "faction": "both"
+    },
+    {
+      "name": "Mount Hyjal",
+      "continent": "Kalimdor",
+      "faction": "both",
+      "lo": 60,
+      "hi": 60,
+      "confidence": "confirmed",
+      "source": [
+        "https://warcraftforever.games",
+        "https://warcraftforever.games/maps/mount-hyjal"
       ]
     }
   ]

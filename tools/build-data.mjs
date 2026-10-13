@@ -207,8 +207,14 @@ for (const f of characters.factions || []) if (!f.key || !f.label || !Array.isAr
     if ((z.lo === undefined) !== (z.hi === undefined) || (z.lo !== undefined && !(z.lo >= 1 && z.lo <= z.hi))) errors.push(w + " needs lo and hi together, lo <= hi");
     if (z.lo !== undefined && !["confirmed", "inferred", "unverified"].includes(z.confidence)) errors.push(w + " needs a confidence for its level range");
     if (z.confidence === "confirmed" && !(z.source || []).length) errors.push(w + " is confirmed with no source");
+    if (!["alliance", "horde", "both"].includes(z.faction)) errors.push(w + " needs faction: alliance, horde or both");
+    if (z.approx !== undefined && (z.approx !== true || z.lo === undefined)) errors.push(w + " has approx without a level range, or approx that is not true");
   }
-  for (const r of characters.races || []) for (const n of r.path || []) if (!seen.has(n)) errors.push("characters.json: path zone of " + r.key + " has no entry in zones: " + n);
+  for (const r of characters.races || []) for (const n of r.path || []) {
+    const z = (characters.zones || []).find((x) => x.name === n);
+    if (!z) errors.push("characters.json: path zone of " + r.key + " has no entry in zones: " + n);
+    else if (z.faction !== "both" && z.faction !== r.faction) errors.push("characters.json: path zone " + n + " of " + r.key + " is not open to the " + r.faction + " faction");
+  }
 }
 for (const r of characters.races || []) if (!factionKeys.has(r.faction)) errors.push("characters.json: race " + r.key + " has a faction that is not in factions");
 for (const c of categories) if (!c.key || !c.label || !c.color) errors.push("categories.json: an entry needs key, label and color");
