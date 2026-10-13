@@ -39,8 +39,6 @@
     "warlock.grimoire.torment-2": "t_19_08",
     "place.senjin-village-echo-isles.cooking-quests-cook-torka": "t_5_02",
     "place.senjin-village-echo-isles.herbalism-trainer-mishiki": "t_5_03",
-    "place.senjin-village-echo-isles.learn-fishing": "t_5_04",
-    "place.razor-hill.learn-first-aid": "t_7_10",
     "place.razor-hill.keep-linen-cloth": "t_7_11",
     "place.razor-hill.camping-101-first-aid-kit": "t_7_12",
     "place.razor-hill.skinning-targets": "t_7_02",
@@ -101,6 +99,8 @@
     "prof.skinning.human.apprentice",
     "prof.skinning.human.journeyman",
     "t_1_04",
-    "t_9_08"
+    "t_9_08",
+    "t_5_04",
+    "t_7_10"
   ]
 }

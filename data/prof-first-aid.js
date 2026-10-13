@@ -3,7 +3,7 @@
 // On-level rows for first-aid.
 window.LEVEL_DATA = (window.LEVEL_DATA || []).concat([
   { "level": 5, "tasks": [
-    {"id":"prof.first-aid.learn.apprentice","category":"aid","priority":"GATE","title":"Learn First Aid","learn":{"max":75,"profession":"first-aid","rank":"apprentice"},"note":"No skill or level needed; teaches to skill 75.","source":["https://www.wow-professions.com/forever/first-aid-trainers"],"confidence":"confirmed","professions":["first-aid"]}
+    {"id":"prof.first-aid.learn.apprentice","category":"aid","priority":"GATE","title":"Learn First Aid","learn":{"max":75,"profession":"first-aid","rank":"apprentice"},"note":"No skill or level needed; teaches to skill 75. In Forever First Aid also makes healing potions and cures for bleeds, disease and poison.","source":["https://www.wow-professions.com/forever/first-aid-trainers"],"confidence":"confirmed","professions":["first-aid"]}
   ] },
   { "level": 7, "tasks": [
     {"id":"prof.first-aid.learn.journeyman","category":"aid","priority":"GATE","title":"Journeyman First Aid at skill 50","learn":{"max":150,"profession":"first-aid","rank":"journeyman"},"note":"Needs First Aid 50, no level; teaches to 150. The trainer page lists no trainer past 150.","source":["https://www.wow-professions.com/forever/first-aid-trainers"],"confidence":"confirmed","professions":["first-aid"]}

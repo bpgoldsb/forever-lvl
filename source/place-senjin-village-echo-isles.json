@@ -36,21 +36,6 @@
         "https://www.wow-professions.com/forever/herbalism-trainers"
       ],
       "confidence": "confirmed"
-    },
-    {
-      "id": "place.senjin-village-echo-isles.learn-fishing",
-      "category": "fish_cook",
-      "title": "Learn Fishing",
-      "location": "Lau'Tiki, Durotar",
-      "note": "No level requirement. From Classic: Sen'jin Village; coast gives Slitherskin Mackerel and Brilliant Smallfish.",
-      "professions": [
-        "fishing"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/fishing-trainers"
-      ],
-      "confidence": "confirmed"
     }
   ]
 }

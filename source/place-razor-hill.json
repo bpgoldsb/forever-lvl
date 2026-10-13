@@ -8,21 +8,6 @@
   },
   "facts": [
     {
-      "id": "place.razor-hill.learn-first-aid",
-      "category": "aid",
-      "title": "Learn First Aid",
-      "location": "Rawrk, Razor Hill Barracks",
-      "note": "Secondary profession, no level requirement. Rawrk teaches to 150 (Journeyman at 50). In Forever First Aid also makes healing potions and cures for bleeds, disease and poison.",
-      "professions": [
-        "first-aid"
-      ],
-      "priority": "GATE",
-      "source": [
-        "https://www.wow-professions.com/forever/first-aid-trainers"
-      ],
-      "confidence": "confirmed"
-    },
-    {
       "id": "place.razor-hill.keep-linen-cloth",
       "category": "aid",
       "title": "Keep Linen Cloth",
