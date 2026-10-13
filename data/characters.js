@@ -324,8 +324,8 @@ window.CHARACTER_OPTIONS = {
     ]
   },
   "continents": [
-    "Eastern Kingdoms",
-    "Kalimdor"
+    "Kalimdor",
+    "Eastern Kingdoms"
   ],
   "zones": [
     {

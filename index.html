@@ -366,6 +366,9 @@
   // Up to this level a character's zones start as its race's usual path;
   // past it the zones are picked by hand, place by place.
   const PATH_MAX_LEVEL = 20;
+  // The character dialog lists only zones whose minimum level is at most this
+  // (plus the race's own path); the Zones tab lists them all.
+  const DIALOG_ZONE_MAX_LEVEL = 20;
   const raceByKey = (key) => (options().races || []).find((x) => x.key === key) || {};
   const raceOf = (ch) => raceByKey(ch.race);
   // The game zones a race can tick: its own path first, then every zone of
@@ -1187,13 +1190,14 @@
   // CHARACTER_OPTIONS.continents, then "Other" for a zone with none. Within a
   // group, by minimum level, then maximum level, then name; a zone with no
   // known range comes last. Continent and level range are data (source/).
-  function zoneGroups(race, keepEmpty) {
+  function zoneGroups(race, keepEmpty, cutAt) {
     const o = options(), info = o.zones || [];
     const mins = info.filter((z) => z.lo != null).map((z) => z.lo);
     const min = Math.min(...mins), max = Math.max(...mins);
     const groups = (o.continents || []).concat("Other").map((name) => ({ name, zones: [] }));
     for (const name of zoneChoices(race)) {
       const z = info.find((x) => x.name === name) || { name }, has = z.lo != null;
+      if (cutAt != null && !(has && z.lo <= cutAt) && !(race.path || []).includes(name)) continue;
       const g = groups.find((x) => x.name === z.continent) || groups[groups.length - 1];
       const classic = z.confidence !== "confirmed";
       g.zones.push({
@@ -1210,13 +1214,13 @@
   // With `cols` the continents sit side by side (a continent with no zones for
   // this faction keeps its heading and says "none"), and "Other" goes full
   // width below; otherwise all groups stack.
-  function zoneTicks(sec, race, ticked, onTick, sub, cols) {
+  function zoneTicks(sec, race, ticked, onTick, sub, cols, cutAt) {
     const fill = (host, g) => {
       host.appendChild(el("h4", "continent", g.name));
       if (!g.zones.length) host.appendChild(el("div", "none", "none for this faction"));
       for (const z of g.zones) host.appendChild(tickRow(z.name, ticked.includes(z.name), (on) => onTick(z.name, on), sub(z.name), false, z));
     };
-    const groups = zoneGroups(race, cols), tied = groups.filter((g) => g.name !== "Other");
+    const groups = zoneGroups(race, cols, cutAt), tied = groups.filter((g) => g.name !== "Other");
     if (!cols) { for (const g of groups) fill(sec, g); return; }
     const row = el("div", "twocol");
     for (const g of tied) { const c = el("div"); fill(c, g); row.appendChild(c); }
@@ -1357,9 +1361,9 @@
     const sec = el("section", "builds");
     sec.appendChild(el("h3", null, "Zones"));
     sec.appendChild(el("p", null, "In zone shows rows for the zones ticked here (written for levels 1-" + PATH_MAX_LEVEL + " only so far), and profession trainers are listed for them. The usual ones for " + race.label +
-      " are ticked; zones past level " + PATH_MAX_LEVEL + " are yours to tick. You can change them later in the Zones tab."));
+      " are ticked. Zones past level " + DIALOG_ZONE_MAX_LEVEL + " are not listed here; tick them later in the Zones tab."));
     const written = new Set((window.ROUTE_DATA || []).filter(onPath).map((z) => z.area));
-    zoneTicks(sec, race, form.zones, (zone, on) => inList(form.zones, zone, on), (zone) => (written.has(zone) ? null : "no rows written yet"), true);
+    zoneTicks(sec, race, form.zones, (zone, on) => inList(form.zones, zone, on), (zone) => (written.has(zone) ? null : "no rows written yet"), true, DIALOG_ZONE_MAX_LEVEL);
     d.appendChild(sec);
   }
 

@@ -150,18 +150,24 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
      class and the talents come from the address and the build is saved
      with the character; the address holds no race, so the race is still
      picked by hand.
-  2. **Zones.** A checklist of every game zone to level 60 that the
-     character's faction can go to (`faction` in `source/characters.json`;
-     contested zones are in both factions' lists), with the race's usual
-     levels 1-20 ones ticked and every zone past level 20 left unticked, to
-     be hand-picked. The same list is
-     in the Zones tab, from one piece of code. It is in groups. In the dialog
-     Eastern Kingdoms is the left column and Kalimdor the right, each with
+  2. **Zones.** A checklist of the game zones the character's faction can
+     go to (`faction` in `source/characters.json`; contested zones are in
+     both factions' lists), with the race's usual levels 1-20 ones ticked.
+     The dialog lists only zones whose minimum level is 20 or lower
+     (`DIALOG_ZONE_MAX_LEVEL`), plus the race's own path zones whatever their
+     level; a zone with no range that is not on the path is left out. It says
+     that zones past level 20 can be ticked later in the Zones tab. The Zones
+     tab lists every zone to level 60, from the same piece of code, and
+     colours by the whole 1-60 list, so a level has the same colour in both.
+     Edit has no zones step: saving it never touches the ticks, so ticks on
+     zones the dialog hides are kept (changing race still resets them to the
+     new race's path). It is in groups. In the dialog
+     Kalimdor is the left column and Eastern Kingdoms the right, each with
      its heading and a muted "none for this faction" when it has no zones,
      and "Other" is full width below, only when it has zones; at narrow
-     width (under 520px) the columns stack, Eastern Kingdoms first. The dialog scrolls inside itself and keeps Back/Next in view. The Zones
-     tab is too narrow for two columns and stacks the groups. The groups are Eastern
-     Kingdoms then Kalimdor, then "Other" for a zone with no known continent
+     width (under 520px) the columns stack, Kalimdor first. The dialog scrolls inside itself and keeps Back/Next in view. The Zones
+     tab is too narrow for two columns and stacks the groups. The groups are Kalimdor
+     then Eastern Kingdoms, then "Other" for a zone with no known continent
      (Zephras Isle); each group is ordered by minimum level, then maximum
      level, then name, and a zone with no known range (Stormwind City) comes
      last (the capital cities, Shen'dralas). The level range shows beside the name, marked "(Classic)" unless a
