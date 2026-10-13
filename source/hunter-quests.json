@@ -1,0 +1,39 @@
+{
+  "build": "1.60.1",
+  "class": "hunter",
+  "facts": [
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "hunter.quest.scribbled-letter",
+      "level": 1,
+      "title": "A Scribbled Letter",
+      "location": "Marshal McBride, Northshire Abbey (48.8, 41.7), then Tordrin Sternblade (51.0, 40.4)",
+      "note": "Level 1. Offered after Kobold Camp Cleanup, only if Marshal McBride offers it to a Hunter. Tordrin stands by the stable at the northeast of the abbey; no page says he trains hunter spells.",
+      "priority": "QUEST",
+      "source": [
+        "https://foreverwisp.com/guides/wow-forever-human-leveling-guide"
+      ]
+    },
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "hunter.quest.taming-the-beast",
+      "level": 10,
+      "title": "Taming the Beast (3 lessons), Training the Beast",
+      "location": "Josephine Carson, Goldshire (41.2, 66.2); Isaac Chan, Goldshire (41.8, 66.4)",
+      "note": "Level 10. Tame a Rockhide Boar (47.3, 75.8), a Gray Forest Wolf (58.7, 63.9) and a Young Forest Bear (46.3, 75.8) with each lesson's Taming Rod, handing the rod back to Josephine each time. Training the Beast ends with Isaac Chan, the pet trainer. Tame Beast, Call Pet, Dismiss Pet, Feed Pet, Revive Pet and Beast Training are not taught by a class trainer. Dismiss a trial pet if the next tame is refused.",
+      "priority": "GATE",
+      "source": [
+        "https://foreverwisp.com/guides/wow-forever-human-leveling-guide",
+        "https://warcraftforever.games/spells/1515",
+        "https://warcraftforever.games/spells/982",
+        "https://warcraftforever.games/spells/5149"
+      ],
+      "chain": {
+        "name": "Taming the Beast",
+        "step": "1-4"
+      }
+    }
+  ]
+}

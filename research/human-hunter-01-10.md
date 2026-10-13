@@ -1,6 +1,6 @@
 # Human Hunter, levels 1-10, in WoW Forever (research, 2026-10-12, build 1.60.1)
 
-Agents: Claude (first pass) and `agy` on Gemini 3.8 Flash (second pass), merged 2026-10-12. The second pass and the checks made on it are in the last section, which overrides the earlier sections where they differ.
+Agents: Claude (first pass), `agy` on Gemini 3.8 Flash (second pass), and a third pass by Claude re-reading pages plus one more `agy` (Gemini 3.8 Flash) run, 2026-10-12. The last section ("Third pass") overrides everything above it where they differ.
 
 Tags: confirmed = a Forever-specific page says so; inferred = Classic assumed; unverified = sources conflict, single odd source, or ambiguous; not found.
 Note: every Forever source here is a third-party guide or database site reading the beta, not a Blizzard client. "Confirmed" means "a Forever-specific page says so". Human Hunter is a NEW combination in Forever (Blizzard lists it among the new race/class pairings), so no Classic data exists to fall back on for trainers or class quests.
@@ -155,3 +155,24 @@ this. Everything under "agy only" was not checked and stays `unverified`.
   vendors Brother Danil and Brog Hamfist, and the Worn Shortbow with Rough
   Arrows: the pages cited are general wiki or Classic pages, not Forever ones.
   `inferred` at best.
+
+## Third pass: agy (Gemini 3.8 Flash) run 3 and Claude page checks, 2026-10-12
+
+Raw: `research/raw/agy-hunter-paladin-01-10-20261012.{md,json}` (prompt beside it). Pages re-read and saved under `research/raw/pages-20261012/` (`wfg-*`, `wt-class-trainers`, `fwisp-human`). These rows were built from the saved pages only, never from agy's answer.
+
+Checked and used:
+- warcraftforever.games class list (`wfg-classes-hunter-spells`): level and rank of each spell. Levels: Track Beasts 1; Serpent Sting R1 and Aspect of the Monkey 4; Arcane Shot R1 and Hunter's Mark R1 6; Concussive Shot, Raptor Strike R2 and Parry 8; Aspect of the Hawk R1, Track Humanoids and Serpent Sting R2 10.
+- Costs from the Orc hunter trainers' own pages (`wfg-npcs-3154` Jen'shan, `wfg-npcs-3171` Thotar): 10c at 1, 1s at 4 and 6, 2s at 8, 4s at 10. The class list shows 95c/1s 90c/3s 80c for the same spells (a 5% lower figure, probably a reputation discount of the recorder). No Human hunter trainer has a page in the database, so costs are the Orc trainers' list prices.
+- Raptor Strike R1 is not on Jen'shan's list although its page says "trainer": row kept `unverified` ("known from the start").
+- Auto Shot, Tame Beast, Call Pet, Dismiss Pet, Feed Pet, Revive Pet (learned 10), Beast Training: "not from a trainer" on their pages. Aspect of the Viper and Heart of the Lion have no level at all on the class list, so they are left out.
+- Trainers: Warcraft Tavern class trainer guide (`wt-class-trainers`) lists only Stormwind Dwarven District (Einris Brightspear 67.4, 36.3; Thorfin Stoneshield 68.0, 35.9; Ulfir Ironbeard 67.6, 35.9) for Humans; none for Northshire or Goldshire. Pet trainer there: Karrina Mekenda (Stormwind, 67.4, 36.8).
+- Quests: Human leveling guide on foreverwisp (`fwisp-human`) confirms A Scribbled Letter (level 1; Marshal McBride 48.8, 41.7 to Tordrin Sternblade 51.0, 40.4, "if offered") and the level 10 chain: Josephine Carson (41.2, 66.2) gives three Taming the Beast lessons (Rockhide Boar 47.3, 75.8; Gray Forest Wolf 58.7, 63.9; Young Forest Bear 46.3, 75.8) and Training the Beast, handed in to Isaac Chan (41.8, 66.4). This settles the earlier conflict: Josephine starts the chain.
+
+agy run 3 claims the pages do not support (not used):
+- Tordrin Sternblade and Josephine Carson as hunter trainers teaching spells by level: the guide only sends a Hunter to Tordrin and names Josephine as quest giver; the Tavern guide lists neither.
+- Stormwind trainer coordinates "from memory (63.8, 12.6)": wrong against the Tavern table.
+- Quest XP (850, 420) for the Human chain: those figures are on the Orc (Thotar) quest pages; no Human page was read.
+- Follow That Kobold! "level 3-4" and Shhh! We're Hunting Kobolds: not class-tagged in the guide, so not treated as hunter quests.
+- URLs that do not exist (`/spells/hunter-call-pet`).
+
+Still not found: Human hunter spell list from a Human trainer, trainer in Northshire or Goldshire, quest rewards for the Human chain, stable master and ammo vendors.

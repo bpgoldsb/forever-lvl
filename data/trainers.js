@@ -8,7 +8,13 @@ window.TRAINERS = [
   {"teaches":"warlock","race":"orc","levels":"8-9","location":"Razor Hill trainer (Ophek)","confidence":"unverified"},
   {"teaches":"warlock","race":"orc","levels":"10-60","location":"Orgrimmar, Cleft of Shadow","confidence":"unverified"},
   {"teaches":"warlock-demon","race":"orc","levels":"1-9","location":"Demon trainer","confidence":"unverified"},
-  {"teaches":"warlock-demon","race":"orc","levels":"10-60","location":"Demon trainer, Orgrimmar","confidence":"unverified"}
+  {"teaches":"warlock-demon","race":"orc","levels":"10-60","location":"Demon trainer, Orgrimmar","confidence":"unverified"},
+  {"teaches":"hunter","race":"human","levels":"1-10","location":"Stormwind, Dwarven District: Einris Brightspear (67.4, 36.3), Thorfin Stoneshield (68.0, 35.9) or Ulfir Ironbeard (67.6, 35.9). No hunter trainer is listed for Northshire or Goldshire; the Human guide sends a Hunter to Tordrin Sternblade (51.0, 40.4), who is not called a trainer","confidence":"unverified"},
+  {"teaches":"paladin","race":"undead","levels":"1-6","location":"Deathknell chapel: Aramis Hammerhand (31.1, 66.4), who trains up to level 6 (Shari Stilwell in Brill also trains the level 6 spells)","confidence":"confirmed"},
+  {"teaches":"paladin","race":"undead","levels":"7-10","location":"Brill: Shari Stilwell (60.3, 52.6)","confidence":"confirmed"},
+  {"teaches":"hunter","race":"human","levels":"1-10","location":"Stormwind, Dwarven District: Einris Brightspear (67.4, 36.3), Thorfin Stoneshield (68.0, 35.9) or Ulfir Ironbeard (67.6, 35.9). No hunter trainer is listed for Northshire or Goldshire; the Human guide sends a Hunter to Tordrin Sternblade (51.0, 40.4), who is not called a trainer","confidence":"unverified"},
+  {"teaches":"paladin","race":"undead","levels":"1-6","location":"Deathknell chapel: Aramis Hammerhand (31.1, 66.4), who trains up to level 6 (Shari Stilwell in Brill also trains the level 6 spells)","confidence":"confirmed"},
+  {"teaches":"paladin","race":"undead","levels":"7-10","location":"Brill: Shari Stilwell (60.3, 52.6)","confidence":"confirmed"}
 ];
 // Every profession trainer: the skill range its section of the trainer page
 // teaches (lo-hi), its faction (or both) and where it stands. A row with

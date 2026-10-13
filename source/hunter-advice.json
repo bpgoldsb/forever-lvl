@@ -1,0 +1,41 @@
+{
+  "class": "hunter",
+  "advice": {
+    "spell:75": {
+      "priority": "INFO"
+    },
+    "spell:1494": {
+      "priority": "BUY"
+    },
+    "spell:1978": {
+      "priority": "BUY"
+    },
+    "spell:13163": {
+      "priority": "BUY"
+    },
+    "spell:3044": {
+      "priority": "BUY"
+    },
+    "spell:1130": {
+      "priority": "BUY"
+    },
+    "spell:5116": {
+      "priority": "BUY"
+    },
+    "spell:14260": {
+      "priority": "BUY"
+    },
+    "spell:3127": {
+      "priority": "BUY"
+    },
+    "spell:13165": {
+      "priority": "BUY"
+    },
+    "spell:19883": {
+      "priority": "BUY"
+    },
+    "spell:13549": {
+      "priority": "BUY"
+    }
+  }
+}

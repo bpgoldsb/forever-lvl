@@ -1,0 +1,185 @@
+{
+  "build": "1.60.1",
+  "class": "hunter",
+  "facts": [
+    {
+      "id": "spell:75",
+      "level": 1,
+      "category": "spell",
+      "title": "Auto Shot, and Raptor Strike (Rank 1)",
+      "location": "Known from the start",
+      "note": "Level 1. The spell database says Auto Shot is not from a trainer. Raptor Strike (Rank 1) is not on the Valley of Trials hunter trainer's list (the Orc starter trainer) either, but its page says 'trainer'; whether it is granted or bought is not settled.",
+      "source": [
+        "https://warcraftforever.games/spells/75",
+        "https://warcraftforever.games/spells/2973",
+        "https://warcraftforever.games/npcs/3154"
+      ],
+      "confidence": "unverified"
+    },
+    {
+      "id": "spell:1494",
+      "level": 1,
+      "category": "spell",
+      "title": "Track Beasts",
+      "trainer": "hunter",
+      "cost": "10c",
+      "note": "Level 1.",
+      "source": [
+        "https://warcraftforever.games/spells/1494",
+        "https://warcraftforever.games/npcs/3154",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:1978",
+      "level": 4,
+      "category": "spell",
+      "title": "Serpent Sting (Rank 1)",
+      "trainer": "hunter",
+      "cost": "1s",
+      "note": "Level 4. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/1978",
+        "https://warcraftforever.games/npcs/3154",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:13163",
+      "level": 4,
+      "category": "spell",
+      "title": "Aspect of the Monkey",
+      "trainer": "hunter",
+      "cost": "1s",
+      "note": "Level 4. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/13163",
+        "https://warcraftforever.games/npcs/3154",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:3044",
+      "level": 6,
+      "category": "spell",
+      "title": "Arcane Shot (Rank 1)",
+      "trainer": "hunter",
+      "cost": "1s",
+      "note": "Level 6. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/3044",
+        "https://warcraftforever.games/npcs/3154",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:1130",
+      "level": 6,
+      "category": "spell",
+      "title": "Hunter's Mark (Rank 1)",
+      "trainer": "hunter",
+      "cost": "1s",
+      "note": "Level 6. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/1130",
+        "https://warcraftforever.games/npcs/3154",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:5116",
+      "level": 8,
+      "category": "spell",
+      "title": "Concussive Shot",
+      "trainer": "hunter",
+      "cost": "2s",
+      "note": "Level 8. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/5116",
+        "https://warcraftforever.games/npcs/3171",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:14260",
+      "level": 8,
+      "category": "spell",
+      "title": "Raptor Strike (Rank 2)",
+      "trainer": "hunter",
+      "cost": "2s",
+      "note": "Level 8. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/14260",
+        "https://warcraftforever.games/npcs/3171",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:3127",
+      "level": 8,
+      "category": "spell",
+      "title": "Parry",
+      "trainer": "hunter",
+      "cost": "2s",
+      "note": "Level 8. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/3127",
+        "https://warcraftforever.games/npcs/3171",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:13165",
+      "level": 10,
+      "category": "spell",
+      "title": "Aspect of the Hawk (Rank 1)",
+      "trainer": "hunter",
+      "cost": "4s",
+      "note": "Level 10. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/13165",
+        "https://warcraftforever.games/npcs/3171",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:19883",
+      "level": 10,
+      "category": "spell",
+      "title": "Track Humanoids",
+      "trainer": "hunter",
+      "cost": "4s",
+      "note": "Level 10. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/19883",
+        "https://warcraftforever.games/npcs/3171",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:13549",
+      "level": 10,
+      "category": "spell",
+      "title": "Serpent Sting (Rank 2)",
+      "trainer": "hunter",
+      "cost": "4s",
+      "note": "Level 10. Price is the Orc hunter trainer's list price; the Human trainers' prices were not recorded.",
+      "source": [
+        "https://warcraftforever.games/spells/13549",
+        "https://warcraftforever.games/npcs/3171",
+        "https://warcraftforever.games/classes/hunter/spells"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

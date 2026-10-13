@@ -8,6 +8,8 @@ window.DATA_FILES = [
   "categories.js",
   "characters.js",
   "trainers.js",
+  "class-hunter.js",
+  "class-paladin.js",
   "class-warlock.js",
   "prof-alchemy.js",
   "prof-blacksmithing.js",

@@ -1,0 +1,259 @@
+{
+  "build": "1.60.1",
+  "class": "paladin",
+  "facts": [
+    {
+      "id": "spell:635",
+      "level": 1,
+      "category": "spell",
+      "title": "Holy Light (Rank 1)",
+      "location": "Known from the start (Aramis Hammerhand's list does not include it)",
+      "note": "Level 1. Cast on five Injured Deathguard in Rediscovering the Light at level 2. The spell page says 'trainer', learned at 1, but the Deathknell trainer's list starts with Devotion Aura.",
+      "source": [
+        "https://warcraftforever.games/spells/635",
+        "https://warcraftforever.games/npcs/244808"
+      ],
+      "confidence": "unverified"
+    },
+    {
+      "id": "spell:20154",
+      "level": 1,
+      "category": "spell",
+      "title": "Seal of Righteousness (Rank 1)",
+      "location": "Known from the start (Aramis Hammerhand's list does not include it)",
+      "note": "Level 1. The spell page says 'trainer', learned at 1, but the Deathknell trainer's list does not have it.",
+      "source": [
+        "https://warcraftforever.games/spells/20154",
+        "https://warcraftforever.games/npcs/244808"
+      ],
+      "confidence": "unverified"
+    },
+    {
+      "id": "spell:465",
+      "level": 1,
+      "category": "spell",
+      "title": "Devotion Aura (Rank 1)",
+      "trainer": "paladin",
+      "cost": "10c",
+      "note": "Level 1.",
+      "source": [
+        "https://warcraftforever.games/spells/465",
+        "https://warcraftforever.games/npcs/244808",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:19740",
+      "level": 4,
+      "category": "spell",
+      "title": "Blessing of Might (Rank 1)",
+      "trainer": "paladin",
+      "cost": "95c",
+      "note": "Level 4. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/19740",
+        "https://warcraftforever.games/npcs/244808",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:20271",
+      "level": 4,
+      "category": "spell",
+      "title": "Judgement",
+      "trainer": "paladin",
+      "cost": "95c",
+      "note": "Level 4. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/20271",
+        "https://warcraftforever.games/npcs/244808",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:679",
+      "level": 6,
+      "category": "spell",
+      "title": "Holy Strike (Rank 1)",
+      "trainer": "paladin",
+      "cost": "95c",
+      "note": "Level 6. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/679",
+        "https://warcraftforever.games/npcs/244808",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:21082",
+      "level": 6,
+      "category": "spell",
+      "title": "Seal of the Crusader (Rank 1)",
+      "trainer": "paladin",
+      "cost": "95c",
+      "note": "Level 6. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/21082",
+        "https://warcraftforever.games/npcs/244808",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:498",
+      "level": 6,
+      "category": "spell",
+      "title": "Divine Protection (Rank 1)",
+      "trainer": "paladin",
+      "cost": "95c",
+      "note": "Level 6. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/498",
+        "https://warcraftforever.games/npcs/244808",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:639",
+      "level": 6,
+      "category": "spell",
+      "title": "Holy Light (Rank 2)",
+      "trainer": "paladin",
+      "cost": "95c",
+      "note": "Level 6. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/639",
+        "https://warcraftforever.games/npcs/244808",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:853",
+      "level": 8,
+      "category": "spell",
+      "title": "Hammer of Justice (Rank 1)",
+      "trainer": "paladin",
+      "cost": "95c",
+      "note": "Level 8. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/853",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:1152",
+      "level": 8,
+      "category": "spell",
+      "title": "Purify",
+      "trainer": "paladin",
+      "cost": "95c",
+      "note": "Level 8. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/1152",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "paladin.spell.parry",
+      "level": 8,
+      "category": "spell",
+      "title": "Parry",
+      "trainer": "paladin",
+      "cost": "95c",
+      "note": "Level 8. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher. Listed on Shari Stilwell's page; the paladin spell list has no Parry entry, so the rank and spell id were not found.",
+      "source": [
+        "https://warcraftforever.games/npcs/246152"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:1022",
+      "level": 10,
+      "category": "spell",
+      "title": "Blessing of Protection (Rank 1)",
+      "trainer": "paladin",
+      "cost": "2s 85c",
+      "note": "Level 10. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/1022",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:1311649",
+      "level": 10,
+      "category": "spell",
+      "title": "Seal of Fury (Rank 1)",
+      "trainer": "paladin",
+      "cost": "2s 85c",
+      "note": "Level 10. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/1311649",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:633",
+      "level": 10,
+      "category": "spell",
+      "title": "Lay on Hands (Rank 1)",
+      "trainer": "paladin",
+      "cost": "2s 85c",
+      "note": "Level 10. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/633",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:10290",
+      "level": 10,
+      "category": "spell",
+      "title": "Devotion Aura (Rank 2)",
+      "trainer": "paladin",
+      "cost": "2s 85c",
+      "note": "Level 10. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/10290",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "id": "spell:20287",
+      "level": 10,
+      "category": "spell",
+      "title": "Seal of Righteousness (Rank 2)",
+      "trainer": "paladin",
+      "cost": "2s 85c",
+      "note": "Level 10. Price as the trainer's page shows it; hunter trainers' pages list the same kind of spell 5% higher.",
+      "source": [
+        "https://warcraftforever.games/spells/20287",
+        "https://warcraftforever.games/npcs/246152",
+        "https://warcraftforever.games/classes/paladin/spells"
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

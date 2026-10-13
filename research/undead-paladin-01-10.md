@@ -1,6 +1,6 @@
 # Undead (Forsaken) Paladin, levels 1-10 in WoW Forever (research, 2026-10-12, build 1.60.1)
 
-Agents: Claude (first pass) and `agy` on Gemini 3.8 Flash (second pass), merged 2026-10-12. The second pass and the checks made on it are in the last section, which overrides the earlier sections where they differ.
+Agents: Claude (first pass), `agy` on Gemini 3.8 Flash (second pass), and a third pass by Claude re-reading pages plus one more `agy` (Gemini 3.8 Flash) run, 2026-10-12. The last section ("Third pass") overrides everything above it where they differ.
 
 Tags: confirmed = a Forever-specific page says so; inferred = Classic assumed; unverified = sources conflict or none; not found.
 Note on "confirmed": every Forever source here is a third-party guide site or the Warcraft Wiki (warcraft.wiki.gg Forever pages, which read the beta client and flag themselves "possibly out of date"). None is Blizzard. Wowhead Forever, Mobalytics and Icy Veins pages returned HTTP 403 to plain fetch, so their content is only known from search snippets (marked "snippet").
@@ -156,3 +156,21 @@ read, so the claim stays `unverified`.
   cooldown. Still `unverified`, as in section 5.
 - "Holy spells do not damage the Undead paladin in play": the page it cited says
   only that the Light is "physically painful" as lore. `unverified`.
+
+## Third pass: agy (Gemini 3.8 Flash) run 3 and Claude page checks, 2026-10-12
+
+Raw: `research/raw/agy-hunter-paladin-01-10-20261012.{md,json}`. Pages saved under `research/raw/pages-20261012/` (`wfg-npcs-*`, `wfg-quests-*`, `wfg-spell-*`, `wt-class-trainers`, `fwisp-undead`). Rows were built from the saved pages, not from agy's answer.
+
+Checked and used:
+- warcraftforever.games NPC pages list what each trainer sells, with level and price. Aramis Hammerhand (npcs/244808, Deathknell 31.2, 66.3): Devotion Aura 1 (10c); Blessing of Might and Judgement 4 (95c); Divine Protection, Holy Light, Holy Strike, Seal of the Crusader 6 (95c). Shari Stilwell (npcs/246152, Brill 60.4, 51.9): the same four at 6, then Hammer of Justice, Parry, Purify at 8 (95c), and Blessing of Protection, Devotion Aura, Lay on Hands, Seal of Fury, Seal of Righteousness at 10 (2s 85c). Hilda the Breaker (npcs/246389, Bandarion Keep 22.0, 48.1) starts at 12. The Tavern guide says Aramis teaches only up to 6.
+- Holy Light R1 and Seal of Righteousness R1 (level 1) are NOT on Aramis's list, although their spell pages say "trainer": rows kept `unverified` as "known from the start". This supports the wiki's "baseline" reading over the first pass.
+- Holy Light at 6 is Rank 2 (class list); the class list's cost column for Holy Light and Seal of Righteousness looks shifted by one rank, so prices come from the trainer pages.
+- Prices are about 5% under other trainers' list prices (hunter trainers show 1s where Aramis shows 95c); shown as recorded.
+- Quests (foreverwisp undead guide, class-tagged, with required levels): A Difficult Path 1, Rediscovering the Light 2, Coming to Terms 4, Continue Your Training 4, Murlocs at the Gates 7, Touring the Grounds 8, The Tarnished 9, A Token of Good Faith 9; A Lesson in Divinity starts at 12 (outside range). XP 40/85/180/90 from the quest pages.
+- A Light in the Darkness (Aramis) is addressed to a rogue ("Greetings, rogue") and Seeking Refuge (level 7, Shari) is not class-tagged: not paladin rows.
+
+Conflict, left unresolved: warcraftforever.games has an Undercity paladin trainer, Garen Largo (War Quarter 46.9, 16.6, sells from level 18), while the Tavern guide says Horde paladin trainers exist only in Deathknell, Brill and Bandarion Keep. Irrelevant below level 18; `unverified`.
+
+agy run 3 claims not supported by pages: nothing material for the paladin; its Aramis, Shari and Hilda lists matched the NPC pages. It listed Seal of Righteousness R1 as "granted automatically", which is consistent with the pages.
+
+Not found: Rank of Parry and its spell id (no entry on the paladin spell list), rewards for the Murlocs at the Gates to A Token of Good Faith quests.

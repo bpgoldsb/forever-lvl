@@ -1,0 +1,114 @@
+{
+  "build": "1.60.1",
+  "class": "paladin",
+  "facts": [
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "paladin.quest.a-difficult-path",
+      "level": 1,
+      "title": "A Difficult Path",
+      "location": "Shadow Priest Sarvis (30.8, 66.2), then Aramis Hammerhand (31.0, 66.2), Deathknell chapel",
+      "note": "Level 1. Read the Consecrated Scroll, then meet Aramis. Needs The Mindless Ones first. 40 XP.",
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-undead-leveling-guide",
+        "https://warcraftforever.games/quests/98601"
+      ]
+    },
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "paladin.quest.rediscovering-the-light",
+      "level": 2,
+      "title": "Rediscovering the Light",
+      "location": "Aramis Hammerhand, Deathknell chapel (31.0, 66.2)",
+      "note": "Level 2. Use Holy Light on five Injured Deathguard beside the chapel (32.0, 64.4), then return to Aramis before leaving for Night's Web Hollow. 85 XP. Healing others hurts you for a while; that is the quest's theme.",
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-undead-leveling-guide",
+        "https://warcraftforever.games/quests/90902"
+      ]
+    },
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "paladin.quest.coming-to-terms",
+      "level": 4,
+      "title": "Coming to Terms",
+      "location": "Aramis Hammerhand (31.0, 66.2); Frightened Paladin in the hills west of the chapel (27.6, 63.8)",
+      "note": "Level 4. Finish it before leaving Deathknell. 180 XP.",
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-undead-leveling-guide",
+        "https://warcraftforever.games/quests/91208"
+      ]
+    },
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "paladin.quest.continue-your-training",
+      "level": 4,
+      "title": "Continue Your Training",
+      "location": "Aramis Hammerhand, then Shari Stilwell in Brill (60.4, 51.9)",
+      "note": "Level 4. Follow the road east to Brill. 90 XP. Shari trains from level 6.",
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-undead-leveling-guide",
+        "https://warcraftforever.games/quests/91209"
+      ]
+    },
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "paladin.quest.murlocs-at-the-gates",
+      "level": 7,
+      "title": "Murlocs at the Gates",
+      "location": "Breton Samuels, Bandarion Keep gate (21.9, 45.3)",
+      "note": "Level 7. Murlocs are at about 13.8, 53.1. Turn in to Breton, who then gives Touring the Grounds. The keep is also called Tyr's Watch.",
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-undead-leveling-guide"
+      ]
+    },
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "paladin.quest.touring-the-grounds",
+      "level": 8,
+      "title": "Touring the Grounds",
+      "location": "Breton Samuels; Hilda the Breaker (22.0, 47.1), Jorin Croge, Ander Solliden (about 25.3, 50.5); turn in to Danitha Morr (22.1, 44.7)",
+      "note": "Level 8. Four conversations in and around the keep, then Danitha upstairs.",
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-undead-leveling-guide"
+      ]
+    },
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "paladin.quest.the-tarnished",
+      "level": 9,
+      "title": "The Tarnished",
+      "location": "Danitha Morr, Bandarion Keep (22.1, 44.7); Shadowvale (13.1, 64.2)",
+      "note": "Level 9. Kill 8 Tarnished Drudges and 6 Tarnished Zealots, and Rudolph Gelhardt upstairs in the house for his head.",
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-undead-leveling-guide"
+      ]
+    },
+    {
+      "category": "quest",
+      "confidence": "confirmed",
+      "id": "paladin.quest.a-token-of-good-faith",
+      "level": 9,
+      "title": "A Token of Good Faith",
+      "location": "Danitha Morr; Lady Sylvanas Windrunner, Undercity Royal Quarter (58.0, 91.8)",
+      "note": "Level 9. Deliver Rudolph Gelhardt's Head to Sylvanas, then return to Danitha. The next chain, A Lesson in Divinity, starts at level 12 (keep ten Linen Cloth and the Symbol of Life).",
+      "priority": "QUEST",
+      "source": [
+        "https://www.foreverwisp.com/guides/wow-forever-undead-leveling-guide"
+      ]
+    }
+  ]
+}

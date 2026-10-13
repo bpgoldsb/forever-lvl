@@ -1,0 +1,56 @@
+{
+  "class": "paladin",
+  "advice": {
+    "spell:635": {
+      "priority": "INFO"
+    },
+    "spell:20154": {
+      "priority": "INFO"
+    },
+    "spell:465": {
+      "priority": "BUY"
+    },
+    "spell:19740": {
+      "priority": "BUY"
+    },
+    "spell:20271": {
+      "priority": "BUY"
+    },
+    "spell:679": {
+      "priority": "BUY"
+    },
+    "spell:21082": {
+      "priority": "BUY"
+    },
+    "spell:498": {
+      "priority": "BUY"
+    },
+    "spell:639": {
+      "priority": "BUY"
+    },
+    "spell:853": {
+      "priority": "BUY"
+    },
+    "spell:1152": {
+      "priority": "BUY"
+    },
+    "paladin.spell.parry": {
+      "priority": "BUY"
+    },
+    "spell:1022": {
+      "priority": "BUY"
+    },
+    "spell:1311649": {
+      "priority": "BUY"
+    },
+    "spell:633": {
+      "priority": "BUY"
+    },
+    "spell:10290": {
+      "priority": "BUY"
+    },
+    "spell:20287": {
+      "priority": "BUY"
+    }
+  }
+}
