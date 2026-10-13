@@ -206,6 +206,11 @@
   .builds label { display: flex; gap: 6px; align-items: baseline; padding: 3px 0; cursor: pointer; }
   .builds label.off { opacity: .45; cursor: default; }
   .builds .what { color: var(--muted); font-size: 12px; display: block; }
+  .builds h4.continent { margin: 10px 0 2px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+  .builds label.zone { border-left: 3px solid var(--zone, transparent); padding-left: 6px; }
+  .builds label.zone .zname { color: var(--zone, inherit); }
+  .builds label.zone.on .zname { font-weight: 700; }
+  .builds .zlv { color: var(--muted); font-size: 12px; font-weight: 400; margin-left: 6px; white-space: nowrap; }
   .builds .grow { flex: 1; min-width: 0; }
   #panel .bad, dialog .bad { color: var(--bad); }
   #panel .note, dialog .note { color: var(--warn); }
@@ -1093,13 +1098,24 @@
   }
 
   // A row with a checkbox, for the Professions and Zones panels.
-  function tickRow(text, on, onChange, sub, off) {
+  function tickRow(text, on, onChange, sub, off, zone) {
     const row = el("label", off ? "off" : null);
+    if (zone) {
+      row.classList.add("zone");
+      if (on) row.classList.add("on");
+      if (zone.color) row.style.setProperty("--zone", zone.color);
+    }
     const box = el("input");
     box.type = "checkbox"; box.checked = on; box.disabled = !!off;
-    box.addEventListener("change", () => onChange(box.checked));
+    box.addEventListener("change", () => { row.classList.toggle("on", box.checked); onChange(box.checked); });
     row.appendChild(box);
-    const span = el("span", "grow", text);
+    const span = el("span", "grow");
+    span.appendChild(el("span", "zname", text));
+    if (zone && zone.range) {
+      const lv = el("span", "zlv", zone.range);
+      if (zone.title) lv.title = zone.title;
+      span.appendChild(lv);
+    }
     if (sub) span.appendChild(el("span", "what", sub));
     row.appendChild(span);
     return row;
@@ -1132,10 +1148,48 @@
   }
   function renderProfessionPanel(root) { professionPickers(root, me().professions, changed); }
 
-  // One tick per game zone a race can level in to PATH_MAX_LEVEL. `sub(zone)`
-  // is the muted text under a zone's name, if any.
+  // The colour of a zone by its minimum level: WoW's quest difficulty colours,
+  // green to red. The scale is these four stops; change them to change the
+  // palette. `min` and `max` are the lowest and highest minimum level of the
+  // whole zone list, so one level is one colour in every group.
+  const ZONE_STOPS = ["#40BF40", "#FFFF00", "#FF8040", "#FF2020"];
+  function zoneColor(level, min, max) {
+    if (level == null) return null;
+    const t = max > min ? Math.min(1, Math.max(0, (level - min) / (max - min))) : 0;
+    const at = t * (ZONE_STOPS.length - 1), i = Math.min(ZONE_STOPS.length - 2, Math.floor(at)), f = at - i;
+    const rgb = (h) => [1, 3, 5].map((k) => parseInt(h.slice(k, k + 2), 16));
+    const a = rgb(ZONE_STOPS[i]), b = rgb(ZONE_STOPS[i + 1]);
+    return "#" + a.map((v, k) => Math.round(v + (b[k] - v) * f).toString(16).padStart(2, "0")).join("");
+  }
+  // The zones a race can tick, in groups: one per continent in
+  // CHARACTER_OPTIONS.continents, then "Other" for a zone with none. Within a
+  // group, by minimum level, then maximum level, then name; a zone with no
+  // known range comes last. Continent and level range are data (source/).
+  function zoneGroups(race) {
+    const o = options(), info = o.zones || [];
+    const mins = info.filter((z) => z.lo != null).map((z) => z.lo);
+    const min = Math.min(...mins), max = Math.max(...mins);
+    const groups = (o.continents || []).concat("Other").map((name) => ({ name, zones: [] }));
+    for (const name of zoneChoices(race)) {
+      const z = info.find((x) => x.name === name) || { name }, has = z.lo != null;
+      const g = groups.find((x) => x.name === z.continent) || groups[groups.length - 1];
+      const classic = z.confidence !== "confirmed";
+      g.zones.push({
+        name, lo: has ? z.lo : Infinity, hi: has ? z.hi : Infinity, color: has ? zoneColor(z.lo, min, max) : null,
+        range: has ? "Lv " + z.lo + (z.hi !== z.lo ? "-" + z.hi : "") + (classic ? " (Classic)" : "") : null,
+        title: has ? (classic ? "Classic's level range, not confirmed for Forever" : "Level range stated for Forever") : null,
+      });
+    }
+    for (const g of groups) g.zones.sort((a, b) => a.lo - b.lo || a.hi - b.hi || a.name.localeCompare(b.name));
+    return groups.filter((g) => g.zones.length);
+  }
+  // The zone checklist, used by the character dialog and the Zones tab.
+  // `sub(zone)` is the muted text under a zone's name, if any.
   function zoneTicks(sec, race, ticked, onTick, sub) {
-    for (const zone of zoneChoices(race)) sec.appendChild(tickRow(zone, ticked.includes(zone), (on) => onTick(zone, on), sub(zone)));
+    for (const g of zoneGroups(race)) {
+      sec.appendChild(el("h4", "continent", g.name));
+      for (const z of g.zones) sec.appendChild(tickRow(z.name, ticked.includes(z.name), (on) => onTick(z.name, on), sub(z.name), false, z));
+    }
   }
 
   function renderZonePanel(root) {

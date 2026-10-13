@@ -197,6 +197,19 @@ for (const t of profTrainers) {
   else if (t.faction !== "both" && !factionKeys.has(t.faction)) errors.push("trainers-professions.json: unknown faction on " + t.name);
 }
 for (const f of characters.factions || []) if (!f.key || !f.label || !Array.isArray(f.capitals)) errors.push("characters.json: a faction needs key, label and capitals");
+{
+  const continents = characters.continents || [], seen = new Set();
+  for (const z of characters.zones || []) {
+    const w = "characters.json: zone " + z.name;
+    if (!z.name || seen.has(z.name)) errors.push(w + " needs a unique name");
+    seen.add(z.name);
+    if (z.continent && !continents.includes(z.continent)) errors.push(w + " has a continent that is not in continents");
+    if ((z.lo === undefined) !== (z.hi === undefined) || (z.lo !== undefined && !(z.lo >= 1 && z.lo <= z.hi))) errors.push(w + " needs lo and hi together, lo <= hi");
+    if (z.lo !== undefined && !["confirmed", "inferred", "unverified"].includes(z.confidence)) errors.push(w + " needs a confidence for its level range");
+    if (z.confidence === "confirmed" && !(z.source || []).length) errors.push(w + " is confirmed with no source");
+  }
+  for (const r of characters.races || []) for (const n of r.path || []) if (!seen.has(n)) errors.push("characters.json: path zone of " + r.key + " has no entry in zones: " + n);
+}
 for (const r of characters.races || []) if (!factionKeys.has(r.faction)) errors.push("characters.json: race " + r.key + " has a faction that is not in factions");
 for (const c of categories) if (!c.key || !c.label || !c.color) errors.push("categories.json: an entry needs key, label and color");
 for (const k of ["classes", "races", "professions"]) {

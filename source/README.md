@@ -69,6 +69,14 @@ after the fact's note.
   or `secondary`; a character has at most two primary ones. `legacy` is the
   character (class, race, professions, places) that a save from before
   characters belongs to. A new visitor starts with no character.
+- `characters.json` also has `continents` (the groups of the zone list, in
+  the order shown) and `zones`, one entry per game zone named in a race's
+  `path`: `name`, `continent` (one of `continents`; left out when not known, and
+  the zone is then listed under "Other"; do not guess one), and, when a level
+  range is known, `lo`, `hi`, `confidence` and `source`. The range is the
+  zone's own, not a place's; Classic's ranges are `inferred`. A zone with no
+  range sorts last and gets no colour. Names must match the place files'
+  `zone` and the races' `path`; the build checks the path names.
 - `trainers.json`: where a trainer is, as `teaches`, `race`, `levels`,
   `location` and `confidence`.
 - `trainers-professions.json`: every profession trainer, as `profession`, `lo`

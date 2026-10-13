@@ -306,5 +306,154 @@
       "northern-barrens-sludge-fen",
       "oases-camp-taurajo"
     ]
-  }
+  },
+  "continents": [
+    "Eastern Kingdoms",
+    "Kalimdor"
+  ],
+  "zones": [
+    {
+      "name": "Elwynn Forest",
+      "continent": "Eastern Kingdoms",
+      "lo": 1,
+      "hi": 10,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Stormwind City",
+      "continent": "Eastern Kingdoms"
+    },
+    {
+      "name": "Westfall",
+      "continent": "Eastern Kingdoms",
+      "lo": 10,
+      "hi": 20,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Redridge Mountains",
+      "continent": "Eastern Kingdoms",
+      "lo": 15,
+      "hi": 25,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Dun Morogh",
+      "continent": "Eastern Kingdoms",
+      "lo": 1,
+      "hi": 10,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Loch Modan",
+      "continent": "Eastern Kingdoms",
+      "lo": 10,
+      "hi": 20,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Tirisfal Glades",
+      "continent": "Eastern Kingdoms",
+      "lo": 1,
+      "hi": 10,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Silverpine Forest",
+      "continent": "Eastern Kingdoms",
+      "lo": 10,
+      "hi": 20,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Hillsbrad Foothills",
+      "continent": "Eastern Kingdoms",
+      "lo": 20,
+      "hi": 35,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Durotar",
+      "continent": "Kalimdor",
+      "lo": 1,
+      "hi": 10,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "The Barrens",
+      "continent": "Kalimdor",
+      "lo": 10,
+      "hi": 25,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Mulgore",
+      "continent": "Kalimdor",
+      "lo": 1,
+      "hi": 10,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Teldrassil",
+      "continent": "Kalimdor",
+      "lo": 1,
+      "hi": 10,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Darkshore",
+      "continent": "Kalimdor",
+      "lo": 10,
+      "hi": 20,
+      "confidence": "inferred",
+      "source": [
+        "https://warcraft.wiki.gg/wiki/Zones_by_level_(Classic)"
+      ]
+    },
+    {
+      "name": "Zephras Isle",
+      "lo": 1,
+      "hi": 12,
+      "confidence": "confirmed",
+      "source": [
+        "https://news.blizzard.com/en-us/article/24303862"
+      ]
+    }
+  ]
 }

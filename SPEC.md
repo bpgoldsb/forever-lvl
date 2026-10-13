@@ -151,7 +151,17 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
      with the character; the address holds no race, so the race is still
      picked by hand.
   2. **Zones.** A checklist of the game zones for levels 1-20 of the
-     character's faction, with the race's usual ones ticked.
+     character's faction, with the race's usual ones ticked. The same list is
+     in the Zones tab, from one piece of code. It is in groups, Eastern
+     Kingdoms then Kalimdor, then "Other" for a zone with no known continent
+     (Zephras Isle); each group is ordered by minimum level, then maximum
+     level, then name, and a zone with no known range (Stormwind City) comes
+     last. The level range shows beside the name, marked "(Classic)" unless a
+     Forever page gave it. The name and a bar at the left are coloured by
+     minimum level on WoW's quest difficulty colours (green, yellow, orange,
+     red) across the whole zone list, so a level has one colour in every
+     group; a zone with no range has no colour. Continent and range are in
+     `source/characters.json` (`zones`).
   3. **Professions.** A short reason for asking, then the same two lists as
      the Professions tab.
   A new character keeps what was ticked; no tab opens by itself afterwards.
