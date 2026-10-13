@@ -152,7 +152,12 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
      picked by hand.
   2. **Zones.** A checklist of the game zones for levels 1-20 of the
      character's faction, with the race's usual ones ticked. The same list is
-     in the Zones tab, from one piece of code. It is in groups, Eastern
+     in the Zones tab, from one piece of code. It is in groups. In the dialog
+     Eastern Kingdoms is the left column and Kalimdor the right, each with
+     its heading and a muted "none for this faction" when it has no zones,
+     and "Other" is full width below, only when it has zones; at narrow
+     width (under 520px) the columns stack, Eastern Kingdoms first. The Zones
+     tab is too narrow for two columns and stacks the groups. The groups are Eastern
      Kingdoms then Kalimdor, then "Other" for a zone with no known continent
      (Zephras Isle); each group is ordered by minimum level, then maximum
      level, then name, and a zone with no known range (Stormwind City) comes
@@ -163,7 +168,8 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
      group; a zone with no range has no colour. Continent and range are in
      `source/characters.json` (`zones`).
   3. **Professions.** A short reason for asking, then the same two lists as
-     the Professions tab.
+     the Professions tab, side by side: primary on the left, secondary on the
+     right (stacked at narrow width), each profession with its icon.
   A new character keeps what was ticked; no tab opens by itself afterwards.
 - **A first visit ends with a tour**: five cards over the loaded page (On
   level, In zone, Level and Type, the edge tabs, the header), each with a
@@ -181,7 +187,9 @@ Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as o
   new race's path. Places past level 20 are ticked by hand, place by place.
 - The header holds the character picker, **Edit** (one step of the same
   dialog: name, class, race, and Remove) and **+ New**.
-- The **Professions** edge tab has two lists. Primary professions: at most
+- The **Professions** edge tab has two lists, in two columns, each profession
+  with its icon (`icon` in `source/characters.json`, a file in `icons/`, never
+  loaded from the web; a neutral square where it is missing). Primary professions: at most
   two, and the rest cannot be ticked while two are. Secondary professions
   (Cooking, Fishing, First Aid; `kind` in `source/characters.json`): any
   number. A saved character with more than two primary ones keeps them and

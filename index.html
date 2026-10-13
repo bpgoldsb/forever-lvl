@@ -212,13 +212,20 @@
   .builds label.zone.on .zname { font-weight: 700; }
   .builds .zlv { color: var(--muted); font-size: 12px; font-weight: 400; margin-left: 6px; white-space: nowrap; }
   .builds .grow { flex: 1; min-width: 0; }
+  .twocol { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 18px; align-items: start; }
+  .twocol > * { min-width: 0; }
+  .twocol + .fullrow { margin-top: 4px; }
+  .builds .none { color: var(--muted); font-size: 12px; padding: 3px 0 3px 9px; }
+  .builds .picon { width: 24px; height: 24px; border-radius: 3px; flex: none; align-self: center; background: var(--panel-2); border: 1px solid var(--line); box-sizing: border-box; }
+  .builds img.picon { border: 0; }
+  @media (max-width: 520px) { .twocol { grid-template-columns: minmax(0, 1fr); } }
   #panel .bad, dialog .bad { color: var(--bad); }
   #panel .note, dialog .note { color: var(--warn); }
   #panel .good, dialog .good { color: var(--ok); }
 
   /* Character dialog: make a character, or change the current one. */
   dialog {
-    width: min(560px, calc(100% - 24px));
+    width: min(680px, calc(100% - 24px));
     background: var(--panel); color: var(--text);
     border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, .6);
@@ -1097,8 +1104,19 @@
     root.appendChild(add);
   }
 
+  // A profession's icon from icons/ (never from the web), or a neutral square
+  // when the profession has none or the file is missing.
+  function profIcon(name) {
+    if (!name) return el("span", "picon");
+    const img = el("img", "picon");
+    img.alt = "";
+    img.onerror = () => img.replaceWith(el("span", "picon"));
+    img.src = ICON_LOCAL + name + ".jpg";
+    return img;
+  }
+
   // A row with a checkbox, for the Professions and Zones panels.
-  function tickRow(text, on, onChange, sub, off, zone) {
+  function tickRow(text, on, onChange, sub, off, zone, icon) {
     const row = el("label", off ? "off" : null);
     if (zone) {
       row.classList.add("zone");
@@ -1109,6 +1127,7 @@
     box.type = "checkbox"; box.checked = on; box.disabled = !!off;
     box.addEventListener("change", () => { row.classList.toggle("on", box.checked); onChange(box.checked); });
     row.appendChild(box);
+    if (icon !== undefined) row.appendChild(profIcon(icon));
     const span = el("span", "grow");
     span.appendChild(el("span", "zname", text));
     if (zone && zone.range) {
@@ -1123,30 +1142,32 @@
   const inList = (list, key, on) => { const at = list.indexOf(key); if (on && at < 0) list.push(key); if (!on && at >= 0) list.splice(at, 1); };
   // The two profession lists, over `mine` (a list of profession keys); used
   // by the Professions panel and by the character dialog.
-  function professionPickers(root, mine, onChange) {
+  function professionPickers(root, mine, onChange, cols) {
     const all = options().professions || [];
     const has = (x) => mine.includes(x.key);
     const rows = (sec, list, full) => {
       for (const x of list) {
-        sec.appendChild(tickRow(x.label, has(x), (on) => { inList(mine, x.key, on); onChange(); }, null, full && !has(x)));
+        sec.appendChild(tickRow(x.label, has(x), (on) => { inList(mine, x.key, on); onChange(); }, null, full && !has(x), null, x.icon || ""));
       }
     };
     const primary = all.filter(isPrimary), count = primary.filter(has).length;
+    const host = cols ? el("div", "twocol") : root;
+    if (cols) root.appendChild(host);
     const one = el("section", "builds");
     one.appendChild(el("h3", null, "Primary professions"));
     one.appendChild(el("p", null, "A character has at most " + MAX_PRIMARY + ": " + count + " of " + MAX_PRIMARY + " picked." +
       (count >= MAX_PRIMARY ? " Untick one to pick another." : "")));
     if (count > MAX_PRIMARY) one.appendChild(el("p", "note", "This character has " + count + " primary professions; the game allows " + MAX_PRIMARY + "."));
     rows(one, primary, count >= MAX_PRIMARY);
-    root.appendChild(one);
+    host.appendChild(one);
 
     const two = el("section", "builds");
     two.appendChild(el("h3", null, "Secondary professions"));
     two.appendChild(el("p", null, "A character can have all of them."));
     rows(two, all.filter((x) => !isPrimary(x)), false);
-    root.appendChild(two);
+    host.appendChild(two);
   }
-  function renderProfessionPanel(root) { professionPickers(root, me().professions, changed); }
+  function renderProfessionPanel(root) { professionPickers(root, me().professions, changed, true); }
 
   // The colour of a zone by its minimum level: WoW's quest difficulty colours,
   // green to red. The scale is these four stops; change them to change the
@@ -1165,7 +1186,7 @@
   // CHARACTER_OPTIONS.continents, then "Other" for a zone with none. Within a
   // group, by minimum level, then maximum level, then name; a zone with no
   // known range comes last. Continent and level range are data (source/).
-  function zoneGroups(race) {
+  function zoneGroups(race, keepEmpty) {
     const o = options(), info = o.zones || [];
     const mins = info.filter((z) => z.lo != null).map((z) => z.lo);
     const min = Math.min(...mins), max = Math.max(...mins);
@@ -1181,15 +1202,25 @@
       });
     }
     for (const g of groups) g.zones.sort((a, b) => a.lo - b.lo || a.hi - b.hi || a.name.localeCompare(b.name));
-    return groups.filter((g) => g.zones.length);
+    return groups.filter((g) => g.zones.length || (keepEmpty && g.name !== "Other"));
   }
   // The zone checklist, used by the character dialog and the Zones tab.
   // `sub(zone)` is the muted text under a zone's name, if any.
-  function zoneTicks(sec, race, ticked, onTick, sub) {
-    for (const g of zoneGroups(race)) {
-      sec.appendChild(el("h4", "continent", g.name));
-      for (const z of g.zones) sec.appendChild(tickRow(z.name, ticked.includes(z.name), (on) => onTick(z.name, on), sub(z.name), false, z));
-    }
+  // With `cols` the continents sit side by side (a continent with no zones for
+  // this faction keeps its heading and says "none"), and "Other" goes full
+  // width below; otherwise all groups stack.
+  function zoneTicks(sec, race, ticked, onTick, sub, cols) {
+    const fill = (host, g) => {
+      host.appendChild(el("h4", "continent", g.name));
+      if (!g.zones.length) host.appendChild(el("div", "none", "none for this faction"));
+      for (const z of g.zones) host.appendChild(tickRow(z.name, ticked.includes(z.name), (on) => onTick(z.name, on), sub(z.name), false, z));
+    };
+    const groups = zoneGroups(race, cols), tied = groups.filter((g) => g.name !== "Other");
+    if (!cols) { for (const g of groups) fill(sec, g); return; }
+    const row = el("div", "twocol");
+    for (const g of tied) { const c = el("div"); fill(c, g); row.appendChild(c); }
+    sec.appendChild(row);
+    for (const g of groups.filter((x) => x.name === "Other")) { const c = el("div", "fullrow"); fill(c, g); sec.appendChild(c); }
   }
 
   function renderZonePanel(root) {
@@ -1327,7 +1358,7 @@
     sec.appendChild(el("p", null, "In zone shows rows for the zones ticked here. The usual ones for " + race.label +
       " are ticked. You can change them later in the Zones tab."));
     const written = new Set((window.ROUTE_DATA || []).filter(onPath).map((z) => z.area));
-    zoneTicks(sec, race, form.zones, (zone, on) => inList(form.zones, zone, on), (zone) => (written.has(zone) ? null : "no rows written yet"));
+    zoneTicks(sec, race, form.zones, (zone, on) => inList(form.zones, zone, on), (zone) => (written.has(zone) ? null : "no rows written yet"), true);
     d.appendChild(sec);
   }
 
@@ -1337,7 +1368,7 @@
       "(Journeyman: skill 50 and level 10; Expert: skill 125 and level 20), and the camp items come from Cooking, Fishing, " +
       "Skinning and Herbalism. The page puts each on the level or in the zone where it comes up. " +
       "You can change them later in the Professions tab."));
-    professionPickers(d, form.professions, renderDialog);
+    professionPickers(d, form.professions, renderDialog, true);
   }
 
   function renderDialog() {

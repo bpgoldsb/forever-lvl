@@ -66,7 +66,9 @@ after the fact's note.
   have, each with `key` and `label`. A race also has `faction`, `classes`
   (the classes it can be) and `path` (the game zones of its levels 1-20, in
   order). A profession also has `kind`, `primary`
-  or `secondary`; a character has at most two primary ones. `legacy` is the
+  or `secondary`; a character has at most two primary ones; and `icon`, the
+  name of its icon file in `icons/` without `.jpg` (36x36, from Wowhead's icon
+  CDN like the talent icons; a profession with none shows a neutral square). `legacy` is the
   character (class, race, professions, places) that a save from before
   characters belongs to. A new visitor starts with no character.
 - `characters.json` also has `continents` (the groups of the zone list, in

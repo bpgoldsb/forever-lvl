@@ -230,62 +230,74 @@
     {
       "key": "herbalism",
       "label": "Herbalism",
-      "kind": "primary"
+      "kind": "primary",
+      "icon": "trade_herbalism"
     },
     {
       "key": "skinning",
       "label": "Skinning",
-      "kind": "primary"
+      "kind": "primary",
+      "icon": "inv_misc_pelt_wolf_01"
     },
     {
       "key": "leatherworking",
       "label": "Leatherworking",
-      "kind": "primary"
+      "kind": "primary",
+      "icon": "trade_leatherworking"
     },
     {
       "key": "cooking",
       "label": "Cooking",
-      "kind": "secondary"
+      "kind": "secondary",
+      "icon": "inv_misc_food_15"
     },
     {
       "key": "fishing",
       "label": "Fishing",
-      "kind": "secondary"
+      "kind": "secondary",
+      "icon": "trade_fishing"
     },
     {
       "key": "first-aid",
       "label": "First Aid",
-      "kind": "secondary"
+      "kind": "secondary",
+      "icon": "spell_holy_sealofsacrifice"
     },
     {
       "key": "alchemy",
       "label": "Alchemy",
-      "kind": "primary"
+      "kind": "primary",
+      "icon": "trade_alchemy"
     },
     {
       "key": "tailoring",
       "label": "Tailoring",
-      "kind": "primary"
+      "kind": "primary",
+      "icon": "trade_tailoring"
     },
     {
       "key": "enchanting",
       "label": "Enchanting",
-      "kind": "primary"
+      "kind": "primary",
+      "icon": "trade_engraving"
     },
     {
       "key": "mining",
       "label": "Mining",
-      "kind": "primary"
+      "kind": "primary",
+      "icon": "trade_mining"
     },
     {
       "key": "blacksmithing",
       "label": "Blacksmithing",
-      "kind": "primary"
+      "kind": "primary",
+      "icon": "trade_blacksmithing"
     },
     {
       "key": "engineering",
       "label": "Engineering",
-      "kind": "primary"
+      "kind": "primary",
+      "icon": "trade_engineering"
     }
   ],
   "legacy": {
