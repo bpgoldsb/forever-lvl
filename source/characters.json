@@ -2,7 +2,13 @@
   "classes": [
     { "key": "warlock", "label": "Warlock" },
     { "key": "hunter", "label": "Hunter" },
-    { "key": "paladin", "label": "Paladin" }
+    { "key": "paladin", "label": "Paladin" },
+    { "key": "warrior", "label": "Warrior" },
+    { "key": "rogue", "label": "Rogue" },
+    { "key": "priest", "label": "Priest" },
+    { "key": "shaman", "label": "Shaman" },
+    { "key": "mage", "label": "Mage" },
+    { "key": "druid", "label": "Druid" }
   ],
   "races": [
     { "key": "orc", "label": "Orc" },
@@ -10,20 +16,20 @@
     { "key": "undead", "label": "Undead" }
   ],
   "professions": [
-    { "key": "herbalism", "label": "Herbalism" },
-    { "key": "skinning", "label": "Skinning" },
-    { "key": "leatherworking", "label": "Leatherworking" },
-    { "key": "cooking", "label": "Cooking" },
-    { "key": "fishing", "label": "Fishing" },
-    { "key": "first-aid", "label": "First Aid" },
-    { "key": "alchemy", "label": "Alchemy" },
-    { "key": "tailoring", "label": "Tailoring" },
-    { "key": "enchanting", "label": "Enchanting" },
-    { "key": "mining", "label": "Mining" },
-    { "key": "blacksmithing", "label": "Blacksmithing" },
-    { "key": "engineering", "label": "Engineering" }
+    { "key": "herbalism", "label": "Herbalism", "kind": "primary" },
+    { "key": "skinning", "label": "Skinning", "kind": "primary" },
+    { "key": "leatherworking", "label": "Leatherworking", "kind": "primary" },
+    { "key": "cooking", "label": "Cooking", "kind": "secondary" },
+    { "key": "fishing", "label": "Fishing", "kind": "secondary" },
+    { "key": "first-aid", "label": "First Aid", "kind": "secondary" },
+    { "key": "alchemy", "label": "Alchemy", "kind": "primary" },
+    { "key": "tailoring", "label": "Tailoring", "kind": "primary" },
+    { "key": "enchanting", "label": "Enchanting", "kind": "primary" },
+    { "key": "mining", "label": "Mining", "kind": "primary" },
+    { "key": "blacksmithing", "label": "Blacksmithing", "kind": "primary" },
+    { "key": "engineering", "label": "Engineering", "kind": "primary" }
   ],
-  "default": {
+  "legacy": {
     "class": "warlock",
     "race": "orc",
     "professions": ["herbalism", "skinning", "cooking", "fishing", "first-aid"],

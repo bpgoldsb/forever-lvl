@@ -32,9 +32,10 @@ It is a work in progress and I would like to hear what you think; see "Feedback"
   arrow that appears when you hover the row.
 - The talent order shown at first is one example build. The Talents tab on the
   right edge takes your own: paste a Wowhead Forever talent calculator address
-  for any class, keep several builds and switch between them. Everything else
-  on the page is still written for an Orc Warlock: the Character tab can add
-  other characters. A Human has Skinning and Leatherworking rows and five
+  for any class, keep several builds and switch between them. The page
+  asks for a character on the first visit (by hand, or from that same
+  address), and the Professions and Zones tabs choose what it shows. Most
+  rows are still written for an Orc Warlock. A Human has Skinning and Leatherworking rows and five
   Alliance places (Northshire to Redridge); the rest is not written yet.
 
 ## Feedback

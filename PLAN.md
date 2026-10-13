@@ -165,6 +165,15 @@ Build order:
    `research/skinning-leatherworking-human-zones.md`. The rows are tagged
    Human, the only Alliance race in the picker; when another Alliance race is
    added they need a faction tag instead. Place level ranges are Classic's.
+   Changed 2026-10-12 after the owner looked at the preview (SPEC.md
+   "Characters"): no starting character, a creation dialog with Manual and
+   Import from Wowhead modes, the character picker in the header, and the
+   Character tab split into Professions (two primary at most) and Zones.
+   Choices made without asking, easy to change: the two "sidebars" are edge
+   tabs like the others; renaming, changing race or class and removing a
+   character are behind an Edit button beside the picker; the picker now
+   offers all nine classes, since an imported address can be any of them
+   (six have talent data and no rows).
 3. Human Hunter and Undead Paladin facts for levels 1-10, built and shown.
    Needs more research first: spell costs from the per-spell pages on
    warcraftforever.games, and the unread parts of the two leveling guides.

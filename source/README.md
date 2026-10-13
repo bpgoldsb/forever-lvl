@@ -60,9 +60,11 @@ after the fact's note.
 
 - `categories.json`: row categories in the order of the Type filter, each with
   `key`, `label` and `color`.
-- `characters.json`: the classes, races and professions the Character tab
-  offers, each with `key` and `label`, and `default`, the character the page
-  starts with (class, race, professions, places).
+- `characters.json`: the classes, races and professions a character can
+  have, each with `key` and `label`. A profession also has `kind`, `primary`
+  or `secondary`; a character has at most two primary ones. `legacy` is the
+  character (class, race, professions, places) that a save from before
+  characters belongs to. A new visitor starts with no character.
 - `trainers.json`: where a trainer is, as `teaches`, `race`, `levels`,
   `location` and `confidence`.
 - `legacy-ids.json`: `ids` maps a fact id to the row id the page used before

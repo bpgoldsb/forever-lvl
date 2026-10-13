@@ -5,10 +5,12 @@ changes; `PLAN.md` holds what is left to do and what is still undecided.
 
 ## Purpose
 
-A leveling cheatsheet and task tracker for one character in *World of Warcraft:
-Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-12).
+A leveling cheatsheet and task tracker for one character at a time in *World of
+Warcraft: Forever* (official Blizzard version, launches 2026-11-04, in beta as of
+2026-10-12).
 
-- Character: Orc Warlock. Professions: Herbalism, Skinning, Cooking, Fishing, First Aid.
+- First written for an Orc Warlock with Herbalism, Skinning, Cooking, Fishing and
+  First Aid; that is still the character with the most rows.
 - Route: Durotar (1-10), then The Barrens (10-20). First dataset covers levels 1-20;
   levels 21-60 are added later as data only.
 
@@ -42,9 +44,10 @@ Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-
   checkbox and, like SKIP rows, never hold a row open or count in a tally. A level
   with nothing to tick shows no tally and stays on screen.
 - "Hide done tasks" hides individual ticked tasks inside unfinished rows.
-- Reference material lives in **edge tabs** on the right side that slide a panel
-  out over the page: Camping, Warlock, Orc. Not shown until opened. More panels
-  can be added as data.
+- **Edge tabs** on the right side slide a panel out over the page; nothing is
+  shown until one is opened. First the character's own: Professions, Zones,
+  Talents. Then reference material: Camping, Warlock, Orc. More reference
+  panels can be added as data. With no character there are no tabs.
 - The header and edge tabs stay fixed; only the task area scrolls.
 
 ## A task row
@@ -122,32 +125,46 @@ Forever* (official Blizzard version, launches 2026-11-04, in beta as of 2026-10-
 
 ## Characters
 
-- A character is a class, a race, professions and chosen places, with an
-  optional name. The page starts with the Orc Warlock from
-  `source/characters.json`, which also lists what can be picked.
-- The **Character** edge tab switches between characters, edits the current
-  one, and adds or removes one. A new character starts with no professions and
-  no places.
+- A character is a class, a race, professions and chosen places (shown as
+  zones), with an optional name. `source/characters.json` lists what can be
+  picked: all nine classes, though most have no rows yet, and three races.
+- **A new visitor has no character.** The character dialog opens on first
+  load and cannot be closed until one is made. It has two modes:
+  - **Manual**: name (optional), race and class.
+  - **Import from Wowhead**: a Wowhead Forever talent calculator address,
+    the same one the Talents tab takes. The class and the talents come from
+    it and the build is saved with the character. The address holds no race,
+    so the race is still picked by hand.
+  A new character starts with no professions and no places; the Professions
+  tab opens once it is made.
+- The header holds the character picker, **Edit** (the same dialog: name,
+  race, class, and Remove) and **+ New**.
+- The **Professions** edge tab has two lists. Primary professions: at most
+  two, and the rest cannot be ticked while two are. Secondary professions
+  (Cooking, Fishing, First Aid; `kind` in `source/characters.json`): any
+  number. A saved character with more than two primary ones keeps them and
+  gets a note.
+- The **Zones** edge tab ticks the places shown under In zone.
 - Rows are chosen for the current character: a class file's rows for that
   class; any row that names `professions` (any one is enough), `races` or
   `classes` only when the character matches. In zone shows the places the
   character ticked that have rows for it; a level with nothing stays empty.
 - A reference panel can be tied to a class or a race (the Warlock and Orc
   panels). The example talent build shows only for its own class.
-- Ticks, the level stepper and talent builds belong to the character. The
-  header shows the character's name, or its race and class.
+- Ticks, the level stepper and talent builds belong to the character.
 
 ## Persistence
 
 - `localStorage` key `forever-lvl.v2` holds the characters (each with its ticks,
   level and builds), which one is shown, and the view settings (category, hide
   done, swap, lock, show finished, open panel). The older key `forever-lvl.v1`
-  held one character's progress; it is read when the new key is empty, becomes
-  the starting character, and is left in place.
+  held one character's progress, from when the page was a single Orc Warlock;
+  it is read when the new key is empty, becomes that character (`legacy` in
+  `source/characters.json`), and is left in place.
 - Export and Import move every character as a JSON file, since `localStorage` is
   not shared between `file://`, a preview address and the hosted site. A file
   exported before characters existed replaces only the current character's
-  progress.
+  progress, or becomes the Orc Warlock when there is no character.
 
 ## Hosting
 

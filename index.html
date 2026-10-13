@@ -193,18 +193,38 @@
   #panel ol { margin: 0; padding-left: 18px; font-size: 13px; }
   #panel p { margin: 0 0 4px; font-size: 13px; color: var(--muted); }
 
-  /* Talents panel: saved builds and the paste box. */
-  #panel input[type="text"], #panel textarea {
+  /* Text boxes and pickers in a panel or the character dialog. */
+  #panel input[type="text"], #panel textarea, dialog input[type="text"], dialog textarea {
     width: 100%; background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px;
     padding: 4px 6px; margin-bottom: 6px; resize: vertical;
   }
-  #panel select { background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px; margin: 0 6px 6px 0; color: var(--text); }
+  #panel select, dialog select, #charSelect {
+    background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px; color: var(--text);
+  }
+  #panel select, dialog select { margin: 0 6px 6px 0; }
+  #charSelect { font-weight: 600; max-width: 260px; }
   .builds label { display: flex; gap: 6px; align-items: baseline; padding: 3px 0; cursor: pointer; }
+  .builds label.off { opacity: .45; cursor: default; }
   .builds .what { color: var(--muted); font-size: 12px; display: block; }
   .builds .grow { flex: 1; min-width: 0; }
-  #panel .bad { color: var(--bad); }
-  #panel .note { color: var(--warn); }
-  #panel .good { color: var(--ok); }
+  #panel .bad, dialog .bad { color: var(--bad); }
+  #panel .note, dialog .note { color: var(--warn); }
+  #panel .good, dialog .good { color: var(--ok); }
+
+  /* Character dialog: make a character, or change the current one. */
+  dialog {
+    width: min(440px, calc(100% - 24px));
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .6);
+  }
+  dialog::backdrop { background: rgba(10, 8, 14, .7); }
+  dialog h2 { font-size: 15px; margin: 0 0 8px; color: var(--accent); }
+  dialog p { margin: 0 0 8px; font-size: 13px; color: var(--muted); }
+  dialog .row { margin-bottom: 8px; }
+  dialog .buttons { margin: 6px 0 0; }
+  dialog .btn { padding: 4px 12px; }
+  dialog .btn.main { border-color: var(--accent); color: var(--accent); font-weight: 600; }
 
   .empty, .error { color: var(--muted); padding: 20px; text-align: center; }
   .error { color: var(--bad); text-align: left; white-space: pre-wrap; }
@@ -218,7 +238,7 @@
     .band > div + div { border-left: 0; }
     .band.head { display: none; }
     #locked, #rail { grid-column: 1; grid-row: auto; }
-    #rail { flex-direction: row; padding: 4px; border-left: 0; order: -1; }
+    #rail { flex-direction: row; flex-wrap: wrap; padding: 4px; border-left: 0; order: -1; }
     #rail button { writing-mode: horizontal-tb; border-right: 1px solid var(--line); border-radius: 4px; margin: 0; padding: 2px 8px; }
     /* In the flow, under the tabs, so the tab that opened it can close it. */
     #panel {
@@ -232,7 +252,11 @@
 
 <header>
   <div class="row">
-    <h1 id="title">WoW Forever</h1>
+    <h1>WoW Forever</h1>
+    <select id="charSelect" aria-label="Character" title="Switch character"></select>
+    <button class="btn" id="charEdit" type="button" title="Rename, change or remove this character">Edit</button>
+    <button class="btn" id="charNew" type="button" title="Add a character">+ New</button>
+    <span class="gap"></span>
     <div class="progress" title="Overall progress"><i id="progressBar"></i></div>
     <span id="progressText"></span>
     <span class="spacer"></span>
@@ -264,6 +288,7 @@
   <nav id="rail" aria-label="Reference panels"></nav>
   <aside id="panel" hidden></aside>
 </main>
+<dialog id="charDialog" aria-label="Character"></dialog>
 
 <!-- data/index.js lists the data files; the app loads each one in order. -->
 <script src="data/index.js"></script>
@@ -277,9 +302,12 @@
   // Row categories, key -> label. Declared in data/categories.js; the talent
   // category is the page's own, for the rows it makes from a talent build.
   const CATEGORIES = {};
-  // What a character can be, and the one the page starts with: data/characters.js.
+  // What a character can be: data/characters.js.
   const options = () => window.CHARACTER_OPTIONS || {};
   const label = (list, key) => ((options()[list] || []).find((x) => x.key === key) || {}).label || key;
+  // The game allows two primary professions and every secondary one.
+  const MAX_PRIMARY = 2;
+  const isPrimary = (x) => x.kind !== "secondary";
 
   const $ = (id) => document.getElementById(id);
   const el = (tag, cls, text) => {
@@ -294,7 +322,8 @@
   // lock: both columns scroll as one, each zone beside the levels it covers.
   // showFinished: keep rows whose tasks are all ticked on screen.
   // panel: id of the open reference panel, or null.
-  // characters: every saved character; character: which one is shown.
+  // characters: every saved character; character: which one is shown. A new
+  // visitor has none, and the character dialog stays open until one is made.
   //
   // A character is { name, class, race, professions, places, done, level,
   // builds, build }. name is "" until the user types one. places are the
@@ -304,20 +333,24 @@
   // is shown, counting the data file's own build (if any) as number 0.
   const state = { characters: [], character: 0, category: "all", hideDone: false, swap: false, lock: true, showFinished: false, panel: null };
   const me = () => state.characters[state.character];
+  // What the page reads while there is no character.
+  const NOBODY = { done: new Set(), level: "all", builds: [], build: 0 };
   for (const k of ["done", "level", "builds", "build"]) {
-    Object.defineProperty(state, k, { get: () => me()[k], set: (v) => { me()[k] = v; } });
+    Object.defineProperty(state, k, { get: () => (me() || NOBODY)[k], set: (v) => { if (me()) me()[k] = v; } });
   }
-  const charName = (c) => c.name || label("races", c.race) + " " + label("classes", c.class);
+  const raceClass = (c) => label("races", c.race) + " " + label("classes", c.class);
+  const charName = (c) => c.name || raceClass(c);
 
-  // Saved or imported text -> a character, with anything unknown replaced by
-  // the starting character's value.
-  function readCharacter(raw) {
-    const o = options(), first = o.default || {};
+  // Saved or imported text -> a character. Anything unknown or missing comes
+  // from `base` when there is one (the character an old save belongs to), or
+  // is the first class and race in the lists, with nothing chosen.
+  function readCharacter(raw, base) {
+    const o = options(), first = base || {};
     const known = (list, key) => (o[list] || []).some((x) => x.key === key);
     return {
       name: typeof raw.name === "string" ? raw.name.slice(0, 40) : "",
-      class: known("classes", raw.class) ? raw.class : first.class,
-      race: known("races", raw.race) ? raw.race : first.race,
+      class: known("classes", raw.class) ? raw.class : first.class || ((o.classes || [])[0] || {}).key,
+      race: known("races", raw.race) ? raw.race : first.race || ((o.races || [])[0] || {}).key,
       professions: (Array.isArray(raw.professions) ? raw.professions : first.professions || []).filter((x) => known("professions", x)),
       places: (Array.isArray(raw.places) ? raw.places : first.places || []).map(String),
       done: new Set(Array.isArray(raw.done) ? raw.done.map(String) : []),
@@ -329,21 +362,24 @@
   }
 
   function loadState() {
-    let raw = {};
+    let raw = null, old = false;
     try {
-      raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || JSON.parse(localStorage.getItem(OLD_STORAGE_KEY) || "{}") || {};
+      raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      if (!raw) { raw = JSON.parse(localStorage.getItem(OLD_STORAGE_KEY) || "null"); old = !!raw; }
     } catch (e) { /* corrupt or unavailable storage: start clean */ }
-    applyState(raw);
+    applyState(raw || {}, old);
   }
   // Takes both shapes: the current one, with a list of characters, and the
-  // older one, which is one character's progress and becomes the starting
-  // character.
-  function applyState(raw) {
+  // older one (`old`, or anything with a `done` list), which is one
+  // character's progress from when the page was a single Orc Warlock and
+  // becomes that character. Anything else leaves no character.
+  function applyState(raw, old) {
     if (typeof raw.category === "string") state.category = raw.category;
     if (typeof raw.panel === "string" || raw.panel === null) state.panel = raw.panel;
     for (const k of ["hideDone", "swap", "lock", "showFinished"]) if (typeof raw[k] === "boolean") state[k] = raw[k];
     const list = Array.isArray(raw.characters) ? raw.characters.filter((c) => c && typeof c === "object") : [];
-    state.characters = list.length ? list.map(readCharacter) : [readCharacter(raw)];
+    state.characters = list.length ? list.map((c) => readCharacter(c))
+      : old || Array.isArray(raw.done) ? [readCharacter(raw, options().legacy)] : [];
     state.character = Number.isInteger(raw.character) && raw.character >= 0 && raw.character < state.characters.length ? raw.character : 0;
   }
   function serialize() {
@@ -502,7 +538,7 @@
   // pasted ones.
   function buildList() {
     const own = window.TALENT_DATA && window.TALENT_DATA.build;
-    const mine = own && parseAddress(own).slug === me().class;
+    const mine = own && me() && parseAddress(own).slug === me().class;
     return (mine ? [{ name: "Example build", url: own, fixed: true }] : []).concat(state.builds);
   }
 
@@ -573,6 +609,7 @@
   // In zone shows the places the character chose that have rows for it.
   async function applyCharacter() {
     const ch = me();
+    if (!ch) { ROUTE = []; BASE_LEVELS = []; LEVELS = []; ALL = []; ACTIVE = null; return; }
     ROUTE = placesFor(ch).filter((z) => z.tasks.length && (!z.place || ch.places.includes(z.place)));
     // Several files can hold rows for one level (a class, a profession): one
     // group per level, rows by `order` (default 50) and then by load order.
@@ -767,9 +804,11 @@
 
   // Said when a column or the whole page has nothing to show.
   function emptyText() {
+    if (!me()) return "No character yet.";
     if (ROUTE.length || BASE_LEVELS.length) return "Nothing here with these filters.";
-    return "No rows are written for a " + label("races", me().race) + " " + label("classes", me().class) +
-      " yet. Talent rows appear once a build is added in the Talents tab.";
+    if (LEVELS.length) return "Only talent rows so far. Pick professions and zones in the Professions and Zones tabs.";
+    return "Nothing to show for this " + raceClass(me()) + " yet. Pick professions and zones in the Professions and Zones tabs, " +
+      "and add a talent build in the Talents tab.";
   }
   function fill(root, sections) {
     root.textContent = "";
@@ -850,9 +889,11 @@
   }
 
   function renderPanels() {
-    // A reference panel can be for one class or one race.
-    const panels = (window.PANELS || []).filter((p) => (!p.class || p.class === me().class) && (!p.race || p.race === me().race))
-      .concat([{ id: "talents", tab: "Talents" }, { id: "character", tab: "Character" }]);
+    // The character's own choices first, then the reference panels, which
+    // can be for one class or one race. No character, no tabs.
+    const ch = me();
+    const panels = !ch ? [] : [{ id: "professions", tab: "Professions" }, { id: "zones", tab: "Zones" }, { id: "talents", tab: "Talents" }]
+      .concat((window.PANELS || []).filter((p) => (!p.class || p.class === ch.class) && (!p.race || p.race === ch.race)));
     const rail = $("rail");
     rail.textContent = "";
     for (const p of panels) {
@@ -868,7 +909,8 @@
     root.hidden = !open;
     root.textContent = "";
     if (open && open.id === "talents") renderTalentPanel(root);
-    if (open && open.id === "character") renderCharacterPanel(root);
+    if (open && open.id === "professions") renderProfessionPanel(root);
+    if (open && open.id === "zones") renderZonePanel(root);
     for (const s of (open && open.sections) || []) {
       const sec = el("section");
       if (s.title) sec.appendChild(el("h3", null, s.title));
@@ -960,104 +1002,197 @@
     root.appendChild(add);
   }
 
-  // The class and race picked for the next new character.
-  const newChar = { class: null, race: null };
-
-  function renderCharacterPanel(root) {
-    const o = options(), ch = me();
-    const select = (list, value, onPick, name) => {
-      const sel = el("select");
-      sel.setAttribute("aria-label", name);
-      for (const x of o[list] || []) {
-        const opt = el("option", null, x.label);
-        opt.value = x.key; opt.selected = x.key === value;
-        sel.appendChild(opt);
-      }
-      sel.addEventListener("change", () => onPick(sel.value));
-      return sel;
-    };
-    const tick = (text, on, onChange, sub) => {
-      const row = el("label");
-      const box = el("input");
-      box.type = "checkbox"; box.checked = on;
-      box.addEventListener("change", () => onChange(box.checked));
-      row.appendChild(box);
-      const span = el("span", "grow", text);
-      if (sub) span.appendChild(el("span", "what", sub));
-      row.appendChild(span);
-      return row;
-    };
-    const inList = (list, key, on) => { const at = list.indexOf(key); if (on && at < 0) list.push(key); if (!on && at >= 0) list.splice(at, 1); };
-
-    const all = el("section", "builds");
-    all.appendChild(el("h3", null, "Characters"));
-    all.appendChild(el("p", null, "Each character has its own ticks, level and talent builds. Export and Import carry them all."));
-    state.characters.forEach((c, i) => {
-      const row = el("label");
-      const pick = el("input");
-      pick.type = "radio"; pick.name = "character"; pick.checked = i === state.character;
-      pick.addEventListener("change", () => chooseCharacter(i));
-      row.appendChild(pick);
-      const text = el("span", "grow", charName(c));
-      text.appendChild(el("span", "what", label("races", c.race) + " " + label("classes", c.class) + ", " + c.done.size + " ticked"));
-      row.appendChild(text);
-      if (state.characters.length > 1) {
-        const del = el("button", "btn", "Remove");
-        del.type = "button";
-        del.addEventListener("click", (e) => {
-          e.preventDefault();
-          if (!confirm("Remove '" + charName(c) + "' and its " + c.done.size + " ticks?")) return;
-          state.characters.splice(i, 1);
-          chooseCharacter(Math.max(0, state.character - (state.character >= i ? 1 : 0)));
-        });
-        row.appendChild(del);
-      }
-      all.appendChild(row);
-    });
-    root.appendChild(all);
-
-    const edit = el("section", "builds");
-    edit.appendChild(el("h3", null, "This character"));
-    const name = el("input");
-    name.type = "text"; name.placeholder = "Name (optional)"; name.value = ch.name; name.maxLength = 40;
-    name.setAttribute("aria-label", "Character name");
-    name.addEventListener("change", () => { ch.name = name.value.trim(); changed(); });
-    edit.appendChild(name);
-    edit.appendChild(select("races", ch.race, (v) => { ch.race = v; changed(); }, "Race"));
-    edit.appendChild(select("classes", ch.class, (v) => { ch.class = v; changed(); }, "Class"));
-    edit.appendChild(el("h3", null, "Professions"));
-    for (const x of o.professions || []) {
-      edit.appendChild(tick(x.label, ch.professions.includes(x.key), (on) => { inList(ch.professions, x.key, on); changed(); }));
+  // A row with a checkbox, for the Professions and Zones panels.
+  function tickRow(text, on, onChange, sub, off) {
+    const row = el("label", off ? "off" : null);
+    const box = el("input");
+    box.type = "checkbox"; box.checked = on; box.disabled = !!off;
+    box.addEventListener("change", () => onChange(box.checked));
+    row.appendChild(box);
+    const span = el("span", "grow", text);
+    if (sub) span.appendChild(el("span", "what", sub));
+    row.appendChild(span);
+    return row;
+  }
+  const inList = (list, key, on) => { const at = list.indexOf(key); if (on && at < 0) list.push(key); if (!on && at >= 0) list.splice(at, 1); };
+  // A picker over one of the lists in data/characters.js.
+  function pickList(list, value, onPick, name) {
+    const sel = el("select");
+    sel.setAttribute("aria-label", name);
+    for (const x of options()[list] || []) {
+      const opt = el("option", null, x.label);
+      opt.value = x.key; opt.selected = x.key === value;
+      sel.appendChild(opt);
     }
-    edit.appendChild(el("h3", null, "Places"));
-    edit.appendChild(el("p", null, "In zone shows the places ticked here that have rows for this character."));
+    sel.addEventListener("change", () => onPick(sel.value));
+    return sel;
+  }
+
+  function renderProfessionPanel(root) {
+    const ch = me(), all = options().professions || [];
+    const has = (x) => ch.professions.includes(x.key);
+    const rows = (sec, list, full) => {
+      for (const x of list) {
+        sec.appendChild(tickRow(x.label, has(x), (on) => { inList(ch.professions, x.key, on); changed(); }, null, full && !has(x)));
+      }
+    };
+    const primary = all.filter(isPrimary), count = primary.filter(has).length;
+    const one = el("section", "builds");
+    one.appendChild(el("h3", null, "Primary professions"));
+    one.appendChild(el("p", null, "A character has at most " + MAX_PRIMARY + ": " + count + " of " + MAX_PRIMARY + " picked." +
+      (count >= MAX_PRIMARY ? " Untick one to pick another." : "")));
+    if (count > MAX_PRIMARY) one.appendChild(el("p", "note", "This character has " + count + " primary professions; the game allows " + MAX_PRIMARY + "."));
+    rows(one, primary, count >= MAX_PRIMARY);
+    root.appendChild(one);
+
+    const two = el("section", "builds");
+    two.appendChild(el("h3", null, "Secondary professions"));
+    two.appendChild(el("p", null, "A character can have all of them."));
+    rows(two, all.filter((x) => !isPrimary(x)), false);
+    root.appendChild(two);
+  }
+
+  function renderZonePanel(root) {
+    const ch = me();
+    const sec = el("section", "builds");
+    sec.appendChild(el("h3", null, "Zones"));
+    sec.appendChild(el("p", null, "In zone shows the zones ticked here that have rows for this character."));
     for (const z of placesFor(ch)) {
       const n = z.tasks.length;
-      edit.appendChild(tick(z.zone, ch.places.includes(z.place), (on) => { inList(ch.places, z.place, on); changed(); },
+      sec.appendChild(tickRow(z.zone, ch.places.includes(z.place), (on) => { inList(ch.places, z.place, on); changed(); },
         "Lv " + z.levels + ", " + (n ? n + (n === 1 ? " row" : " rows") : "no rows for this character")));
     }
-    root.appendChild(edit);
+    root.appendChild(sec);
+  }
 
-    const add = el("section");
-    add.appendChild(el("h3", null, "Add a character"));
-    add.appendChild(el("p", null, "It starts with no professions and no places; tick them above once it is added."));
-    newChar.race = newChar.race || (o.default || {}).race;
-    newChar.class = newChar.class || (o.default || {}).class;
-    add.appendChild(select("races", newChar.race, (v) => { newChar.race = v; }, "Race of the new character"));
-    add.appendChild(select("classes", newChar.class, (v) => { newChar.class = v; }, "Class of the new character"));
-    const ok = el("button", "btn", "Add");
-    ok.type = "button";
-    ok.addEventListener("click", () => {
-      state.characters.push(readCharacter({ class: newChar.class, race: newChar.race, professions: [], places: [] }));
-      chooseCharacter(state.characters.length - 1);
+  // ---- character dialog --------------------------------------------------
+  // Makes a character (by hand, or from a Wowhead talent calculator address,
+  // which holds the class and the talents but no race) or changes the current
+  // one. With no character it cannot be closed.
+  const form = { edit: false, mode: "manual", name: "", race: null, class: null, text: "", result: null };
+
+  function openDialog(edit) {
+    const o = options(), ch = edit ? me() : null;
+    Object.assign(form, {
+      edit: !!ch, mode: "manual", text: "", result: null,
+      name: ch ? ch.name : "",
+      race: ch ? ch.race : ((o.races || [])[0] || {}).key,
+      class: ch ? ch.class : ((o.classes || [])[0] || {}).key
     });
-    add.appendChild(ok);
-    root.appendChild(add);
+    renderDialog();
+    if (!$("charDialog").open) $("charDialog").showModal();
+  }
+
+  function renderDialog() {
+    const d = $("charDialog"), first = !state.characters.length;
+    const importing = !form.edit && form.mode === "import";
+    d.textContent = "";
+    d.appendChild(el("h2", null, form.edit ? "Edit character" : "New character"));
+    if (first) d.appendChild(el("p", null, "There is no character yet. Make one to see its rows. It is saved in this browser only."));
+
+    if (!form.edit) {
+      const modes = el("div", "row");
+      for (const [key, text] of [["manual", "Manual"], ["import", "Import from Wowhead"]]) {
+        const b = el("button", "chip", text);
+        b.type = "button";
+        b.setAttribute("aria-pressed", String(form.mode === key));
+        b.addEventListener("click", () => { form.mode = key; renderDialog(); });
+        modes.appendChild(b);
+      }
+      d.appendChild(modes);
+    }
+
+    const name = el("input");
+    name.type = "text"; name.placeholder = "Name (optional)"; name.value = form.name; name.maxLength = 40;
+    name.setAttribute("aria-label", "Character name");
+    name.addEventListener("input", () => { form.name = name.value; });
+    d.appendChild(name);
+
+    const picks = el("div", "row");
+    picks.appendChild(pickList("races", form.race, (v) => { form.race = v; }, "Race"));
+    if (!importing) picks.appendChild(pickList("classes", form.class, (v) => { form.class = v; }, "Class"));
+    d.appendChild(picks);
+
+    if (importing) {
+      d.appendChild(el("p", null, "The class and the talents come from the address; it does not hold a race, so pick that above. " + HOW_TO));
+      const box = el("textarea");
+      box.rows = 3; box.placeholder = "https://www.wowhead.com/forever/talent-calc/..."; box.value = form.text;
+      box.setAttribute("aria-label", "Wowhead talent calculator address");
+      box.addEventListener("input", () => { form.text = box.value; form.result = null; });
+      d.appendChild(box);
+      const r = form.result;
+      if (r && r.error) d.appendChild(el("p", "bad", r.error));
+      if (r && !r.error) {
+        d.appendChild(el("p", "good", r.summary));
+        r.notes.forEach((n) => d.appendChild(el("p", "note", n)));
+      }
+    } else if (!form.edit) {
+      d.appendChild(el("p", null, "Professions and zones are picked afterwards, in the Professions and Zones tabs."));
+    }
+
+    const buttons = el("div", "row buttons");
+    const button = (text, onClick, cls) => {
+      const b = el("button", "btn" + (cls ? " " + cls : ""), text);
+      b.type = "button";
+      b.addEventListener("click", onClick);
+      buttons.appendChild(b);
+    };
+    if (importing) button("Check", async () => { form.result = await readBuild(form.text); renderDialog(); });
+    button(form.edit ? "Save" : "Create", form.edit ? saveCharacter : createCharacter, "main");
+    if (!first) button("Cancel", () => d.close());
+    if (form.edit) {
+      buttons.appendChild(el("span", "spacer"));
+      button("Remove", removeCharacter);
+    }
+    d.appendChild(buttons);
+  }
+
+  async function createCharacter() {
+    const raw = { name: form.name.trim(), race: form.race, class: form.class, professions: [], places: [] };
+    if (form.mode === "import") {
+      const r = form.result = await readBuild(form.text);
+      if (!r.error && !(options().classes || []).some((x) => x.key === r.slug)) r.error = "This page does not offer the " + r.slug + " class yet.";
+      if (r.error) { form.result = { error: r.error }; renderDialog(); return; }
+      raw.class = r.slug;
+      raw.builds = [{ name: (r.cls.name || r.slug) + " build", url: r.url }];
+    }
+    state.characters.push(readCharacter(raw));
+    state.character = state.characters.length - 1;
+    // The pasted build is the last on the list, after the page's own example.
+    me().build = Math.max(0, buildList().length - 1);
+    state.panel = "professions";
+    $("charDialog").close();
+    changed();
+  }
+  function saveCharacter() {
+    Object.assign(me(), { name: form.name.trim().slice(0, 40), race: form.race, class: form.class });
+    $("charDialog").close();
+    changed();
+  }
+  function removeCharacter() {
+    const c = me();
+    if (!confirm("Remove '" + charName(c) + "' and its " + c.done.size + " ticks?")) return;
+    state.characters.splice(state.character, 1);
+    state.character = Math.max(0, state.character - 1);
+    $("charDialog").close();
+    changed();
+  }
+
+  function renderHeader() {
+    const sel = $("charSelect");
+    sel.textContent = "";
+    state.characters.forEach((c, i) => {
+      const opt = el("option", null, c.name ? c.name + " (" + raceClass(c) + ")" : raceClass(c));
+      opt.value = i; opt.selected = i === state.character;
+      sel.appendChild(opt);
+    });
+    sel.hidden = $("charEdit").hidden = !state.characters.length;
+    document.title = (me() ? charName(me()) + " · " : "") + "WoW Forever";
   }
 
   function render() {
-    $("title").textContent = charName(me()) + " \u00b7 WoW Forever";
-    renderFilters(); renderTasks(); renderProgress(); renderPanels();
+    renderHeader(); renderFilters(); renderTasks(); renderProgress(); renderPanels();
+    if (!me() && !$("charDialog").open) openDialog(false);
   }
 
   // ---- actions -----------------------------------------------------------
@@ -1105,6 +1240,10 @@
         if (raw && Array.isArray(raw.characters) && raw.characters.length) {
           if (!confirm("Replace every character here with the " + raw.characters.length + " in this file?")) return;
           applyState(raw);
+        } else if (raw && Array.isArray(raw.done) && !me()) {
+          // A file from before characters, and nobody here: it becomes the
+          // character it was written for.
+          applyState(raw, true);
         } else if (raw && Array.isArray(raw.done)) {
           // A file from before characters: one character's progress.
           if (!confirm("Replace the progress of '" + charName(me()) + "' with " + raw.done.length + " completed tasks from this file?")) return;
@@ -1122,6 +1261,12 @@
   }
 
   // ---- boot --------------------------------------------------------------
+  $("charSelect").addEventListener("change", (e) => chooseCharacter(Number(e.target.value)));
+  $("charEdit").addEventListener("click", () => openDialog(true));
+  $("charNew").addEventListener("click", () => openDialog(false));
+  // Escape closes the dialog only when there is a character to go back to.
+  $("charDialog").addEventListener("cancel", (e) => { if (!me()) e.preventDefault(); });
+  $("charDialog").addEventListener("close", () => { if (!me()) openDialog(false); });
   $("levelAll").addEventListener("click", () => set("level", "all"));
   $("levelDown").addEventListener("click", () => stepLevel(-1));
   $("levelUp").addEventListener("click", () => stepLevel(1));

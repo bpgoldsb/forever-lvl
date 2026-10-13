@@ -9,8 +9,8 @@
 //
 // Reads:
 //   source/categories.json        row categories: key, label, colour
-//   source/characters.json        what the character picker offers, and the
-//                                 character the page starts with
+//   source/characters.json        what a character can be, and the character
+//                                 a save from before characters belongs to
 //   source/trainers.json          where a class trainer is, by race and level
 //   source/legacy-ids.json        fact id -> the id the page has always used
 //   source/<class>-*.json         facts for a class (spells, quests, items)
@@ -158,7 +158,7 @@ const groups = (list) => "[\n" + list.map((g) => {
 }).join(",\n") + "\n]";
 
 files.set("categories.js", HEADER + "// Row categories, in the order of the Type filter.\nwindow.CATEGORY_DATA = " + lines(categories) + ";\n");
-files.set("characters.js", HEADER + "// What the Character tab offers, and the character the page starts with.\nwindow.CHARACTER_OPTIONS = " + JSON.stringify(characters, null, 2) + ";\n");
+files.set("characters.js", HEADER + "// What a character can be, and `legacy`: the character that a save from\n// before characters belongs to. A new visitor starts with no character.\nwindow.CHARACTER_OPTIONS = " + JSON.stringify(characters, null, 2) + ";\n");
 files.set("trainers.js", HEADER + "// Where a class trainer is, by race and character level. A row with a\n// `trainer` field and no `location` gets its location from this list.\nwindow.TRAINERS = " + lines(trainers) + ";\n");
 for (const c of Object.keys(classes).sort()) {
   files.set("class-" + c + ".js", HEADER + "// On-level rows for the " + c + ": what depends on character level.\nwindow.LEVEL_DATA = (window.LEVEL_DATA || []).concat(" + groups(byLevel(classes[c], { class: c })) + ");\n");
@@ -183,10 +183,13 @@ for (const k of ["classes", "races", "professions"]) {
   for (const x of characters[k] || []) if (!x.key || !x.label) errors.push("characters.json: an entry in " + k + " needs key and label");
   if (!(characters[k] || []).length) errors.push("characters.json: no " + k);
 }
-const first = characters.default || {};
-if (!classKeys.has(first.class) || !raceKeys.has(first.race)) errors.push("characters.json: default needs a class and a race from the lists");
-for (const p of first.professions || []) if (!profKeys.has(p)) errors.push("characters.json: default profession is not in the list: " + p);
-for (const p of first.places || []) if (!places[p]) errors.push("characters.json: default place has no place file: " + p);
+for (const x of characters.professions || []) {
+  if (!["primary", "secondary"].includes(x.kind)) errors.push("characters.json: profession " + x.key + " needs kind primary or secondary");
+}
+const first = characters.legacy || {};
+if (!classKeys.has(first.class) || !raceKeys.has(first.race)) errors.push("characters.json: legacy needs a class and a race from the lists");
+for (const p of first.professions || []) if (!profKeys.has(p)) errors.push("characters.json: legacy profession is not in the list: " + p);
+for (const p of first.places || []) if (!places[p]) errors.push("characters.json: legacy place has no place file: " + p);
 for (const n of HAND_WRITTEN) if (!existsSync(join(DATA, n))) errors.push("data/" + n + " is missing");
 
 const order = ["categories.js", "characters.js", "trainers.js"].concat([...files.keys()].filter((n) => /^(class|prof|place)-/.test(n)));
